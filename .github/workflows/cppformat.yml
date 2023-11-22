@@ -1,0 +1,17 @@
+name: C/C++ format
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  clang-format-checking:
+    name: Vérification formatage C++
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: RafikFarhad/clang-format-github-action@v1.0.1
+        with:
+          sources: "*.h,*.cpp"
+          style: file
