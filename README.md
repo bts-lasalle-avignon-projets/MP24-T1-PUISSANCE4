@@ -3,8 +3,9 @@
 # Mini-projet : PUISSANCE4
 
 ## Présentation
-
+Bonjour
 ## Auteurs
-
+HNIZDO Thomas
+HILLION Jules
 ---
 ©️ BTS SNIR LaSalle Avignon 2024
