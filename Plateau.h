@@ -19,7 +19,7 @@ class Plateau
 
   public:
     Plateau(int lignes, int colonnes);
-    void afficherPlateau() const;
+    void             afficherPlateau() const;
     void             afficherPartie() const;
     Joueur*          getVainqueur();
     int              getNbLignes() const;

@@ -10,12 +10,12 @@ class Joueur
 {
   private:
     string couleur;
-    string  nom;
+    string nom;
 
   public:
     Joueur(string couleur, string nom);
     ~Joueur();
-    string  getNom() const;
+    string getNom() const;
     string getCouleur() const;
 };
 #endif // JOUEUR

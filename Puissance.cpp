@@ -6,7 +6,8 @@
 
 using namespace std;
 
-Puissance::Puissance(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes): plateau(nbLignes, nbColonnes)
+Puissance::Puissance(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes) :
+    plateau(nbLignes, nbColonnes)
 {
 }
 

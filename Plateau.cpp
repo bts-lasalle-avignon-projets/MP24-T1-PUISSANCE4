@@ -20,7 +20,6 @@ void Plateau::afficherPlateau() const
 void Plateau::afficherPartie() const
 {
     this->afficherPlateau();
-    //thomas c'est là qu'il faut afficher le gagnant
 }
 
 Joueur* Plateau::getVainqueur()
