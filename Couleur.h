@@ -5,7 +5,8 @@
 
 enum Couleur
 {
-    ROUGE, JAUNE
+    ROUGE,
+    JAUNE
 };
 
 std::string getSequence(Couleur couleur);
