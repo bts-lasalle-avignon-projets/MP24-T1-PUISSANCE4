@@ -11,8 +11,13 @@ class Joueur
     std::string nom;
 
   public:
-    Joueur(Jeton couleur, std::string nom);
+    Joueur();
+    Joueur(Jeton couleur, const std::string& nom);
+    Joueur(const Joueur& joueur);
+    Joueur(Joueur&& joueur) noexcept;
     ~Joueur();
+    Joueur&     operator=(const Joueur& joueur) noexcept;
+    Joueur&     operator=(Joueur&& joueur) noexcept;
     std::string getNom() const;
     Jeton       getJeton() const;
 };
