@@ -1,6 +1,7 @@
 #include "Plateau.h"
 #include "Puissance.h"
 #include "Joueur.h"
+#include "Jeton.h"
 #include <list>
 #include <iostream>
 
@@ -8,8 +9,8 @@
 
 using namespace std;
 
-Plateau::Plateau(int lignes, int colonnes) :
-    lignes(lignes), colonnes(colonnes), plateaux(lignes * colonnes), vainqueur(nullptr)
+Plateau::Plateau(Puissance* partie, int lignes, int colonnes) :
+    lignes(lignes), colonnes(colonnes), cases(lignes * colonnes), partie(partie)
 {
 }
 
@@ -20,14 +21,14 @@ void Plateau::afficherPlateau() const
         cout << "|";
         for(int j = 0; j < this->colonnes; j++)
         {
-            Joueur* joueur = this->plateaux.at(i * this->colonnes + j);
-            if(joueur == nullptr)
+            Jeton jeton = this->cases.at(i * this->colonnes + j);
+            if(jeton == Jeton(VIDE))
             {
                 cout << " |";
             }
             else
             {
-                cout << getSequence(joueur->getCouleur()) << "|";
+                cout << getSequence(jeton) << "|";
             }
         }
         cout << endl;
@@ -37,7 +38,6 @@ void Plateau::afficherPlateau() const
 void Plateau::afficherPartie() const
 {
     this->afficherPlateau();
-    // thomas c'est là qu'il faut afficher le gagnant
 }
 
 Joueur* Plateau::getVainqueur()
@@ -46,38 +46,38 @@ Joueur* Plateau::getVainqueur()
     {
         for(int j = 0; j < this->colonnes; j++)
         {
-            Joueur* case_ = this->plateaux.at(i * this->colonnes + j);
-            if(this->estUneSequence(i * this->colonnes + j, case_))
+            Jeton casePlateau = this->cases.at(i * this->colonnes + j);
+            if(this->estUneSequence(i * this->colonnes + j, casePlateau))
             {
-                return case_;
+                return this->partie->recupererJoueurAyantJeton(casePlateau);
             }
         }
     }
     return nullptr;
 }
 
-bool Plateau::estUneSequence(int indiceCase, Joueur* case_) const
+bool Plateau::estUneSequence(int indiceCase, Jeton casePlateau) const
 {
-    if(case_ == nullptr)
+    if(casePlateau == Jeton(VIDE))
         return false;
-    bool sequenceHorizontale     = testerSequence(indiceCase, case_, 1);
-    bool sequenceVerticale       = testerSequence(indiceCase, case_, this->colonnes);
-    bool sequenceDiagonaleGauche = testerSequence(indiceCase, case_, this->colonnes - 1);
-    bool sequenceDiagonaleDroite = testerSequence(indiceCase, case_, this->colonnes + 1);
+    bool sequenceHorizontale     = testerSequence(indiceCase, casePlateau, 1);
+    bool sequenceVerticale       = testerSequence(indiceCase, casePlateau, this->colonnes);
+    bool sequenceDiagonaleGauche = testerSequence(indiceCase, casePlateau, this->colonnes - 1);
+    bool sequenceDiagonaleDroite = testerSequence(indiceCase, casePlateau, this->colonnes + 1);
     return sequenceHorizontale || sequenceVerticale || sequenceDiagonaleGauche ||
            sequenceDiagonaleDroite;
 }
 
-bool Plateau::testerSequence(int indiceCase, Joueur* case_, int indiceCaseTeste) const
+bool Plateau::testerSequence(int indiceCase, Jeton casePlateau, int indiceCaseTeste) const
 {
     for(int i = 0; i < NOMBRE_CASE; i++)
     {
         int prochainIndiceTest = indiceCase + i * indiceCaseTeste;
-        if(prochainIndiceTest < 0 || prochainIndiceTest >= (int)this->plateaux.size())
+        if(prochainIndiceTest < 0 || prochainIndiceTest >= (int)this->cases.size())
         {
             return false;
         }
-        if(this->plateaux.at(prochainIndiceTest) != case_)
+        if(this->cases.at(prochainIndiceTest) != casePlateau)
         {
             return false;
         }
@@ -95,7 +95,7 @@ int Plateau::getNbColonnes() const
     return this->colonnes;
 }
 
-vector<Joueur*>* Plateau::getPlateau()
+vector<Jeton>* Plateau::getPlateau()
 {
-    return &plateaux;
+    return &cases;
 }
