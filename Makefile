@@ -12,29 +12,38 @@ CLANG_FORMAT_STYLE = -style=file
 CLANG_FORMAT_FILES = $(SOURCES) $(wildcard $(SRCDIR)/*.h)
 
 # Couleurs
-GREEN = \033[0;32m
-YELLOW = \033[1;33m
+VERT = \033[0;32m
+JAUNE = \033[1;33m
+GRIS = \033[0;35m
 NC = \033[0m
 
 all: format $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	@echo "$(YELLOW)Linking...$(NC)"
+	@echo "$(JAUNE)------------------------"
+	@echo "Edition des liens :"
+	@echo "------------------------$(NC)"
 	@$(CXX) $(CXXFLAGS) $^ -o $@
-	@echo "$(GREEN)Build complete: $(EXECUTABLE)$(NC)"
+	@echo "$(VERT)Compilation réussie : $(EXECUTABLE)$(NC)"
+	@echo "$(VERT)Fichiers compilés avec succès.$(NC)"
 
 %.o: %.cpp
-	@echo "$(YELLOW)Compiling $<...$(NC)"
+	@echo "Compilation de $< en $@ :"
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@echo "$(VERT)Fichier $< compilé avec succès en $@.$(NC)"
 
 .PHONY: format clean
 
 format:
-	@echo "$(YELLOW)Running Clang Format...$(NC)"
+	@echo "\n$(JAUNE)------------------------"
+	@echo "Exécution de Clang Format :"
+	@echo "------------------------$(NC)"
 	@$(CLANG_FORMAT) $(CLANG_FORMAT_STYLE) -i $(CLANG_FORMAT_FILES)
-	@echo "$(GREEN)Clang Format done.$(NC)"
+	@echo "$(VERT)Clang Format terminé.$(NC)"
 
 clean:
-	@echo "$(YELLOW)Cleaning...$(NC)"
+	@echo "\n$(JAUNE)------------------------"
+	@echo "Nettoyage 🧹:"
+	@echo "------------------------$(NC)"
 	@rm -rf *.o $(EXECUTABLE)
-	@echo "$(GREEN)Clean complete.$(NC)"
+	@echo "$(VERT)Nettoyage terminé.$(NC)"
