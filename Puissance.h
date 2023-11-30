@@ -1,21 +1,19 @@
+#ifndef PUISSANCE
 #define PUISSANCE
-#ifdef PUISSANCE
 
 #include <vector>
 #include <iostream>
 #include "Plateau.h"
 
-using namespace std;
-
 class Puissance
 {
   private:
-    int             indiceJoueurActuel;
-    vector<Joueur>* listeJoueurs;
-    Plateau         plateau;
+    int                  indiceJoueurActuel;
+    std::vector<Joueur>* listeJoueurs;
+    Plateau              plateau;
 
   public:
-    Puissance(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
+    Puissance(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
     ~Puissance();
 
     void demarrerPartie();
