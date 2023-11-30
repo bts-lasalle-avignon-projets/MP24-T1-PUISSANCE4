@@ -21,7 +21,7 @@ class Plateau
     Plateau(Puissance* partie, int lignes, int colonnes);
     void                afficherPlateau() const;
     void                afficherPartie() const;
-    Joueur*             getVainqueur();
+    Joueur*             getVainqueur() const;
     int                 getNbLignes() const;
     int                 getNbColonnes() const;
     std::vector<Jeton>* getPlateau();

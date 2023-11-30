@@ -2,6 +2,7 @@
 #include "Puissance.h"
 #include "Joueur.h"
 #include "Jeton.h"
+#include "Ihm.h"
 #include <list>
 #include <iostream>
 
@@ -38,9 +39,10 @@ void Plateau::afficherPlateau() const
 void Plateau::afficherPartie() const
 {
     this->afficherPlateau();
+    IHM::afficherVictoire(this->getVainqueur());
 }
 
-Joueur* Plateau::getVainqueur()
+Joueur* Plateau::getVainqueur() const
 {
     for(int i = this->lignes - 1; i >= 0; i--)
     {
