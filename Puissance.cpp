@@ -2,6 +2,7 @@
 #include "Plateau.h"
 #include "Joueur.h"
 #include "Jeton.h"
+#include "Ihm.h"
 #include <vector>
 #include <iostream>
 
@@ -31,6 +32,7 @@ void Puissance::jouerTour()
                            ? 0
                            : this->indiceJoueurActuel + 1;
     indiceJoueurActuel = prochainIndice;
+    IHM::afficherMessageTour(listeJoueurs->at(prochainIndice));
     int indice;
     cin >> indice;
     for(int i = this->plateau.getNbLignes() - 1; i >= 0; i--)
