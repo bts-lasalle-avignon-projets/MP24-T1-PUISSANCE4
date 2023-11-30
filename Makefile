@@ -17,7 +17,7 @@ JAUNE = \033[1;33m
 GRIS = \033[0;35m
 NC = \033[0m
 
-all: format $(EXECUTABLE) check run
+all: format $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	@echo "$(JAUNE)------------------------"
@@ -32,7 +32,7 @@ $(EXECUTABLE): $(OBJECTS)
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "$(VERT)Fichier $< compilé avec succès en $@.$(NC)"
 
-.PHONY: format clean check run
+.PHONY: format clean check
 
 format:
 	@echo "\n$(JAUNE)------------------------"
@@ -53,12 +53,6 @@ check:
 	@clang-tidy *.cpp --quiet -header-filter='.*' -checks=-*,boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-use-nullptr,clang-analyzer-*,cppcoreguidelines-* --format-style=none -- -std=c++11
 	@echo "$(VERT)Clang Tidy terminé.$(NC)"
 
-run: $(EXECUTABLE)
-	@echo "\n$(JAUNE)------------------------"
-	@echo "Exécution de $(EXECUTABLE) :"
-	@echo "------------------------$(NC)"
-	@./$(EXECUTABLE)
-	@echo "$(VERT)Exécution terminée.$(NC)"
 
 clean:
 	@echo "\n$(JAUNE)------------------------"
