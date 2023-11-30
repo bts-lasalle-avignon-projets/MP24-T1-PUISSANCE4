@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Plateau.h"
 
+#include "Jeton.h"
 class Puissance
 {
   private:
@@ -16,9 +17,10 @@ class Puissance
     Puissance(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
     ~Puissance();
 
-    void demarrerPartie();
-    void jouerTour();
-    bool partieEstTerminee();
+    void    demarrerPartie();
+    void    jouerTour();
+    bool    partieEstTerminee();
+    Joueur* recupererJoueurAyantJeton(Jeton jeton);
 };
 
 #endif

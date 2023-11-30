@@ -1,19 +1,19 @@
 #ifndef JOUEUR
 #define JOUEUR
 
-#include "Couleur.h"
+#include "Jeton.h"
 #include <iostream>
 
 class Joueur
 {
   private:
-    Couleur     couleur;
+    Jeton       couleur;
     std::string nom;
 
   public:
-    Joueur(Couleur couleur, std::string nom);
+    Joueur(Jeton couleur, std::string nom);
     ~Joueur();
     std::string getNom() const;
-    Couleur     getCouleur() const;
+    Jeton       getJeton() const;
 };
 #endif // JOUEUR

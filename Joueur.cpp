@@ -1,10 +1,10 @@
 #include "Joueur.h"
-#include "Couleur.h"
+#include "Jeton.h"
 #include <iostream>
 
 using namespace std;
 
-Joueur::Joueur(Couleur couleur, string nom) : couleur(couleur), nom(nom)
+Joueur::Joueur(Jeton couleur, string nom) : couleur(couleur), nom(nom)
 {
 }
 
@@ -17,7 +17,7 @@ string Joueur::getNom() const
     return this->nom;
 }
 
-Couleur Joueur::getCouleur() const
+Jeton Joueur::getJeton() const
 {
     return this->couleur;
 }
