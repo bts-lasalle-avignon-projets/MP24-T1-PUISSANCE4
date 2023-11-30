@@ -20,6 +20,7 @@ class Plateau
   public:
     Plateau(Puissance* partie, int lignes, int colonnes);
     void                afficherPlateau() const;
+    void                afficherNumerosDeColonnes() const;
     void                afficherPartie() const;
     Joueur*             getVainqueur() const;
     int                 getNbLignes() const;

@@ -17,6 +17,7 @@ Plateau::Plateau(Puissance* partie, int lignes, int colonnes) :
 
 void Plateau::afficherPlateau() const
 {
+    this->afficherNumerosDeColonnes();
     for(int i = 0; i < this->lignes; i++)
     {
         cout << "|";
@@ -34,6 +35,16 @@ void Plateau::afficherPlateau() const
         }
         cout << endl;
     }
+}
+
+void Plateau::afficherNumerosDeColonnes() const
+{
+    cout << "|";
+    for(int i = 0; i < this->colonnes; i++)
+    {
+        cout << i + 1 << "|";
+    }
+    cout << endl;
 }
 
 void Plateau::afficherPartie() const
