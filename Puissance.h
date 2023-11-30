@@ -14,8 +14,13 @@ class Puissance
     Plateau              plateau;
 
   public:
+    Puissance();
     Puissance(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
+    Puissance(const Puissance& puissance);
+    Puissance(Puissance&& puissance) noexcept;
     ~Puissance();
+    Puissance& operator=(const Puissance& puissance) noexcept;
+    Puissance& operator=(Puissance&& puissance) noexcept;
 
     void    demarrerPartie();
     void    jouerTour();

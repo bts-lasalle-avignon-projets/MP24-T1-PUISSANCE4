@@ -18,7 +18,13 @@ class Plateau
     Puissance*         partie;
 
   public:
+    Plateau();
     Plateau(Puissance* partie, int lignes, int colonnes);
+    Plateau(const Plateau& plateau);
+    Plateau(Plateau&& plateau) noexcept;
+    ~Plateau();
+    Plateau&            operator=(const Plateau& plateau) noexcept;
+    Plateau&            operator=(Plateau&& plateau) noexcept;
     void                afficherPlateau() const;
     void                afficherNumerosDeColonnes() const;
     void                afficherPartie() const;
