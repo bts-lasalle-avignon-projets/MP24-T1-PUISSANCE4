@@ -9,13 +9,13 @@ using namespace std;
 class Joueur
 {
   private:
-    string couleur;
+    Couleur couleur;
     string nom;
 
   public:
     Joueur(string couleur, string nom);
     ~Joueur();
     string getNom() const;
-    string getCouleur() const;
+    Couleur getCouleur() const;
 };
 #endif // JOUEUR

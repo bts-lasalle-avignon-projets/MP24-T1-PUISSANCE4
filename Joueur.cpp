@@ -17,7 +17,7 @@ string Joueur::getNom() const
     return "";
 }
 
-string Joueur::getCouleur() const
+Couleur Joueur::getCouleur() const
 {
-    return "";
+    return this->couleur;
 }
