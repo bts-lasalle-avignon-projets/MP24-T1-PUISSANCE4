@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Joueur::Joueur(string couleur, string nom)
+Joueur::Joueur(Couleur couleur, string nom) : couleur(couleur), nom(nom)
 {
 }
 
@@ -14,7 +14,7 @@ Joueur::~Joueur()
 
 string Joueur::getNom() const
 {
-    return "";
+    return this->nom;
 }
 
 Couleur Joueur::getCouleur() const
