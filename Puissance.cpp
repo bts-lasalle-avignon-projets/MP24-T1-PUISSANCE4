@@ -37,10 +37,10 @@ void Puissance::jouerTour()
     cin >> indice;
     for(int i = this->plateau.getNbLignes() - 1; i >= 0; i--)
     {
-        if(this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice) ==
+        if(this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice - 1) ==
            Jeton(VIDE))
         {
-            this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice) =
+            this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice - 1) =
               listeJoueurs->at(prochainIndice).getJeton();
             break;
         }
