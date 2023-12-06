@@ -8,13 +8,13 @@
 - Date de début : 24 novembre 2023 à 14:58
 - Numéro de version du logiciel : 1.0
 
-## Présentation + Objectifs
+## Présentation
 
-Ce projet implémente le jeu classique "Puissance4" en C++. Le jeu met en scène deux joueurs qui alternent pour placer des jetons de couleur dans une grille suspendue verticalement. L'objectif est de connecter quatre jetons de sa propre couleur consécutivement en ligne (horizontalement, verticalement ou diagonalement) avant l'adversaire.
+Ce projet implémente le jeu classique "Puissance4" en POO/C++. Le jeu met en scène deux joueurs qui alternent pour placer des jetons de couleur dans une grille suspendue verticalement. L'objectif est de connecter quatre jetons de sa propre couleur consécutivement en ligne (horizontalement, verticalement ou diagonalement) avant l'adversaire.
+
+Lien Wikipédia : [Puissance 4](https://fr.wikipedia.org/wiki/Puissance_4)
 
 ## Utilisation
-
-Exemple :
 
 ```bash
 $ make
@@ -24,38 +24,41 @@ $ ./puissance4.out
 
 ## Ce que le logiciel fait dans cette version
 
-Permet de jouer une partie de Puissance 4 à deux.
+Permet de jouer une partie de Puissance 4 à deux joueurs.
 
-### Version 1.0 :
+### Version 1.0
 
 - [x] saisir le nom du joueur
 - [x] jouer une partie
 - [x] afficher le déroulement d’une partie
 
-![Puissance4](img/Puissance4.gif "Puissance4")
+![Puissance4](images/puissance4.gif)
 
 ## TODO
 
 ### Version 2.0
 
-- [ ] Choix du niveau de difficulté.
-- [ ] Possibilité de jouer une ou plusieurs parties.
-- [ ] Affichage de l'historique des parties jouées.
+- [ ] Choix du niveau de difficulté
+- [ ] Possibilité de jouer une ou plusieurs parties
+- [ ] Affichage de l'historique des parties jouées
 
 ### Version 3.0
 
-- [ ] Configuration de la grille et du nombre de pions à aligner.
-- [ ] Affichage des statistiques du joueur.
-- [ ] Sauvegarde des statistiques du joueur dans un fichier.
-- [ ] Chronométrage de la partie.
+- [ ] Configuration de la grille et du nombre de pions à aligner
+- [ ] Affichage des statistiques du joueur
+- [ ] Sauvegarde des statistiques du joueur dans un fichier
+- [ ] Chronométrage de la partie
 
 ## Défauts constatés non corrigés
 
+- la saisie d'un `0` provoque le placement d'un jeton incorrect en colonne `7`
+- la saisie d'une valeur supérieure à `7` provoque un plantage de l'application
+
 ## Itérations
 
-![Jira-iteration](img/Jira-IT1.png "Itération1-Jira")
+![Jira-iteration](images/jira-iteration1.png)
 
-## Diagramme de classes (attributs uniquement)
+## Diagramme du domaine
 
 ```mermaid
 classDiagram
@@ -82,20 +85,20 @@ class Puissance {
 class Plateau {
   -lignes: int
   -colonnes: int
-  -cases: vector<Jeton>
 }
 
-Jeton "1 - couleur" <-- Joueur
+Jeton "- couleur" <-- Joueur
 Puissance --> IHM
 Plateau --> IHM
-Puissance --* "2 - listeJoueurs" Joueur : vector< Joueur >
-Puissance "1 - partie" <--o "1 - plateau" Plateau
+Joueur "- listeJoueurs" --* Puissance : vector< Joueur >
+Plateau "- plateau" <--o "- partie" Puissance
+Jeton "- cases" <--o Plateau : vector< Jeton >
 ```
 
 
 ## Diagramme de classes
 
-> Fourni par l'enseignant
+![diagramme-classes-1.0](images/diagramme-classes-1.0.png)
 
 ## Équipe de développement
 
