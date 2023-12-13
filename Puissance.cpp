@@ -3,6 +3,7 @@
 #include "Joueur.h"
 #include "Jeton.h"
 #include "Ihm.h"
+#include "IA.h"
 #include <vector>
 #include <iostream>
 
@@ -55,15 +56,22 @@ Puissance& Puissance::operator=(Puissance&& puissance) noexcept
 
 void Puissance::demarrerPartie()
 {
+    for(Joueur joueur: *listeJoueurs)
+    {
+        if(joueur.estUneIA())
+        {
+            joueur.getObjetIA()->setPlateau(&plateau);
+        }
+    }
+    int indiceJouee = -1;
     while(!this->partieEstTerminee())
     {
-        this->plateau.afficherPlateau();
-        this->jouerTour();
+        this->plateau.afficherPlateau(indiceJouee);
+        indiceJouee = this->jouerTour();
     }
 
     this->plateau.afficherPartie();
 }
-
 int Puissance::jouerTour()
 {
     int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()

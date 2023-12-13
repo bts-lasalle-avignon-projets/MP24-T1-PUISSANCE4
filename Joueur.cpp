@@ -72,7 +72,7 @@ int Joueur::jouerCoup(Plateau& plateau)
     }
     int indice = 0;
     cin >> indice;
-    while(indice < 1 || indice > plateau.getNbColonnes())
+    while(indice < 1 || indice > plateau.getNbColonnes() || plateau.colonneEstPleine(indice - 1))
     {
         IHM::effacerLignes(2);
         cin >> indice;

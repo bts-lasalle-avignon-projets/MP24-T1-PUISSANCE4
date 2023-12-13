@@ -18,7 +18,10 @@ using namespace std;
 
 int main()
 {
-    Joueur         joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
+    // Joueur joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
+    // Joueur  joueur2(Jeton(JAUNE), IHM::saisieNomJoueur(2), nullptr);
+    IA             ia1(Jeton(ROUGE), "Brendan");
+    Joueur&        joueur1 = ia1;
     IA             ia2(Jeton(JAUNE), "IA2");
     Joueur&        joueur2       = ia2;
     vector<Joueur> listeJoueurs  = { joueur1, joueur2 };
