@@ -10,7 +10,7 @@ enum Jeton
     JAUNE
 };
 
-std::string getSequence(Jeton couleur);
+std::string getSequence(Jeton couleur, const std::string& forme);
 std::string getCouleur(Jeton jeton);
 
 #endif // JETON

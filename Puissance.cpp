@@ -3,6 +3,7 @@
 #include "Joueur.h"
 #include "Jeton.h"
 #include "Ihm.h"
+#include "IA.h"
 #include <vector>
 #include <iostream>
 
@@ -55,41 +56,33 @@ Puissance& Puissance::operator=(Puissance&& puissance) noexcept
 
 void Puissance::demarrerPartie()
 {
+    for(Joueur joueur: *listeJoueurs)
+    {
+        if(joueur.estUneIA())
+        {
+            joueur.getObjetIA()->setPlateau(&plateau);
+        }
+    }
+    int indiceJouee = -1;
     while(!this->partieEstTerminee())
     {
-        this->plateau.afficherPlateau();
-        this->jouerTour();
+        this->plateau.afficherPlateau(indiceJouee);
+        indiceJouee = this->jouerTour();
     }
 
     this->plateau.afficherPartie();
 }
-void Puissance::jouerTour()
+int Puissance::jouerTour()
 {
     int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
                            ? 0
                            : this->indiceJoueurActuel + 1;
+    indiceJoueurActuel   = prochainIndice;
+    Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
+    IHM::afficherMessageTour(joueurSuivant);
+    int indiceColonne = joueurSuivant.jouerCoup(plateau);
+    return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
 
-    indiceJoueurActuel = prochainIndice;
-    IHM::afficherMessageTour(listeJoueurs->at(prochainIndice));
-
-    int indice = 0;
-    cin >> indice;
-    while(indice < 1 || indice > plateau.getNbColonnes() || plateau.colonneEstPleine(indice - 1))
-    {
-        IHM::effacerLignes(2);
-        cin >> indice;
-    }
-
-    for(int i = this->plateau.getNbLignes() - 1; i >= 0; i--)
-    {
-        if(this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice - 1) ==
-           Jeton(VIDE))
-        {
-            this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice - 1) =
-              listeJoueurs->at(prochainIndice).getJeton();
-            break;
-        }
-    }
 }
 
 bool Puissance::partieEstTerminee()
@@ -108,4 +101,14 @@ Joueur* Puissance::recupererJoueurAyantJeton(Jeton jeton)
         }
     }
     return nullptr;
+}
+
+Joueur* Puissance::getVainqueur() const
+{
+    return this->plateau.getVainqueur();
+}
+
+std::vector<Joueur>* Puissance::getJoueurs() const
+{
+    return this->listeJoueurs;
 }
