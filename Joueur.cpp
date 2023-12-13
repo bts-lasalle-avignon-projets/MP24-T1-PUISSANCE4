@@ -41,6 +41,11 @@ Joueur& Joueur::operator=(Joueur&& joueur) noexcept
     return *this;
 }
 
+bool Joueur::operator<(const Joueur& joueur) const
+{
+    return this->nom < joueur.nom;
+}
+
 string Joueur::getNom() const
 {
     return this->nom;

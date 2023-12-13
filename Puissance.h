@@ -26,6 +26,7 @@ class Puissance
     void    jouerTour();
     bool    partieEstTerminee();
     Joueur* recupererJoueurAyantJeton(Jeton jeton);
+    Joueur* getVainqueur() const;
 };
 
 #endif

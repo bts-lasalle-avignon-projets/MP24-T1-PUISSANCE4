@@ -73,7 +73,7 @@ void Plateau::afficherPlateau() const
             }
             else
             {
-                cout << getSequence(jeton) << "|";
+                cout << getSequence(jeton, "\u25CF") << "|";
             }
         }
         cout << endl;
