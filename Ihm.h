@@ -15,6 +15,7 @@ class IHM
     static void        attendreRetourMenu();
     static void        effacerLignes(int nombreDeLignes);
     static void        afficherDynamiquement(const std::string& message);
+    static void        afficherRegles();
 };
 
 #endif // IHM_H
