@@ -2,8 +2,6 @@
 #include "Joueur.h"
 #include "Plateau.h"
 #include "Puissance.h"
-#include "Parametres.h"
-#include "Difficulte.h"
 #include <iostream>
 #include <vector>
 #include <map>
@@ -108,8 +106,7 @@ int IA::jouerCoup()
 
     vector<int>* coupsFinal;
 
-    if(!coupsAdverse.empty() && !coups.empty() && coups.at(0) == 4 &&
-       necessiteUnBonCoup(Parametres::getDifficulte()))
+    if(!coupsAdverse.empty() && !coups.empty() && coups.at(0) == 4)
     {
         coupsFinal = &coups;
     }
