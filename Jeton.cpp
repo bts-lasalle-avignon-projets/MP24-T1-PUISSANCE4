@@ -14,3 +14,16 @@ string getSequence(Jeton couleur)
             return "\033[0m\u25CF\033[0m";
     }
 }
+
+string getCouleur(Jeton jeton)
+{
+    switch(jeton)
+    {
+        case ROUGE:
+            return "\033[1;31m";
+        case JAUNE:
+            return "\033[1;33m";
+        default:
+            return "\033[0m";
+    }
+}
