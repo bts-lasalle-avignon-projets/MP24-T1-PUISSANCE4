@@ -74,6 +74,11 @@ void Puissance::jouerTour()
 
     int indice = 0;
     cin >> indice;
+    while(indice < 1 || indice > plateau.getNbColonnes() || plateau.colonneEstPleine(indice - 1))
+    {
+        IHM::effacerLignes(2);
+        cin >> indice;
+    }
 
     for(int i = this->plateau.getNbLignes() - 1; i >= 0; i--)
     {
