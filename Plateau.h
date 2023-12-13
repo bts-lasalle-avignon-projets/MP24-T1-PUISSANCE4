@@ -33,6 +33,10 @@ class Plateau
     int                 getNbColonnes() const;
     std::vector<Jeton>* getPlateau();
     bool                estUneSequence(int indiceCase, Jeton casePlateau) const;
-    bool testerSequence(int indiceCase, Jeton casePlateau, int indiceCaseTeste) const;
+    bool       testerSequence(int indiceCase, Jeton casePlateau, int indiceCaseTeste) const;
+    int        placerJeton(int colonneSelectionnee, Jeton jeton);
+    Puissance* getPartie();
+    void       supprimerJeton(int indiceJeton);
+    int        getNbJetonsAlignes(int positionJeton, Jeton jeton);
 };
 #endif // PLATEAU

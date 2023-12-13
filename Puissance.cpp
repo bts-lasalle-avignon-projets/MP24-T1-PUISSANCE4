@@ -63,28 +63,18 @@ void Puissance::demarrerPartie()
 
     this->plateau.afficherPartie();
 }
-void Puissance::jouerTour()
+
+int Puissance::jouerTour()
 {
     int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
                            ? 0
                            : this->indiceJoueurActuel + 1;
 
-    indiceJoueurActuel = prochainIndice;
-    IHM::afficherMessageTour(listeJoueurs->at(prochainIndice));
-
-    int indice = 0;
-    cin >> indice;
-
-    for(int i = this->plateau.getNbLignes() - 1; i >= 0; i--)
-    {
-        if(this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice - 1) ==
-           Jeton(VIDE))
-        {
-            this->plateau.getPlateau()->at(i * this->plateau.getNbColonnes() + indice - 1) =
-              listeJoueurs->at(prochainIndice).getJeton();
-            break;
-        }
-    }
+    indiceJoueurActuel   = prochainIndice;
+    Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
+    IHM::afficherMessageTour(joueurSuivant);
+    int indiceColonne = joueurSuivant.jouerCoup(plateau);
+    return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
 }
 
 bool Puissance::partieEstTerminee()
@@ -108,4 +98,9 @@ Joueur* Puissance::recupererJoueurAyantJeton(Jeton jeton)
 Joueur* Puissance::getVainqueur() const
 {
     return this->plateau.getVainqueur();
+}
+
+std::vector<Joueur>* Puissance::getJoueurs() const
+{
+    return this->listeJoueurs;
 }

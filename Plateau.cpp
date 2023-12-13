@@ -5,6 +5,7 @@
 #include "Ihm.h"
 #include <list>
 #include <iostream>
+#include <algorithm>
 
 constexpr int nbCases = 4;
 
@@ -158,4 +159,52 @@ int Plateau::getNbColonnes() const
 vector<Jeton>* Plateau::getPlateau()
 {
     return &cases;
+}
+
+Puissance* Plateau::getPartie()
+{
+    return this->partie;
+}
+
+void Plateau::supprimerJeton(int indiceJeton)
+{
+    this->cases.at(indiceJeton) = Jeton(VIDE);
+}
+
+int Plateau::getNbJetonsAlignes(int indiceCase, Jeton jeton)
+{
+    int   nombreJetonComptes = 0;
+    Jeton casePlateau        = this->cases.at(indiceCase);
+    if(jeton == casePlateau && this->estUneSequence(indiceCase, casePlateau))
+    {
+        int nbJetonsHorizontale     = testerSequence(indiceCase, jeton, 1);
+        int nbJetonsVerticale       = testerSequence(indiceCase, jeton, this->colonnes);
+        int nbJetonsDiagonaleGauche = testerSequence(indiceCase, jeton, this->colonnes + 1);
+        int nbJetonsDiagonaleDroite = testerSequence(indiceCase, jeton, this->colonnes - 1);
+
+        int maximum = std::max({ nbJetonsHorizontale,
+                                 nbJetonsVerticale,
+                                 nbJetonsDiagonaleGauche,
+                                 nbJetonsDiagonaleDroite });
+        if(maximum > nombreJetonComptes)
+        {
+            nombreJetonComptes = maximum;
+        }
+    }
+    return nombreJetonComptes;
+}
+
+int Plateau::placerJeton(int colonneSelectionnee, Jeton jeton)
+{
+    int indiceTableauJouee = 0;
+    for(int i = this->lignes - 1; i >= 0; i--)
+    {
+        indiceTableauJouee = i * this->colonnes + colonneSelectionnee - 1;
+        if(this->cases.at(indiceTableauJouee) == Jeton(VIDE))
+        {
+            this->cases.at(indiceTableauJouee) = jeton;
+            break;
+        }
+    }
+    return indiceTableauJouee;
 }

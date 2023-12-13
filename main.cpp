@@ -4,6 +4,7 @@
 #include "Ihm.h"
 #include "Plateau.h"
 #include "Historique.h"
+#include "IA.h"
 
 constexpr int nbLignes   = 6;
 constexpr int nbColonnes = 7;
@@ -17,8 +18,9 @@ using namespace std;
 
 int main()
 {
-    Joueur         joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1));
-    Joueur         joueur2(Jeton(JAUNE), IHM::saisieNomJoueur(2));
+    Joueur         joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
+    IA             ia2(Jeton(JAUNE), "IA2");
+    Joueur&        joueur2       = ia2;
     vector<Joueur> listeJoueurs  = { joueur1, joueur2 };
     bool           continueLeJeu = true;
     Historique     historique(listeJoueurs);
