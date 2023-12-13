@@ -274,6 +274,21 @@ int Plateau::testerSequence(int indiceCase, Jeton casePlateau, int indiceCaseTes
 
 bool Plateau::sequenceEstDansSonAxe(vector<int> indicesSequence, bool alignementHorizontal) const
 {
+    int indiceLigneTeste =
+      (indicesSequence.at(0) - (indicesSequence.at(0) % this->colonnes)) / this->colonnes;
+    for(int indiceCase: indicesSequence)
+    {
+        int indiceLigneCase = (indiceCase - (indiceCase % this->colonnes)) / this->colonnes;
+        if(indiceLigneCase != indiceLigneTeste)
+        {
+            return false;
+        }
+        else if(!alignementHorizontal)
+        {
+            indiceLigneTeste++;
+        }
+    }
+    return true;
 }
 
 int Plateau::getNbLignes() const
