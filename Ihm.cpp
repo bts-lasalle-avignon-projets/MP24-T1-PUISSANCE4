@@ -1,17 +1,16 @@
-// Ihm.cpp
 #include "Ihm.h"
 #include "Jeton.h"
 #include "Joueur.h"
-#include <chrono>
 #include <iostream>
 #include <thread>
+#include <chrono>
 
 using namespace std;
 
 string IHM::saisieNomJoueur(int numeroJoueur)
 {
     string nom;
-    cout << "Entrez le nom/pseudo du Joueur " << numeroJoueur << " : ";
+    cout << "Entrez le nom/pseudo du Joueur " << numeroJoueur << ": ";
     cin >> nom;
     return nom;
 }
@@ -26,16 +25,30 @@ void IHM::afficherMessageTour(const Joueur& joueur)
     cout << endl;
 }
 
+void IHM::afficherDynamiquement(const string& message)
+{
+    for(char lettre: message)
+    {
+        cout << lettre << flush;
+        this_thread::sleep_for(chrono::milliseconds(20));
+    }
+}
+
 void IHM::afficherVictoire(Joueur* joueur)
 {
+    cout << "____            _      _        _               ____" << endl;
+    cout << "\\ \\ \\    /\\   /(_) ___| |_ ___ (_)_ __ ___     / / /" << endl;
+    cout << " \\ \\ \\   \\ \\ / / |/ __| __/ _ \\| | '__/ _ \\   / / / " << endl;
+    cout << "  \\ \\ \\   \\ V /| | (__| || (_) | | | |  __/  / / /  " << endl;
+    cout << "   \\_\\_\\   \\_/ |_|\\___|\\__\\___/|_|_|  \\___| /_/_/   " << endl;
+    cout << "                                                    " << endl;
     cout << joueur->getNom() << " remporte la partie !" << endl;
 }
 
 void IHM::afficherMenu()
 {
-    string rouge  = "\033[1;91m";
-    string jaune  = "\033[1;93m";
-    string violet = "\033[1;95m";
+    string rouge = "\033[1;31m";
+    string jaune = "\033[1;33m";
     cout << jaune << "  _____       _                               " << rouge << " _  _   "
          << endl;
     cout << jaune << " |  __ \\     (_)                              " << rouge << "| || |  "
@@ -50,15 +63,14 @@ void IHM::afficherMenu()
          << endl;
     cout << jaune << "                                              " << rouge << "        "
          << endl;
-    cout << violet << "V1.1" << endl;
     cout << jaune << "                                              " << rouge << "        "
          << endl;
 
-    cout << jaune << "Commandes de jeu à taper :"
+    cout << jaune << "Commandes de jeu à taper:"
          << "\033[0m" << endl;
-    cout << " - Jouer une nouvelle partie : " << rouge << "Jouer"
+    cout << " - Jouer une nouvelle partie: " << rouge << "play"
          << "\033[0m" << endl;
-    cout << " - Afficher les règles: " << rouge << "Règles"
+    cout << " - Afficher l'historique: " << rouge << "history"
          << "\033[0m" << endl;
 }
 
@@ -69,24 +81,6 @@ string IHM::saisirCommandeDeJeu()
     return commande;
 }
 
-void IHM::afficherDynamiquement(const string& message)
-{
-    for(char lettre: message)
-    {
-        cout << lettre << flush;
-        this_thread::sleep_for(chrono::milliseconds(20));
-    }
-}
-
-void IHM::attendreRetourMenu()
-{
-    cout << "Tapez 'menu' pour revenir au menu principal" << endl;
-    string commande = "";
-    while(commande != "menu")
-    {
-        cin >> commande;
-    }
-}
 void IHM::effacerLignes(int nombreDeLignes)
 {
     string effacerLigne       = "\x1B[2K";
@@ -98,5 +92,16 @@ void IHM::effacerLignes(int nombreDeLignes)
         {
             cout << deplacerVersLeHaut;
         }
+    }
+}
+
+void IHM::attendreRetourMenu()
+{
+    cout << "Tapez 'menu' pour quitter" << endl;
+    string commande = "";
+    while(commande != "menu")
+    {
+        cin >> commande;
+        effacerLignes(2);
     }
 }

@@ -18,6 +18,7 @@ class Joueur
     ~Joueur();
     Joueur&     operator=(const Joueur& joueur) noexcept;
     Joueur&     operator=(Joueur&& joueur) noexcept;
+    bool        operator<(const Joueur& joueur) const;
     std::string getNom() const;
     Jeton       getJeton() const;
 };

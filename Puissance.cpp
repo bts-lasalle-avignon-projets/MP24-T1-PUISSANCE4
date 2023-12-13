@@ -104,3 +104,8 @@ Joueur* Puissance::recupererJoueurAyantJeton(Jeton jeton)
     }
     return nullptr;
 }
+
+Joueur* Puissance::getVainqueur() const
+{
+    return this->plateau.getVainqueur();
+}

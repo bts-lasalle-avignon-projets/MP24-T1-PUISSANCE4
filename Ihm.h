@@ -10,10 +10,10 @@ class IHM
     static std::string saisieNomJoueur(int numeroJoueur);
     static void        afficherMessageTour(const Joueur& joueur);
     static void        afficherVictoire(Joueur* joueur);
+    static void        effacerLignes(int nombreDeLignes);
     static void        afficherMenu();
     static std::string saisirCommandeDeJeu();
     static void        attendreRetourMenu();
-    static void        effacerLignes(int nombreDeLignes);
     static void        afficherDynamiquement(const std::string& message);
 };
 
