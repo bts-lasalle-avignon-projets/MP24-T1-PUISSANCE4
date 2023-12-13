@@ -159,3 +159,8 @@ vector<Jeton>* Plateau::getPlateau()
 {
     return &cases;
 }
+
+bool Plateau::colonneEstPleine(int colonne) const
+{
+    return cases.at(colonne) != JETON(VIDE);
+}

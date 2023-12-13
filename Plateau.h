@@ -34,5 +34,6 @@ class Plateau
     std::vector<Jeton>* getPlateau();
     bool                estUneSequence(int indiceCase, Jeton casePlateau) const;
     bool testerSequence(int indiceCase, Jeton casePlateau, int indiceCaseTeste) const;
+    bool colonneEstPleine(int colonne) const;
 };
 #endif // PLATEAU
