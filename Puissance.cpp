@@ -77,12 +77,12 @@ int Puissance::jouerTour()
     int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
                            ? 0
                            : this->indiceJoueurActuel + 1;
-
     indiceJoueurActuel   = prochainIndice;
     Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
     IHM::afficherMessageTour(joueurSuivant);
     int indiceColonne = joueurSuivant.jouerCoup(plateau);
     return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
+
 }
 
 bool Puissance::partieEstTerminee()

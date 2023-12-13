@@ -15,6 +15,7 @@ class IHM
     static std::string saisirCommandeDeJeu();
     static void        attendreRetourMenu();
     static void        afficherDynamiquement(const std::string& message);
+    static void        afficherRegles();
 };
 
 #endif // IHM_H

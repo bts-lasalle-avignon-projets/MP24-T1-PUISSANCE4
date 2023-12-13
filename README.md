@@ -6,7 +6,7 @@
 
 - Nom du logiciel : Puissance 4
 - Date de début : 24 novembre 2023 à 14:58
-- Numéro de version du logiciel : 1.0
+- Numéro de version du logiciel : 1.1
 
 ## Présentation
 
@@ -32,7 +32,13 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 - [x] jouer une partie
 - [x] afficher le déroulement d’une partie
 
-![Puissance4](images/puissance4.gif)
+### Version 1.1
+
+- [x] Affichage de Nom et version du jeu
+- [x] Affichage d'un menu
+- [x] Correction de bug
+
+![Puissance4](images/puissance4-1.1.gif)
 
 ## TODO
 
@@ -51,10 +57,8 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 
 ## Défauts constatés non corrigés
 
-- la saisie d'un `0` provoque le placement d'un jeton incorrect en colonne `7`
-- la saisie d'une valeur supérieure à `7` provoque un plantage de l'application
 
-## Itérations
+## Itérations 1
 
 ![Jira-iteration](images/jira-iteration1.png)
 
@@ -98,7 +102,7 @@ Jeton "- cases" <--o Plateau : vector< Jeton >
 
 ## Diagramme de classes
 
-![diagramme-classes-1.0](images/diagramme-classes-1.0.png)
+![diagramme-classes-1.0](images/diagramme-classes-1.1.png)
 
 ## Équipe de développement
 

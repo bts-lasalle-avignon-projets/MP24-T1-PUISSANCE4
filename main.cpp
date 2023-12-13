@@ -44,8 +44,15 @@ int main()
             historique.ajouterVictoire(puissance->getVainqueur());
             IHM::attendreRetourMenu();
         }
+        else if(commande == "Règles" || commande == "r")
+        {
+
+            IHM::afficherRegles();
+            IHM::attendreRetourMenu();
+        }
         else if(commande == "history" || commande == "h")
         {
+
             historique.afficher();
             IHM::attendreRetourMenu();
         }
