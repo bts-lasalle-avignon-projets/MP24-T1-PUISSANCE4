@@ -102,7 +102,7 @@ Jeton "- cases" <--o Plateau : vector< Jeton >
 
 ## Diagramme de classes
 
-![diagramme-classes-1.0](images/diagramme-classes-1.0.png)
+![diagramme-classes-1.0](images/diagramme-classes-1.1.png)
 
 ## Équipe de développement
 
