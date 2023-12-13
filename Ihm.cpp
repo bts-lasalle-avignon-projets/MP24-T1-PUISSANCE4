@@ -5,14 +5,35 @@
 #include <chrono>
 #include <iostream>
 #include <thread>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-string IHM::saisieNomJoueur(int numeroJoueur)
+std::string IHM::saisieNomJoueur(int numeroJoueur)
 {
-    string nom;
-    cout << "Entrez le nom/pseudo du Joueur " << numeroJoueur << " : ";
-    cin >> nom;
+    string                nom;
+    static vector<string> nomsDejaSaisis;
+
+    bool nomValide = false;
+
+    do
+    {
+        cout << "Entrez le nom/pseudo du Joueur " << numeroJoueur << " : ";
+        cin >> nom;
+
+        if(find(nomsDejaSaisis.begin(), nomsDejaSaisis.end(), nom) == nomsDejaSaisis.end())
+        {
+            nomValide = true;
+            nomsDejaSaisis.push_back(nom);
+        }
+        else
+        {
+            cerr << "Ce nom est déjà utilisé. Veuillez choisir un autre nom." << endl;
+        }
+
+    } while(!nomValide);
+
     return nom;
 }
 
