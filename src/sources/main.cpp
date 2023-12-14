@@ -1,10 +1,10 @@
-#include "Joueur.h"
-#include "Puissance.h"
-#include "Ihm.h"
-#include "Plateau.h"
-#include "Historique.h"
-#include "IA.h"
-#include "Parametres.h"
+#include "../headers/Joueur.h"
+#include "../headers/Puissance.h"
+#include "../headers/Ihm.h"
+#include "../headers/Plateau.h"
+#include "../headers/Historique.h"
+#include "../headers/IA.h"
+#include "../headers/Parametres.h"
 
 #include <iostream>
 #include <string>
@@ -18,12 +18,12 @@ using namespace std;
 
 int main()
 {
-    /*Joueur joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
-    Joueur joueur2(Jeton(JAUNE), IHM::saisieNomJoueur(2), nullptr);*/
-    IA             ia1(Jeton(ROUGE), IHM::saisieNomJoueur(1));
+    Joueur joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
+    Joueur joueur2(Jeton(JAUNE), IHM::saisieNomJoueur(2), nullptr);
+    /*IA             ia1(Jeton(ROUGE), IHM::saisieNomJoueur(1));
     Joueur&        joueur1 = ia1;
     IA             ia2(Jeton(JAUNE), IHM::saisieNomJoueur(2));
-    Joueur&        joueur2       = ia2;
+    Joueur&        joueur2       = ia2;*/
     vector<Joueur> listeJoueurs  = { joueur1, joueur2 };
     bool           continueLeJeu = true;
     Historique     historique(listeJoueurs);
@@ -52,6 +52,17 @@ int main()
         else if(commande == "settings" || commande == "s")
         {
             Parametres::afficher();
+        }
+        else if(commande == "rules" || commande == "r")
+        {
+            IHM::effacerTout();
+            IHM::afficherRegles();
+            IHM::attendreRetourMenu();
+        }
+        else if(commande == "quit" || commande == "q")
+        {
+            IHM::effacerTout();
+            continueLeJeu = false;
         }
     }
     return 0;

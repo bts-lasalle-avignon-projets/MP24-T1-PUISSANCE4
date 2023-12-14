@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 
-#include "Jeton.h"
+#include "../headers/Jeton.h"
 
 class Joueur;
 class Puissance;

@@ -1,7 +1,7 @@
 #ifndef IA_H
 #define IA_H
 
-#include "Joueur.h"
+#include "../headers/Joueur.h"
 #include <iostream>
 #include <vector>
 #include <map>

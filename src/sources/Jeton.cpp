@@ -1,4 +1,4 @@
-#include "Jeton.h"
+#include "../headers/Jeton.h"
 #include <iostream>
 
 using namespace std;

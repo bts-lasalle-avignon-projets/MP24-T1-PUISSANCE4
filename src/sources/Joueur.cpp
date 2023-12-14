@@ -1,8 +1,8 @@
-#include "Joueur.h"
-#include "Jeton.h"
-#include "IA.h"
-#include "Plateau.h"
-#include "Ihm.h"
+#include "../headers/Joueur.h"
+#include "../headers/Jeton.h"
+#include "../headers/IA.h"
+#include "../headers/Plateau.h"
+#include "../headers/Ihm.h"
 #include <iostream>
 
 using namespace std;

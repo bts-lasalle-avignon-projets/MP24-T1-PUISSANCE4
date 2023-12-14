@@ -1,4 +1,4 @@
-#include "Difficulte.h"
+#include "../headers/Difficulte.h"
 #include <random>
 #include <iostream>
 #include <string>
