@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <chrono>
 
-
 using namespace std;
 
 std::string IHM::saisieNomJoueur(int numeroJoueur)
@@ -129,7 +128,6 @@ void IHM::effacerLignes(int nombreDeLignes)
         }
     }
 }
-
 
 void IHM::afficherRegles()
 {

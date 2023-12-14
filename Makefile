@@ -2,14 +2,21 @@ CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 
 SRCDIR = .
+INCDIR = .
 
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
+HEADERS = $(wildcard $(INCDIR)/*.h)
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = puissance4.out
 
+
+
 CLANG_FORMAT = clang-format
 CLANG_FORMAT_STYLE = -style=file
-CLANG_FORMAT_FILES = $(SOURCES) $(wildcard $(SRCDIR)/*.h)
+CLANG_FORMAT_FILES = $(SOURCES) $(HEADERS)
+
+CLANG_TIDY = clang-tidy
+CLANG_TIDY_CHECKS = -*,boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-use-nullptr,clang-analyzer-*,cppcoreguidelines-*
 
 # Couleurs
 VERT=\033[1;92m
@@ -28,12 +35,12 @@ $(EXECUTABLE): $(OBJECTS)
 	@echo "$(VERT)Compilation réussie : $(EXECUTABLE)$(NC)"
 	@echo "$(VERT)Fichiers compilés avec succès.$(NC)"
 
-%.o: %.cpp
+%.o: %.cpp $(HEADERS)
 	@echo -n "Compilation de $< en $@ :"
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo -e "\r$(VERT)Compilation de $< en $@ : $(VIOLET)[OK]$(NC)"
 
-.PHONY: format clean check
+.PHONY: format clean check test-clang-format
 
 format:
 	@echo "\n$(JAUNE)------------------------"
@@ -44,15 +51,22 @@ format:
 
 check:
 	@echo "\n$(JAUNE)------------------------"
-	@echo "Installation de Clang Tidy 🔎 :"
+	@echo "Vérification de l'installation de Clang Tidy 🔎 :"
 	@echo "------------------------$(NC)"
-	@sudo apt-get update >/dev/null && sudo apt-get install -y --no-install-recommends clang-tidy >/dev/null
-	@echo "$(VERT)Installation de Clang Tidy terminée.$(NC)"
+	@(which $(CLANG_TIDY) > /dev/null || (echo "$(JAUNE)Installation de Clang Tidy 🔎 :$(NC)" && sudo apt-get update >/dev/null && sudo apt-get install -y --no-install-recommends clang-tidy >/dev/null))
+	@echo "$(VERT)Clang Tidy est installé ou a été installé avec succès.$(NC)"
 	@echo "\n$(JAUNE)------------------------"
 	@echo "Exécution de Clang Tidy :"
 	@echo "------------------------$(NC)"
-	@clang-tidy *.cpp --quiet -header-filter='.*' -checks=-*,boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-use-nullptr,clang-analyzer-*,cppcoreguidelines-* --format-style=none -- -std=c++11
+	@$(CLANG_TIDY) $(SOURCES) $(HEADERS) --quiet -header-filter='.*' -checks=$(CLANG_TIDY_CHECKS) --format-style=none -- -std=c++11
 	@echo "$(VERT)Clang Tidy terminé.$(NC)"
+
+test-clang-format:
+	@echo "\n$(JAUNE)------------------------"
+	@echo "Vérification du format du code avec Clang Format 🧐 :"
+	@echo "------------------------$(NC)"
+	@$(CLANG_FORMAT) --dry-run --Werror $(CLANG_FORMAT_STYLE) $(CLANG_FORMAT_FILES)
+	@echo "$(VERT)La vérification du format avec Clang Format est terminée.$(NC)"
 
 clean:
 	@echo "\n$(JAUNE)------------------------"

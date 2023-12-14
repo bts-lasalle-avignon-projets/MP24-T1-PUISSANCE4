@@ -82,7 +82,6 @@ int Puissance::jouerTour()
     IHM::afficherMessageTour(joueurSuivant);
     int indiceColonne = joueurSuivant.jouerCoup(plateau);
     return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
-
 }
 
 bool Puissance::partieEstTerminee()
