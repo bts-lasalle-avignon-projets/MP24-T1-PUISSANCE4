@@ -2,9 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <map>
+
 #include "Joueur.h"
 #include "Puissance.h"
 #include "Jeton.h"
+#include "Ihm.h"
 
 using namespace std;
 
@@ -39,16 +41,16 @@ void Historique::afficher()
 {
     if((int)parties.size() == 0)
     {
-        cout << "Historique vide." << endl;
+        IHM::afficherTexte("Historique vide.\n");
         return;
     }
-    cout << "Nombre de parties jouée(s) : " << parties.size() << endl;
-    cout << "Points par joueurs : " << endl;
+    IHM::afficherTexte("Nombre de parties jouée(s) : " + to_string(parties.size()) + "\n");
+    IHM::afficherTexte("Points par joueurs : \n");
     for(map<Joueur, int>::iterator it = points.begin(); it != points.end(); ++it)
     {
         Joueur joueur       = it->first;
         int    pointsJoueur = it->second;
-        cout << getSequence(joueur.getJeton(), joueur.getNom()) << " : " << pointsJoueur
-             << " point(s)" << endl;
+        IHM::afficherTexte(getSequence(joueur.getJeton(), joueur.getNom()) + " : " +
+                           to_string(pointsJoueur) + " point(s)\n");
     }
 }

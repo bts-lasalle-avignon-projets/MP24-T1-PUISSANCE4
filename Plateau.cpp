@@ -83,45 +83,45 @@ int Plateau::placerJeton(int colonneSelectionnee, Jeton jeton)
 
 void Plateau::afficherPlateau(int positionNouveauPion) const
 {
-    IHM::effacerLignes(this->lignes + 4);
+    IHM::effacerLignes();
     this->afficherNumerosDeColonnes();
     for(int i = 0; i < this->lignes; i++)
     {
-        cout << "\033[4m|";
+        IHM::afficherTexte("\033[4m|");
         for(int j = 0; j < this->colonnes; j++)
         {
             Jeton jeton = this->cases.at(i * this->colonnes + j);
             if(jeton == Jeton(VIDE))
             {
-                cout << " |";
+                IHM::afficherTexte(" |");
             }
             else if(positionNouveauPion == i * this->colonnes + j)
             {
-                cout << getSequence(jeton, "\u25C7") << "|";
+                IHM::afficherTexte(getSequence(jeton, "\u25C7") + "|");
             }
             else
             {
-                cout << getSequence(jeton, "\u25CF") << "|";
+                IHM::afficherTexte(getSequence(jeton, "\u25CF") + "|");
             }
         }
-        cout << "\033[0m" << endl;
+        IHM::afficherTexte("\033[0m\n");
     }
 }
 
 void Plateau::afficherPlateauFinDePartie() const
 {
-    IHM::effacerLignes(this->lignes + 4);
+    IHM::effacerLignes();
     vector<int> positionSequence = this->getPositionDeSequenceVainqueur();
     this->afficherNumerosDeColonnes();
     for(int i = 0; i < this->lignes; i++)
     {
-        cout << "\033[4m|";
+        IHM::afficherTexte("\033[4m|");
         for(int j = 0; j < this->colonnes; j++)
         {
             Jeton jeton = this->cases.at(i * this->colonnes + j);
             if(jeton == Jeton(VIDE))
             {
-                cout << " |";
+                IHM::afficherTexte(" |");
             }
             else
             {
@@ -134,10 +134,10 @@ void Plateau::afficherPlateauFinDePartie() const
                         break;
                     }
                 }
-                cout << getSequence(jeton, forme) << "|";
+                IHM::afficherTexte(getSequence(jeton, forme) + "|");
             }
         }
-        cout << "\033[0m" << endl;
+        IHM::afficherTexte("\033[0m\n");
     }
 }
 
@@ -197,12 +197,12 @@ vector<int> Plateau::getPositions(int indiceCase, Jeton casePlateau, int indiceC
 
 void Plateau::afficherNumerosDeColonnes() const
 {
-    cout << "\033[4m|";
+    IHM::afficherTexte("\033[4m|");
     for(int i = 0; i < this->colonnes; i++)
     {
-        cout << i + 1 << "|";
+        IHM::afficherTexte(to_string(i + 1) + "|");
     }
-    cout << "\033[0m" << endl;
+    IHM::afficherTexte("\033[0m\n");
 }
 
 void Plateau::afficherPartie() const

@@ -77,6 +77,7 @@ int Puissance::jouerTour()
     int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
                            ? 0
                            : this->indiceJoueurActuel + 1;
+
     indiceJoueurActuel   = prochainIndice;
     Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
     IHM::afficherMessageTour(joueurSuivant);

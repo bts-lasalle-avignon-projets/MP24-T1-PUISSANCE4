@@ -22,21 +22,19 @@ Difficulte Parametres::getDifficulte()
 
 void Parametres::afficher()
 {
-    IHM::effacerLignes(2);
     bool continueEdition = true;
     while(continueEdition)
     {
-        cout << "Difficultée : "
-             << "\033[1;34m" << getTexte(getDifficulte())
-             << "\033[0m (Tapez '\033[1;31mdifficulte\033[0m')" << endl;
+        IHM::effacerLignes();
+        IHM::afficherTexte("Difficultée : \033[1;34m" + getTexte(getDifficulte()) +
+                           "\033[0m (Tapez '\033[1;31mdifficulte\033[0m')\n");
         string texteAnimation = "Activé";
         if(!animations)
         {
             texteAnimation = "Désactivé";
         }
-        cout << "Animations : "
-             << "\033[1;34m" << texteAnimation << "\033[0m (Tapez '\033[1;31manimation\033[0m')"
-             << endl;
+        IHM::afficherTexte("Animations : \033[1;34m" + texteAnimation +
+                           "\033[0m (Tapez '\033[1;31manimation\033[0m')\n");
         continueEdition = attendreCommande();
     }
 }
@@ -46,13 +44,13 @@ bool Parametres::attendreCommande()
     string commande = "";
     while(true)
     {
-        cout << endl << "Tapez une commande d'édition ou 'menu' pour quitter" << endl;
+        IHM::afficherTexte("\nTapez une commande d'édition ou 'menu' pour quitter\n");
         cin >> commande;
-        IHM::effacerLignes(2);
+        IHM::effacerSaisie();
+        IHM::effacerLignes();
         bool affichageDynamique = true;
         if(commande == "difficulte" || commande == "d")
         {
-            IHM::effacerLignes(5);
             int choixDifficultee = -1;
             while(true)
             {
@@ -67,7 +65,7 @@ bool Parametres::attendreCommande()
                     break;
                 }
                 setDifficulte(getDifficulteIndexe(choixDifficultee));
-                IHM::effacerLignes(9);
+                IHM::effacerLignes();
                 affichageDynamique = false;
             }
             return true;
@@ -79,7 +77,6 @@ bool Parametres::attendreCommande()
             {
                 texteAnimation = "Désactivé";
             }
-            IHM::effacerLignes(5);
             int choixAnimations = -1;
             while(choixAnimations != 0)
             {
@@ -90,7 +87,7 @@ bool Parametres::attendreCommande()
                     break;
                 }
                 animations = choixAnimations == 1;
-                IHM::effacerLignes(8);
+                IHM::effacerLignes();
                 affichageDynamique = false;
             }
             return true;
@@ -108,55 +105,40 @@ int Parametres::editerParametre(std::string                     selection,
                                 bool                            affichageDynamique)
 {
     afficherParametre(selection, elements, affichageDynamique);
-    int choixParametre = 0;
-    cin >> choixParametre;
+    int choixParametre = -1;
     while(choixParametre < 0 || choixParametre > (int)elements.size())
     {
-        IHM::effacerLignes(2);
         cin >> choixParametre;
+        IHM::effacerSaisie();
     }
     return choixParametre;
 }
 
 void Parametres::afficherParametre(string selection, const vector<string>& elements, bool dynamique)
 {
-    cout << endl;
     for(int i = 0; i < (int)elements.size(); i++)
     {
         string element = elements.at(i);
         if(element == selection)
         {
-            cout << i + 1 << " : \033[44m\033[1;37m[ " << element << " ]\033[0m" << endl;
+            IHM::afficherTexte(to_string(i + 1) + " : \033[44m\033[1;37m[ " + element +
+                               " ]\033[0m\n");
         }
         else
         {
-            cout << i + 1 << " : [ " << element << " ]\033[0m" << endl;
+            IHM::afficherTexte(to_string(i + 1) + " : [ " + element + " ]\033[0m\n");
         }
     }
-    cout << endl << "0 : \033[1;31mRetour au paramètres\033[0m" << endl;
+    IHM::afficherTexte("\n0 : \033[1;31mRetour au paramètres\033[0m\n");
+    string message = "\nTapez le numéro du paramètre souhaité (\033[1;34m1\033[0m - \033[1;34m" +
+                     to_string(elements.size()) + "\033[0m) :\n";
     if(dynamique)
     {
-        cout << endl;
-        IHM::afficherDynamiquement("Tapez le numéro du paramètre souhaité (");
-        cout << "\033[1;34m";
-        IHM::afficherDynamiquement("1");
-        cout << "\033[0m";
-        IHM::afficherDynamiquement(" - ");
-        cout << "\033[1;34m";
-        IHM::afficherDynamiquement(to_string(elements.size()));
-        cout << "\033[0m";
-        IHM::afficherDynamiquement(") ou ");
-        cout << "\033[1;31m";
-        IHM::afficherDynamiquement("0");
-        cout << "\033[0m";
-        IHM::afficherDynamiquement(" pour quitter :");
-        cout << endl;
+        IHM::afficherDynamiquement(message);
     }
     else
     {
-        cout << endl
-             << "Tapez le numéro du paramètre souhaité (\033[1;34m1\033[0m - \033[1;34m"
-             << elements.size() << "\033[0m) :" << endl;
+        IHM::afficherTexte(message);
     }
 }
 

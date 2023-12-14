@@ -20,33 +20,28 @@ int main()
 {
     /*Joueur joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
     Joueur joueur2(Jeton(JAUNE), IHM::saisieNomJoueur(2), nullptr);*/
-    IA             ia1(Jeton(ROUGE), "Brendan");
+    IA             ia1(Jeton(ROUGE), IHM::saisieNomJoueur(1));
     Joueur&        joueur1 = ia1;
-    IA             ia2(Jeton(JAUNE), "IA2");
+    IA             ia2(Jeton(JAUNE), IHM::saisieNomJoueur(2));
     Joueur&        joueur2       = ia2;
     vector<Joueur> listeJoueurs  = { joueur1, joueur2 };
     bool           continueLeJeu = true;
     Historique     historique(listeJoueurs);
 
-    IHM::effacerLignes(3);
-
     while(continueLeJeu)
     {
-        std::system("clear");
+        IHM::effacerTout();
         IHM::afficherMenu();
         string commande = IHM::saisirCommandeDeJeu();
-        IHM::effacerLignes(5);
+        IHM::effacerSaisie();
+        IHM::effacerLignes();
         if(commande == "play" || commande == "p")
         {
+            IHM::effacerTout();
             Puissance* puissance = new Puissance(&listeJoueurs, nbLignes, nbColonnes);
             puissance->demarrerPartie();
             historique.savegarderPartie(puissance);
             historique.ajouterVictoire(puissance->getVainqueur());
-            IHM::attendreRetourMenu();
-        }
-        else if(commande == "Règles" || commande == "r")
-        {
-            IHM::afficherRegles();
             IHM::attendreRetourMenu();
         }
         else if(commande == "history" || commande == "h")
