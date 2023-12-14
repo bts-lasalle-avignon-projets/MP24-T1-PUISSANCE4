@@ -1,6 +1,6 @@
-#include "Parametres.h"
-#include "Difficulte.h"
-#include "Ihm.h"
+#include "../headers/Parametres.h"
+#include "../headers/Difficulte.h"
+#include "../headers/Ihm.h"
 
 #include <iostream>
 #include <vector>

@@ -1,9 +1,9 @@
-#include "IA.h"
-#include "Joueur.h"
-#include "Plateau.h"
-#include "Puissance.h"
-#include "Parametres.h"
-#include "Difficulte.h"
+#include "../headers/IA.h"
+#include "../headers/Joueur.h"
+#include "../headers/Plateau.h"
+#include "../headers/Puissance.h"
+#include "../headers/Parametres.h"
+#include "../headers/Difficulte.h"
 
 #include <iostream>
 #include <vector>

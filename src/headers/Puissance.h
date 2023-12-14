@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <iostream>
-#include "Plateau.h"
+#include "../headers/Plateau.h"
 
-#include "Jeton.h"
+#include "../headers/Jeton.h"
 class Puissance
 {
   private:

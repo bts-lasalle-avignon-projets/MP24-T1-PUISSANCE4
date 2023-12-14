@@ -1,7 +1,7 @@
 #ifndef JOUEUR
 #define JOUEUR
 
-#include "Jeton.h"
+#include "../headers/Jeton.h"
 #include <iostream>
 
 class IA;

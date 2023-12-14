@@ -1,7 +1,7 @@
 #ifndef PARAMETRES_H
 #define PARAMETRES_H
 
-#include "Difficulte.h"
+#include "../headers/Difficulte.h"
 
 #include <iostream>
 #include <vector>

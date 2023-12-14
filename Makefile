@@ -1,15 +1,13 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 
-SRCDIR = .
-INCDIR = .
+SRCDIR = src/sources/
+INCDIR = src/headers/
 
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
-HEADERS = $(wildcard $(INCDIR)/*.h)
+SOURCES = $(wildcard $(SRCDIR)*.cpp)
+HEADERS = $(wildcard $(INCDIR)*.h)
 OBJECTS = $(SOURCES:.cpp=.o)
 EXECUTABLE = puissance4.out
-
-
 
 CLANG_FORMAT = clang-format
 CLANG_FORMAT_STYLE = -style=file
@@ -23,7 +21,7 @@ VERT=\033[1;92m
 JAUNE=\033[1;93m
 GRIS=\033[0;35m
 VIOLET=\033[1;95m
-NC =\033[0m
+NC=\033[0m
 
 all: format $(EXECUTABLE)
 
@@ -35,9 +33,9 @@ $(EXECUTABLE): $(OBJECTS)
 	@echo "$(VERT)Compilation réussie : $(EXECUTABLE)$(NC)"
 	@echo "$(VERT)Fichiers compilés avec succès.$(NC)"
 
-%.o: %.cpp $(HEADERS)
+%.o: %.cpp
 	@echo -n "Compilation de $< en $@ :"
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@ -I$(INCDIR)
 	@echo -e "\r$(VERT)Compilation de $< en $@ : $(VIOLET)[OK]$(NC)"
 
 .PHONY: format clean check test-clang-format
@@ -72,5 +70,5 @@ clean:
 	@echo "\n$(JAUNE)------------------------"
 	@echo "Nettoyage 🧹:"
 	@echo "------------------------$(NC)"
-	@rm -rf *.o $(EXECUTABLE)
+	@rm -rf *.o $(EXECUTABLE) $(SRCDIR)*.o
 	@echo "$(VERT)Nettoyage terminé.$(NC)"
