@@ -1,6 +1,8 @@
 #include "Ihm.h"
 #include "Jeton.h"
 #include "Joueur.h"
+#include "Parametres.h"
+
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -49,6 +51,11 @@ void IHM::afficherMessageTour(const Joueur& joueur)
 
 void IHM::afficherDynamiquement(const string& message)
 {
+    if(!Parametres::possedeAnimation())
+    {
+        cout << message;
+        return;
+    }
     for(char lettre: message)
     {
         cout << lettre << flush;
@@ -93,6 +100,8 @@ void IHM::afficherMenu()
     cout << " - Jouer une nouvelle partie: " << rouge << "play"
          << "\033[0m" << endl;
     cout << " - Afficher l'historique: " << rouge << "history"
+         << "\033[0m" << endl;
+    cout << " - Accéder aux paramètres: " << rouge << "settings"
          << "\033[0m" << endl;
 }
 
