@@ -17,10 +17,10 @@ class Parametres
     static Difficulte getDifficulte();
     static void       afficher();
     static bool       attendreCommande();
-    static int        editerParametre(std::string                     selection,
+    static int        editerParametre(const std::string&              selection,
                                       const std::vector<std::string>& elements,
                                       bool                            affichageDynamique);
-    static void       afficherParametre(std::string                     selection,
+    static void       afficherParametre(const std::string&              selection,
                                         const std::vector<std::string>& elements,
                                         bool                            dynamique);
     static bool       possedeAnimation();

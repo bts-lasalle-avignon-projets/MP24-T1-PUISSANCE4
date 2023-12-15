@@ -283,7 +283,7 @@ bool Plateau::sequenceEstDansSonAxe(vector<int> indicesSequence, bool alignement
         {
             return false;
         }
-        else if(!alignementHorizontal)
+        if(!alignementHorizontal)
         {
             indiceLigneTeste++;
         }

@@ -18,13 +18,7 @@ using namespace std;
 
 int main()
 {
-    Joueur joueur1(Jeton(ROUGE), IHM::saisieNomJoueur(1), nullptr);
-    Joueur joueur2(Jeton(JAUNE), IHM::saisieNomJoueur(2), nullptr);
-    /*IA             ia1(Jeton(ROUGE), IHM::saisieNomJoueur(1));
-    Joueur&        joueur1 = ia1;
-    IA             ia2(Jeton(JAUNE), IHM::saisieNomJoueur(2));
-    Joueur&        joueur2       = ia2;*/
-    vector<Joueur> listeJoueurs  = { joueur1, joueur2 };
+    vector<Joueur> listeJoueurs  = IHM::saisieJoueurs();
     bool           continueLeJeu = true;
     Historique     historique(listeJoueurs);
 
@@ -38,10 +32,10 @@ int main()
         if(commande == "play" || commande == "p")
         {
             IHM::effacerTout();
-            Puissance* puissance = new Puissance(&listeJoueurs, nbLignes, nbColonnes);
-            puissance->demarrerPartie();
+            Puissance puissance = *new Puissance(&listeJoueurs, nbLignes, nbColonnes);
+            puissance.demarrerPartie();
             historique.savegarderPartie(puissance);
-            historique.ajouterVictoire(puissance->getVainqueur());
+            historique.ajouterVictoire(puissance.getVainqueur());
             IHM::attendreRetourMenu();
         }
         else if(commande == "history" || commande == "h")

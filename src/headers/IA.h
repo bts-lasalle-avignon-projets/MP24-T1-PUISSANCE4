@@ -14,12 +14,17 @@ class IA : public Joueur
     Plateau* partie;
 
   public:
-    IA(Jeton jeton, std::string nom);
+    IA();
+    IA(Jeton jeton, const std::string& nom);
+    IA(const IA& ia);
+    IA(IA&& ia) noexcept;
     ~IA();
+    IA&              operator=(const IA& ia) noexcept;
+    IA&              operator=(IA&& ia) noexcept;
     std::vector<int> analyserCoupsVainqueurAdversaire();
     std::vector<int> analyserSequence(Jeton jeton, int nbJetons);
     std::vector<int> analyserCoups(Plateau& plateauTemporaire);
-    int              calculerValeurHaute(std::map<int, int>& tailleSequenceParPositions);
+    static int       calculerValeurHaute(std::map<int, int>& tailleSequenceParPositions);
     int              jouerCoup();
     void             setPlateau(Plateau* plateau);
 };

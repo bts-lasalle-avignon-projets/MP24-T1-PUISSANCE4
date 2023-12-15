@@ -2,6 +2,7 @@
 #include "../headers/Jeton.h"
 #include "../headers/Joueur.h"
 #include "../headers/Parametres.h"
+#include "../headers/IA.h"
 
 #include <iostream>
 #include <thread>
@@ -9,11 +10,12 @@
 
 using namespace std;
 
-int IHM::nbLignesASupprimer = 0;
+int           IHM::nbLignesASupprimer = 0;
+constexpr int tempsAffichageCaractere = 20;
 
 string IHM::saisieNomJoueur(int numeroJoueur)
 {
-    string nom = "";
+    string nom;
     while(!nomJoueurValide(nom))
     {
         afficherTexte("Entrez le nom/pseudo du Joueur " + to_string(numeroJoueur) + " : ");
@@ -31,12 +33,12 @@ bool IHM::nomJoueurValide(const std::string& nomJoueur)
         return false;
     }
     static vector<string> nomJoueurs;
-    for(string nom: nomJoueurs)
+    for(string& nom: nomJoueurs)
     {
         if(nom == nomJoueur)
         {
             nbLignesASupprimer++;
-            cerr << "\033[1;31mErreur: Ce nom est déjà utilisé par un autre joueur\033[0m" << endl;
+            cerr << "\033[1;31mErreur: Ce nom est déjà utilisé par un autre joueur\033[0m\n";
             return false;
         }
     }
@@ -111,7 +113,7 @@ void IHM::effacerLignes(int nombreDeLignes)
 void IHM::attendreRetourMenu()
 {
     afficherTexte("Tapez 'menu' pour quitter\n");
-    string commande = "";
+    string commande;
     while(commande != "menu")
     {
         cin >> commande;
@@ -177,42 +179,72 @@ void IHM::afficherDynamiquement(const string& message)
         else
         {
             std::cout << message.at(i) << flush;
-            this_thread::sleep_for(chrono::milliseconds(20));
+            this_thread::sleep_for(chrono::milliseconds(tempsAffichageCaractere));
         }
     }
 }
 
 void IHM::afficherRegles()
 {
-    cout << "\033[1;34m" << R"(
-   _____            _           
-  |  __ \          | |          
-  | |__) |___  __ _| | ___  ___ 
-  |  _  // _ \/ _` | |/ _ \/ __|
-  | | \ \  __/ (_| | |  __/\__ \
-  |_|  \_\___|\__, |_|\___||___/
-               __/ |            
-              |___/              
-)" << "\033[0m" << endl;
+    afficherTexte("\033[1;34m   _____            _           \n");
+    afficherTexte("  |  __ \\          | |          \n");
+    afficherTexte("  | |__) |___  __ _| | ___  ___ \n");
+    afficherTexte("  |  _  // _ \\/ _` | |/ _ \\/ __|\n");
+    afficherTexte("  | | \\ \\  __/ (_| | |  __/\\__ \\\n");
+    afficherTexte("  |_|  \\_\\___|\\__, |_|\\___||___/\n");
+    afficherTexte("               __/ |            \n");
+    afficherTexte("              |___/              \n");
+    afficherTexte("\033[0m\n");
 
-    cout << "1. Le jeu se joue sur un plateau vertical de 6 lignes et horizontal de 7 colonnes." << endl;
-    cout << "" << endl;
-    cout << "2. Deux joueurs s'affrontent avec des jetons de couleurs différentes "
-                 "(\033[1;91mRouge\033[0m et \033[1;93mJaune\033[0m)."
-              << endl;
-    cout << "" << endl;
-    cout << "3. Les joueurs placent tour à tour un jeton dans l'une des colonnes du plateau."
-              << endl;
-    cout << "" << endl;
-    cout << "4. Le jeton tombe au point le plus bas possible dans la colonne choisie."
-              << endl;
-    cout << "" << endl;
-    cout << "5. Le premier joueur qui parvient à aligner quatre de ses jetons consécutifs "
-                 "(horizontalement, verticalement ou en diagonale) remporte la partie."
-              << endl;
-    cout << "" << endl;
-    cout << "6. Si le plateau est rempli sans qu'aucun joueur n'ait aligné quatre "
-                 "jetons, la partie est déclarée nulle."
-              << endl;
-    cout << "" << endl;
+    afficherTexte(
+      "1. Le jeu se joue sur un plateau vertical de 6 lignes et horizontal de 7 colonnes.\n");
+    afficherTexte("\n");
+    afficherTexte("2. Deux joueurs s'affrontent avec des jetons de couleurs différentes "
+                  "(\033[1;91mRouge\033[0m et \033[1;93mJaune\033[0m).\n");
+    afficherTexte("\n");
+    afficherTexte(
+      "3. Les joueurs placent tour à tour un jeton dans l'une des colonnes du plateau.\n");
+    afficherTexte("\n");
+    afficherTexte("4. Le jeton tombe au point le plus bas possible dans la colonne choisie.\n");
+    afficherTexte("\n");
+    afficherTexte("5. Le premier joueur qui parvient à aligner quatre de ses jetons consécutifs "
+                  "(horizontalement, verticalement ou en diagonale) remporte la partie.\n");
+    afficherTexte("\n");
+    afficherTexte("6. Si le plateau est rempli sans qu'aucun joueur n'ait aligné quatre "
+                  "jetons, la partie est déclarée nulle.\n");
+    afficherTexte("\n");
+}
+
+std::vector<Joueur> IHM::saisieJoueurs()
+{
+    std::vector<Joueur> listeJoueurs;
+    static bool         contientIA = false;
+    for(int i = 0; i < 2; i++)
+    {
+        string commande;
+        while(commande != "oui" && commande != "non")
+        {
+            afficherTexte("Souhaitez-vous faire jouer ");
+            if(contientIA)
+            {
+                afficherTexte("une autre ");
+            }
+            afficherTexte("IA ? (oui/non) : ");
+            cin >> commande;
+            effacerSaisie();
+            if(commande == "oui")
+            {
+                listeJoueurs.push_back(
+                  IA(getJetonDepuisIndice(i + 1), "Brendan #" + to_string(i + 1)));
+                contientIA = true;
+            }
+            else if(commande == "non")
+            {
+                listeJoueurs.push_back(
+                  Joueur(getJetonDepuisIndice(i + 1), IHM::saisieNomJoueur(i + 1), nullptr));
+            }
+            afficherTexte(listeJoueurs.at(i).getNom() + " à été ajouté\n");
+        }
+    }
+    return listeJoueurs;
 }

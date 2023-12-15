@@ -5,6 +5,15 @@
 
 using namespace std;
 
+constexpr int nombreDeChanceFacile       = 1;
+constexpr int nombreDePossibilitesFacile = 3;
+
+constexpr int nombreDeChanceNormal       = 3;
+constexpr int nombreDePossibilitesNormal = 5;
+
+constexpr int nombreDeChanceDifficile       = 5;
+constexpr int nombreDePossibilitesDifficile = 6;
+
 bool necessiteUnBonCoup(Difficulte difficulte)
 {
     int nombreDeChance       = 0;
@@ -12,16 +21,16 @@ bool necessiteUnBonCoup(Difficulte difficulte)
     switch(difficulte)
     {
         case FACILE:
-            nombreDeChance       = 1;
-            nombreDePossibilites = 3;
+            nombreDeChance       = nombreDeChanceFacile;
+            nombreDePossibilites = nombreDePossibilitesFacile;
             break;
         case NORMAL:
-            nombreDeChance       = 3;
-            nombreDePossibilites = 5;
+            nombreDeChance       = nombreDeChanceNormal;
+            nombreDePossibilites = nombreDePossibilitesNormal;
             break;
         case DIFFICILE:
-            nombreDeChance       = 5;
-            nombreDePossibilites = 6;
+            nombreDeChance       = nombreDeChanceDifficile;
+            nombreDePossibilites = nombreDePossibilitesDifficile;
             break;
         case EPIQUE:
             return true;
