@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <iostream>
-#include "Plateau.h"
+#include "../headers/Plateau.h"
 
-#include "Jeton.h"
+#include "../headers/Jeton.h"
 class Puissance
 {
   private:
@@ -22,10 +22,12 @@ class Puissance
     Puissance& operator=(const Puissance& puissance) noexcept;
     Puissance& operator=(Puissance&& puissance) noexcept;
 
-    void    demarrerPartie();
-    void    jouerTour();
-    bool    partieEstTerminee();
-    Joueur* recupererJoueurAyantJeton(Jeton jeton);
+    void                 demarrerPartie();
+    int                  jouerTour();
+    bool                 partieEstTerminee();
+    Joueur*              recupererJoueurAyantJeton(Jeton jeton);
+    Joueur*              getVainqueur() const;
+    std::vector<Joueur>* getJoueurs() const;
 };
 
 #endif
