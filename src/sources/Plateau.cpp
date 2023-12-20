@@ -72,7 +72,7 @@ int Plateau::placerJeton(int colonneSelectionnee, Jeton jeton)
     for(int i = this->lignes - 1; i >= 0; i--)
     {
         indiceTableauJouee = i * this->colonnes + colonneSelectionnee - 1;
-        if(this->cases.at(indiceTableauJouee) == Jeton(VIDE))
+        if(this->cases.at(indiceTableauJouee) == JETON::VIDE)
         {
             this->cases.at(indiceTableauJouee) = jeton;
             break;
@@ -91,7 +91,7 @@ void Plateau::afficherPlateau(int positionNouveauPion) const
         for(int j = 0; j < this->colonnes; j++)
         {
             Jeton jeton = this->cases.at(i * this->colonnes + j);
-            if(jeton == Jeton(VIDE))
+            if(jeton == JETON::VIDE)
             {
                 IHM::afficherTexte(" |");
             }
@@ -119,7 +119,7 @@ void Plateau::afficherPlateauFinDePartie() const
         for(int j = 0; j < this->colonnes; j++)
         {
             Jeton jeton = this->cases.at(i * this->colonnes + j);
-            if(jeton == Jeton(VIDE))
+            if(jeton == JETON::VIDE)
             {
                 IHM::afficherTexte(" |");
             }
@@ -151,7 +151,7 @@ vector<int> Plateau::getPositionDeSequenceVainqueur() const
         {
             Jeton casePlateau = this->cases.at(i * this->colonnes + j);
             int   indiceCase  = i * this->colonnes + j;
-            if(casePlateau != Jeton(VIDE) &&
+            if(casePlateau != JETON::VIDE &&
                this->estUneSequence(i * this->colonnes + j, casePlateau))
             {
                 if(testerSequence(indiceCase, casePlateau, 1) == nbCases)
@@ -234,7 +234,7 @@ bool Plateau::estUneSequence(int indiceCase, Jeton casePlateau) const
 
 bool Plateau::estUneSequence(int indiceCase, Jeton casePlateau, int nbJetonsAaligner) const
 {
-    if(casePlateau == Jeton(VIDE))
+    if(casePlateau == JETON::VIDE)
     {
         return false;
     }
@@ -313,7 +313,7 @@ Puissance* Plateau::getPartie()
 
 void Plateau::supprimerJeton(int indiceJeton)
 {
-    this->cases.at(indiceJeton) = Jeton(VIDE);
+    this->cases.at(indiceJeton) = JETON::VIDE;
 }
 
 int Plateau::getNbJetonsAlignes(int positionJeton, Jeton jeton)
@@ -360,5 +360,5 @@ bool Plateau::estPlein() const
 
 bool Plateau::colonneEstPleine(int colonne) const
 {
-    return cases.at(colonne) != JETON(VIDE);
+    return cases.at(colonne) != JETON::VIDE;
 }

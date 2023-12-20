@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Joueur::Joueur() : couleur(JETON(VIDE)), nom(""), ia(nullptr)
+Joueur::Joueur() : couleur(JETON::VIDE), nom(""), ia(nullptr)
 {
 }
 
