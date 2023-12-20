@@ -13,7 +13,19 @@
 
 using namespace std;
 
-IA::IA(Jeton jeton, string nom) : Joueur(jeton, nom, this), partie(nullptr)
+IA::IA() : partie(nullptr)
+{
+}
+
+IA::IA(Jeton jeton, const string& nom) : Joueur(jeton, nom, this), partie(nullptr)
+{
+}
+
+IA::IA(const IA& ia) : Joueur(ia), partie(ia.partie)
+{
+}
+
+IA::IA(IA&& ia) noexcept : Joueur(std::move(ia)), partie(ia.partie)
 {
 }
 
@@ -21,9 +33,27 @@ IA::~IA()
 {
 }
 
+IA& IA::operator=(const IA& ia) noexcept
+{
+    if(this != &ia)
+    {
+        partie = ia.partie;
+    }
+    return *this;
+}
+
+IA& IA::operator=(IA&& ia) noexcept
+{
+    if(this != &ia)
+    {
+        partie = ia.partie;
+    }
+    return *this;
+}
+
 std::vector<int> IA::analyserCoupsVainqueurAdversaire()
 {
-    for(Joueur joueur: *(this->partie->getPartie()->getJoueurs()))
+    for(Joueur& joueur: *(this->partie->getPartie()->getJoueurs()))
     {
         if(joueur.getJeton() != this->getJeton())
         {
@@ -107,21 +137,28 @@ int IA::jouerCoup()
     vector<int> coupsAdverse = analyserCoupsVainqueurAdversaire();
     vector<int> coups        = analyserCoups(plateauTemporaire);
 
-    vector<int>* coupsFinal;
+    vector<int>* coupsFinal = nullptr;
 
-    if(!coupsAdverse.empty() && !coups.empty() && coups.at(0) == 4)
+    if(!coupsAdverse.empty())
     {
-        coupsFinal = &coups;
-    }
-    else if(!coupsAdverse.empty() && necessiteUnBonCoup(Parametres::getDifficulte()))
-    {
-        coupsFinal = &coupsAdverse;
+        if(!coups.empty() && coups.at(0) == 4)
+        {
+            coupsFinal = &coups;
+        }
+        else if(necessiteUnBonCoup(Parametres::getDifficulte()))
+        {
+            coupsFinal = &coupsAdverse;
+        }
     }
     else
     {
         coupsFinal = &coups;
     }
-
+    if(coupsFinal == nullptr || coupsFinal->empty())
+    {
+        cerr << "Erreur: L'IA n'a pas pu placer de pion" << endl;
+        exit(2);
+    }
     std::random_device              rd;
     std::mt19937                    gen(rd());
     std::uniform_int_distribution<> distrib(0, coupsFinal->size() - 1);

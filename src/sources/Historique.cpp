@@ -10,7 +10,11 @@
 
 using namespace std;
 
-Historique::Historique(vector<Joueur>& listeJoueurs) : parties(), points()
+Historique::Historique() : parties({}), points({})
+{
+}
+
+Historique::Historique(vector<Joueur>& listeJoueurs) : parties({}), points({})
 {
     for(int i = 0; i < (int)listeJoueurs.size(); i++)
     {
@@ -19,15 +23,42 @@ Historique::Historique(vector<Joueur>& listeJoueurs) : parties(), points()
     }
 }
 
-Historique::~Historique()
+Historique::Historique(const Historique& historique) :
+    parties(historique.parties), points(historique.points)
 {
-    for(Puissance* puissance: parties)
-    {
-        delete puissance;
-    }
 }
 
-void Historique::savegarderPartie(Puissance* puissance)
+Historique::Historique(Historique&& historique) noexcept :
+    parties(std::move(historique.parties)),
+    points(std::move(historique.points))
+{
+}
+
+Historique::~Historique()
+{
+}
+
+Historique& Historique::operator=(const Historique& historique) noexcept
+{
+    if(this != &historique)
+    {
+        parties = historique.parties;
+        points  = historique.points;
+    }
+    return *this;
+}
+
+Historique& Historique::operator=(Historique&& historique) noexcept
+{
+    if(this != &historique)
+    {
+        parties = historique.parties;
+        points  = historique.points;
+    }
+    return *this;
+}
+
+void Historique::savegarderPartie(Puissance& puissance)
 {
     parties.push_back(puissance);
 }

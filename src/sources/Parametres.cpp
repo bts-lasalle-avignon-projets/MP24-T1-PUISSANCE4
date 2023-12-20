@@ -41,7 +41,7 @@ void Parametres::afficher()
 
 bool Parametres::attendreCommande()
 {
-    string commande = "";
+    string commande;
     while(true)
     {
         IHM::afficherTexte("\nTapez une commande d'édition ou 'menu' pour quitter\n");
@@ -70,16 +70,16 @@ bool Parametres::attendreCommande()
             }
             return true;
         }
-        else if(commande == "animation" || commande == "a")
+        if(commande == "animation" || commande == "a")
         {
-            string texteAnimation = "Activé";
-            if(!animations)
-            {
-                texteAnimation = "Désactivé";
-            }
             int choixAnimations = -1;
             while(choixAnimations != 0)
             {
+                string texteAnimation = "Activé";
+                if(!animations)
+                {
+                    texteAnimation = "Désactivé";
+                }
                 choixAnimations =
                   editerParametre(texteAnimation, { "Activé", "Désactivé" }, affichageDynamique);
                 if(choixAnimations == 0)
@@ -92,7 +92,7 @@ bool Parametres::attendreCommande()
             }
             return true;
         }
-        else if(commande == "menu" || commande == "m")
+        if(commande == "menu" || commande == "m")
         {
             return false;
         }
@@ -100,9 +100,9 @@ bool Parametres::attendreCommande()
     return false;
 }
 
-int Parametres::editerParametre(std::string                     selection,
-                                const std::vector<std::string>& elements,
-                                bool                            affichageDynamique)
+int Parametres::editerParametre(const string&              selection,
+                                const vector<std::string>& elements,
+                                bool                       affichageDynamique)
 {
     afficherParametre(selection, elements, affichageDynamique);
     int choixParametre = -1;
@@ -114,7 +114,9 @@ int Parametres::editerParametre(std::string                     selection,
     return choixParametre;
 }
 
-void Parametres::afficherParametre(string selection, const vector<string>& elements, bool dynamique)
+void Parametres::afficherParametre(const string&         selection,
+                                   const vector<string>& elements,
+                                   bool                  dynamique)
 {
     for(int i = 0; i < (int)elements.size(); i++)
     {

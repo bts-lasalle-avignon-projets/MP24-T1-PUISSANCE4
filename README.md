@@ -26,11 +26,21 @@ $ ./puissance4.out
 
 Permet de jouer une partie de Puissance 4 à deux joueurs.
 
-### Version 1.0
+### Version 2.0
 
-- [x] saisir le nom du joueur
-- [x] jouer une partie
-- [x] afficher le déroulement d’une partie
+- [x] Jouer une ou plusieurs parties
+- [x] Historique de parties jouées
+- [x] Paramétrage de la partie
+- [x] Jouer contre l'odinateur (IA)
+- [x] Nouveau modes de jeux:
+  - Joueur vs Joueur
+  - Joueur vs IA
+  - IA vs IA
+- [x] Choix de la difficulté de l'IA
+  - **FACILE**: Elle contrera les coups adverse une fois sur trois
+  - **NORMALE** (par défaut): Elle contrera les coups adverse trois fois sur cinq
+  - **DIFFILE**: Elle contrera les coups adverse cinq fois sur six
+  - **EPIQUE** (pour le fun): Elle contrera tous les coups adverse et privilègera sa contre-attaque à sa victoire
 
 ### Version 1.1
 
@@ -38,15 +48,15 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 - [x] Affichage d'un menu
 - [x] Correction de bug
 
-![Puissance4](images/puissance4-1.1.gif)
+### Version 1.0
+
+- [x] saisir le nom du joueur
+- [x] jouer une partie
+- [x] afficher le déroulement d’une partie
+
+![Puissance4](images/puissance4-2.0.gif)
 
 ## TODO
-
-### Version 2.0
-
-- [ ] Choix du niveau de difficulté
-- [ ] Possibilité de jouer une ou plusieurs parties
-- [ ] Affichage de l'historique des parties jouées
 
 ### Version 3.0
 
@@ -61,6 +71,10 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 ## Itérations 1
 
 ![Jira-iteration](images/jira-iteration1.png)
+
+## Itérations 2
+
+![Jira-iteration](images/jira-iteration2.png)
 
 ## Diagramme du domaine
 
@@ -102,7 +116,7 @@ Jeton "- cases" <--o Plateau : vector< Jeton >
 
 ## Diagramme de classes
 
-![diagramme-classes-1.0](images/diagramme-classes-1.1.png)
+![diagramme-classes-2.0](images/diagramme-classes-2.0.png)
 
 ## Équipe de développement
 
