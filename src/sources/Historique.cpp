@@ -1,8 +1,8 @@
-#include "../headers/Historique.h"
 #include <iostream>
 #include <vector>
 #include <map>
 
+#include "../headers/Historique.h"
 #include "../headers/Joueur.h"
 #include "../headers/Puissance.h"
 #include "../headers/Jeton.h"
@@ -75,8 +75,10 @@ void Historique::afficher()
         IHM::afficherTexte("Historique vide.\n");
         return;
     }
+
     IHM::afficherTexte("Nombre de parties jouée(s) : " + to_string(parties.size()) + "\n");
     IHM::afficherTexte("Points par joueurs : \n");
+
     for(map<Joueur, int>::iterator it = points.begin(); it != points.end(); ++it)
     {
         Joueur joueur       = it->first;

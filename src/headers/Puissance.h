@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <iostream>
-#include "../headers/Plateau.h"
 
+#include "../headers/Plateau.h"
 #include "../headers/Jeton.h"
 class Puissance
 {

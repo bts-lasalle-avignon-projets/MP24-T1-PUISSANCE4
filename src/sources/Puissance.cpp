@@ -63,6 +63,7 @@ void Puissance::demarrerPartie()
             joueur.getObjetIA()->setPlateau(&plateau);
         }
     }
+
     int indiceJouee = -1;
     while(!this->partieEstTerminee())
     {

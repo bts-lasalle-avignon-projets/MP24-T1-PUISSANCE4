@@ -3,9 +3,11 @@
 #include "../headers/Joueur.h"
 #include "../headers/Jeton.h"
 #include "../headers/Ihm.h"
+
 #include <vector>
 #include <iostream>
 #include <algorithm>
+
 constexpr int nbCases = 4;
 
 using namespace std;
@@ -95,15 +97,18 @@ void Plateau::afficherPlateau(int positionNouveauPion) const
             {
                 IHM::afficherTexte(" |");
             }
+
             else if(positionNouveauPion == i * this->colonnes + j)
             {
                 IHM::afficherTexte(getSequence(jeton, "\u25C7") + "|");
             }
+
             else
             {
                 IHM::afficherTexte(getSequence(jeton, "\u25CF") + "|");
             }
         }
+
         IHM::afficherTexte("\033[0m\n");
     }
 }
@@ -123,6 +128,7 @@ void Plateau::afficherPlateauFinDePartie() const
             {
                 IHM::afficherTexte(" |");
             }
+
             else
             {
                 string forme = "\u25CF";
@@ -134,6 +140,7 @@ void Plateau::afficherPlateauFinDePartie() const
                         break;
                     }
                 }
+
                 IHM::afficherTexte(getSequence(jeton, forme) + "|");
             }
         }
@@ -158,22 +165,27 @@ vector<int> Plateau::getPositionDeSequenceVainqueur() const
                 {
                     positions = getPositions(indiceCase, casePlateau, 1);
                 }
+
                 else if(testerSequence(indiceCase, casePlateau, this->colonnes) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, this->colonnes);
                 }
+
                 else if(testerSequence(indiceCase, casePlateau, this->colonnes + 1) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, this->colonnes + 1);
                 }
+
                 else if(testerSequence(indiceCase, casePlateau, this->colonnes - 1) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, this->colonnes - 1);
                 }
+
                 else
                 {
                     break;
                 }
+
                 estTrouvee = true;
             }
         }
@@ -192,6 +204,7 @@ vector<int> Plateau::getPositions(int indiceCase, Jeton casePlateau, int indiceC
             positions.push_back(prochainIndiceTest);
         }
     }
+
     return positions;
 }
 
@@ -202,6 +215,7 @@ void Plateau::afficherNumerosDeColonnes() const
     {
         IHM::afficherTexte(to_string(i + 1) + "|");
     }
+
     IHM::afficherTexte("\033[0m\n");
 }
 
@@ -283,6 +297,7 @@ bool Plateau::sequenceEstDansSonAxe(vector<int> indicesSequence, bool alignement
         {
             return false;
         }
+
         if(!alignementHorizontal)
         {
             indiceLigneTeste++;

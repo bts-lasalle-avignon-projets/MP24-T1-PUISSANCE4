@@ -38,21 +38,25 @@ int main()
             historique.ajouterVictoire(puissance.getVainqueur());
             IHM::attendreRetourMenu();
         }
+
         else if(commande == "history" || commande == "h")
         {
             historique.afficher();
             IHM::attendreRetourMenu();
         }
+
         else if(commande == "settings" || commande == "s")
         {
             Parametres::afficher();
         }
+
         else if(commande == "rules" || commande == "r")
         {
             IHM::effacerTout();
             IHM::afficherRegles();
             IHM::attendreRetourMenu();
         }
+
         else if(commande == "quit" || commande == "q")
         {
             IHM::effacerTout();

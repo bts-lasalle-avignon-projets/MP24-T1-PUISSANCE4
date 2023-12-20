@@ -70,6 +70,7 @@ int Joueur::jouerCoup(Plateau& plateau)
     {
         return getObjetIA()->jouerCoup() % plateau.getNbColonnes() + 1;
     }
+
     int indice = 0;
     while(indice < 1 || indice > plateau.getNbColonnes() || plateau.colonneEstPleine(indice - 1))
     {
