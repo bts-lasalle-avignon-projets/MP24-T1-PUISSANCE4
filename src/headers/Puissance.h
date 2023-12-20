@@ -30,4 +30,4 @@ class Puissance
     std::vector<Joueur>* getJoueurs() const;
 };
 
-#endif
+#endif // PUISSANCE_H

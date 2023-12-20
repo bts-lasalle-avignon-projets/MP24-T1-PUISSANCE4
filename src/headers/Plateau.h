@@ -48,4 +48,4 @@ class Plateau
     bool estPlein() const;
     bool colonneEstPleine(int colonne) const;
 };
-#endif // PLATEAU
+#endif // PLATEAU_H
