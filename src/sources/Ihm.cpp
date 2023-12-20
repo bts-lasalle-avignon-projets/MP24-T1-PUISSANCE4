@@ -79,7 +79,7 @@ void IHM::afficherMenu()
     afficherTexte(jaune + " |_|    \\__,_|_|___/___/\\__,_|_| |_|\\___\\___| " + rouge +
                   "   |_|  \n");
     afficherTexte(jaune + "                                              " + rouge + "        \n");
-    afficherTexte(violet + "V2.0\n");
+    afficherTexte(violet + "V2.1\n");
     afficherTexte(jaune + "                                              " + rouge + "        \n");
     mettreZeroNbLignesASupprimer();
     afficherTexte(jaune + "Commandes de jeu à taper:\033[0m\n");

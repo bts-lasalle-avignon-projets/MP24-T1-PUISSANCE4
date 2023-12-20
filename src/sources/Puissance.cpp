@@ -75,9 +75,7 @@ void Puissance::demarrerPartie()
 }
 int Puissance::jouerTour()
 {
-    int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
-                           ? 0
-                           : this->indiceJoueurActuel + 1;
+    int prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
 
     indiceJoueurActuel   = prochainIndice;
     Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
