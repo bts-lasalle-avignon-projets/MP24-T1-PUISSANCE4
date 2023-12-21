@@ -3,14 +3,21 @@
 #include "../headers/Joueur.h"
 #include "../headers/Jeton.h"
 #include "../headers/Ihm.h"
+
 #include <vector>
 #include <iostream>
 #include <algorithm>
+
 constexpr int nbCases = 4;
 
 using namespace std;
 
-Plateau::Plateau() : lignes(0), colonnes(0), cases(0), partie(nullptr)
+constexpr int lignePardefaut   = 6;
+constexpr int colonnePardefaut = 7;
+
+Plateau::Plateau() :
+    lignes(lignePardefaut), colonnes(colonnePardefaut), cases(lignePardefaut * colonnePardefaut),
+    partie(nullptr)
 {
 }
 
@@ -72,7 +79,7 @@ int Plateau::placerJeton(int colonneSelectionnee, Jeton jeton)
     for(int i = this->lignes - 1; i >= 0; i--)
     {
         indiceTableauJouee = i * this->colonnes + colonneSelectionnee - 1;
-        if(this->cases.at(indiceTableauJouee) == Jeton(VIDE))
+        if(this->cases.at(indiceTableauJouee) == JETON::VIDE)
         {
             this->cases.at(indiceTableauJouee) = jeton;
             break;
@@ -91,19 +98,22 @@ void Plateau::afficherPlateau(int positionNouveauPion) const
         for(int j = 0; j < this->colonnes; j++)
         {
             Jeton jeton = this->cases.at(i * this->colonnes + j);
-            if(jeton == Jeton(VIDE))
+            if(jeton == JETON::VIDE)
             {
                 IHM::afficherTexte(" |");
             }
+
             else if(positionNouveauPion == i * this->colonnes + j)
             {
                 IHM::afficherTexte(getSequence(jeton, "\u25C7") + "|");
             }
+
             else
             {
                 IHM::afficherTexte(getSequence(jeton, "\u25CF") + "|");
             }
         }
+
         IHM::afficherTexte("\033[0m\n");
     }
 }
@@ -119,10 +129,11 @@ void Plateau::afficherPlateauFinDePartie() const
         for(int j = 0; j < this->colonnes; j++)
         {
             Jeton jeton = this->cases.at(i * this->colonnes + j);
-            if(jeton == Jeton(VIDE))
+            if(jeton == JETON::VIDE)
             {
                 IHM::afficherTexte(" |");
             }
+
             else
             {
                 string forme = "\u25CF";
@@ -134,6 +145,7 @@ void Plateau::afficherPlateauFinDePartie() const
                         break;
                     }
                 }
+
                 IHM::afficherTexte(getSequence(jeton, forme) + "|");
             }
         }
@@ -151,29 +163,34 @@ vector<int> Plateau::getPositionDeSequenceVainqueur() const
         {
             Jeton casePlateau = this->cases.at(i * this->colonnes + j);
             int   indiceCase  = i * this->colonnes + j;
-            if(casePlateau != Jeton(VIDE) &&
+            if(casePlateau != JETON::VIDE &&
                this->estUneSequence(i * this->colonnes + j, casePlateau))
             {
                 if(testerSequence(indiceCase, casePlateau, 1) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, 1);
                 }
+
                 else if(testerSequence(indiceCase, casePlateau, this->colonnes) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, this->colonnes);
                 }
+
                 else if(testerSequence(indiceCase, casePlateau, this->colonnes + 1) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, this->colonnes + 1);
                 }
+
                 else if(testerSequence(indiceCase, casePlateau, this->colonnes - 1) == nbCases)
                 {
                     positions = getPositions(indiceCase, casePlateau, this->colonnes - 1);
                 }
+
                 else
                 {
                     break;
                 }
+
                 estTrouvee = true;
             }
         }
@@ -192,6 +209,7 @@ vector<int> Plateau::getPositions(int indiceCase, Jeton casePlateau, int indiceC
             positions.push_back(prochainIndiceTest);
         }
     }
+
     return positions;
 }
 
@@ -202,6 +220,7 @@ void Plateau::afficherNumerosDeColonnes() const
     {
         IHM::afficherTexte(to_string(i + 1) + "|");
     }
+
     IHM::afficherTexte("\033[0m\n");
 }
 
@@ -234,7 +253,7 @@ bool Plateau::estUneSequence(int indiceCase, Jeton casePlateau) const
 
 bool Plateau::estUneSequence(int indiceCase, Jeton casePlateau, int nbJetonsAaligner) const
 {
-    if(casePlateau == Jeton(VIDE))
+    if(casePlateau == JETON::VIDE)
     {
         return false;
     }
@@ -283,6 +302,7 @@ bool Plateau::sequenceEstDansSonAxe(vector<int> indicesSequence, bool alignement
         {
             return false;
         }
+
         if(!alignementHorizontal)
         {
             indiceLigneTeste++;
@@ -313,7 +333,7 @@ Puissance* Plateau::getPartie()
 
 void Plateau::supprimerJeton(int indiceJeton)
 {
-    this->cases.at(indiceJeton) = Jeton(VIDE);
+    this->cases.at(indiceJeton) = JETON::VIDE;
 }
 
 int Plateau::getNbJetonsAlignes(int positionJeton, Jeton jeton)
@@ -360,5 +380,5 @@ bool Plateau::estPlein() const
 
 bool Plateau::colonneEstPleine(int colonne) const
 {
-    return cases.at(colonne) != JETON(VIDE);
+    return cases.at(colonne) != JETON::VIDE;
 }

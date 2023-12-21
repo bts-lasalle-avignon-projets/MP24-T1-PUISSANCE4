@@ -29,4 +29,5 @@ class Joueur
     bool        estUneIA();
     IA*         getObjetIA();
 };
-#endif // JOUEUR
+
+#endif // JOUEUR_H

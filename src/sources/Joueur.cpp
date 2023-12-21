@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Joueur::Joueur() : couleur(JETON(VIDE)), nom(""), ia(nullptr)
+Joueur::Joueur() : couleur(JETON::VIDE), nom(""), ia(nullptr)
 {
 }
 
@@ -70,6 +70,7 @@ int Joueur::jouerCoup(Plateau& plateau)
     {
         return getObjetIA()->jouerCoup() % plateau.getNbColonnes() + 1;
     }
+
     int indice = 0;
     while(indice < 1 || indice > plateau.getNbColonnes() || plateau.colonneEstPleine(indice - 1))
     {

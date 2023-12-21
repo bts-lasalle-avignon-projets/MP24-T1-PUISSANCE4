@@ -32,6 +32,7 @@ bool IHM::nomJoueurValide(const std::string& nomJoueur)
     {
         return false;
     }
+
     static vector<string> nomJoueurs;
     for(string& nom: nomJoueurs)
     {
@@ -78,7 +79,7 @@ void IHM::afficherMenu()
     afficherTexte(jaune + " |_|    \\__,_|_|___/___/\\__,_|_| |_|\\___\\___| " + rouge +
                   "   |_|  \n");
     afficherTexte(jaune + "                                              " + rouge + "        \n");
-    afficherTexte(violet + "V2.0\n");
+    afficherTexte(violet + "V2.1\n");
     afficherTexte(jaune + "                                              " + rouge + "        \n");
     mettreZeroNbLignesASupprimer();
     afficherTexte(jaune + "Commandes de jeu à taper:\033[0m\n");
@@ -176,6 +177,7 @@ void IHM::afficherDynamiquement(const string& message)
             cout << message.substr(i, indiceFinCodeCouleur - i + 1);
             i = indiceFinCodeCouleur;
         }
+
         else
         {
             std::cout << message.at(i) << flush;
@@ -229,6 +231,7 @@ std::vector<Joueur> IHM::saisieJoueurs()
             {
                 afficherTexte("une autre ");
             }
+
             afficherTexte("IA ? (oui/non) : ");
             cin >> commande;
             effacerSaisie();
@@ -238,6 +241,7 @@ std::vector<Joueur> IHM::saisieJoueurs()
                   IA(getJetonDepuisIndice(i + 1), "Brendan #" + to_string(i + 1)));
                 contientIA = true;
             }
+
             else if(commande == "non")
             {
                 listeJoueurs.push_back(
