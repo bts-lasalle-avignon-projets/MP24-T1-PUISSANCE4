@@ -15,7 +15,9 @@ using namespace std;
 constexpr int lignePardefaut   = 6;
 constexpr int colonnePardefaut = 7;
 
-Plateau::Plateau() : lignes(lignePardefaut), colonnes(colonnePardefaut), cases(lignePardefaut * colonnePardefaut), partie(nullptr)
+Plateau::Plateau() :
+    lignes(lignePardefaut), colonnes(colonnePardefaut), cases(lignePardefaut * colonnePardefaut),
+    partie(nullptr)
 {
 }
 

@@ -77,8 +77,8 @@ void Puissance::demarrerPartie()
 int Puissance::jouerTour()
 {
     size_t prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
-    indiceJoueurActuel   = prochainIndice;
-    Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
+    indiceJoueurActuel    = prochainIndice;
+    Joueur joueurSuivant  = listeJoueurs->at(prochainIndice);
     IHM::afficherMessageTour(joueurSuivant);
     int indiceColonne = joueurSuivant.jouerCoup(plateau);
     return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
