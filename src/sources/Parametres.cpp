@@ -48,6 +48,7 @@ bool Parametres::attendreCommande()
         cin >> commande;
         IHM::effacerSaisie();
         IHM::effacerLignes();
+
         bool affichageDynamique = true;
         if(commande == "difficulte" || commande == "d")
         {
@@ -64,12 +65,14 @@ bool Parametres::attendreCommande()
                 {
                     break;
                 }
+
                 setDifficulte(getDifficulteIndexe(choixDifficultee));
                 IHM::effacerLignes();
                 affichageDynamique = false;
             }
             return true;
         }
+
         if(commande == "animation" || commande == "a")
         {
             int choixAnimations = -1;
@@ -80,18 +83,21 @@ bool Parametres::attendreCommande()
                 {
                     texteAnimation = "Désactivé";
                 }
+
                 choixAnimations =
                   editerParametre(texteAnimation, { "Activé", "Désactivé" }, affichageDynamique);
                 if(choixAnimations == 0)
                 {
                     break;
                 }
+
                 animations = choixAnimations == 1;
                 IHM::effacerLignes();
                 affichageDynamique = false;
             }
             return true;
         }
+
         if(commande == "menu" || commande == "m")
         {
             return false;
@@ -126,11 +132,13 @@ void Parametres::afficherParametre(const string&         selection,
             IHM::afficherTexte(to_string(i + 1) + " : \033[44m\033[1;37m[ " + element +
                                " ]\033[0m\n");
         }
+
         else
         {
             IHM::afficherTexte(to_string(i + 1) + " : [ " + element + " ]\033[0m\n");
         }
     }
+
     IHM::afficherTexte("\n0 : \033[1;31mRetour au paramètres\033[0m\n");
     string message = "\nTapez le numéro du paramètre souhaité (\033[1;34m1\033[0m - \033[1;34m" +
                      to_string(elements.size()) + "\033[0m) :\n";
@@ -138,6 +146,7 @@ void Parametres::afficherParametre(const string&         selection,
     {
         IHM::afficherDynamiquement(message);
     }
+
     else
     {
         IHM::afficherTexte(message);

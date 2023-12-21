@@ -27,4 +27,4 @@ class Historique
     void        afficher();
 };
 
-#endif // HISTORIQUE
+#endif // HISTORIQUE_H

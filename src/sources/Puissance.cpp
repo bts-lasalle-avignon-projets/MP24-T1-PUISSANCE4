@@ -63,6 +63,7 @@ void Puissance::demarrerPartie()
             joueur.getObjetIA()->setPlateau(&plateau);
         }
     }
+
     int indiceJouee = -1;
     while(!this->partieEstTerminee())
     {
@@ -72,14 +73,12 @@ void Puissance::demarrerPartie()
 
     this->plateau.afficherPartie();
 }
+
 int Puissance::jouerTour()
 {
-    int prochainIndice = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
-                           ? 0
-                           : this->indiceJoueurActuel + 1;
-
-    indiceJoueurActuel   = prochainIndice;
-    Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
+    size_t prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
+    indiceJoueurActuel    = prochainIndice;
+    Joueur joueurSuivant  = listeJoueurs->at(prochainIndice);
     IHM::afficherMessageTour(joueurSuivant);
     int indiceColonne = joueurSuivant.jouerCoup(plateau);
     return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
