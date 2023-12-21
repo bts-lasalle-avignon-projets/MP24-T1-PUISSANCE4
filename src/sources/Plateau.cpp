@@ -12,7 +12,10 @@ constexpr int nbCases = 4;
 
 using namespace std;
 
-Plateau::Plateau() : lignes(0), colonnes(0), cases(0), partie(nullptr)
+constexpr int lignePardefaut   = 6;
+constexpr int colonnePardefaut = 7;
+
+Plateau::Plateau() : lignes(lignePardefaut), colonnes(colonnePardefaut), cases(lignePardefaut * colonnePardefaut), partie(nullptr)
 {
 }
 

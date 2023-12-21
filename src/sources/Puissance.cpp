@@ -73,10 +73,10 @@ void Puissance::demarrerPartie()
 
     this->plateau.afficherPartie();
 }
+
 int Puissance::jouerTour()
 {
-    int prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
-
+    size_t prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
     indiceJoueurActuel   = prochainIndice;
     Joueur joueurSuivant = listeJoueurs->at(prochainIndice);
     IHM::afficherMessageTour(joueurSuivant);
