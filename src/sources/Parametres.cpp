@@ -27,14 +27,14 @@ void Parametres::afficher()
     {
         IHM::effacerLignes();
         IHM::afficherTexte("Difficultée : \033[1;34m" + getTexte(getDifficulte()) +
-                           "\033[0m (Tapez '\033[1;31mdifficulte\033[0m')\n");
+                           "\033[0m (Tapez '\033[1;31md\033[0m')\n");
         string texteAnimation = "Activé";
         if(!animations)
         {
             texteAnimation = "Désactivé";
         }
         IHM::afficherTexte("Animations : \033[1;34m" + texteAnimation +
-                           "\033[0m (Tapez '\033[1;31manimation\033[0m')\n");
+                           "\033[0m (Tapez '\033[1;31ma\033[0m')\n");
         continueEdition = attendreCommande();
     }
 }
@@ -44,13 +44,13 @@ bool Parametres::attendreCommande()
     string commande;
     while(true)
     {
-        IHM::afficherTexte("\nTapez une commande d'édition ou 'menu' pour quitter\n");
+        IHM::afficherTexte("\nTapez une commande d'édition ou '0' pour quitter\n");
         cin >> commande;
         IHM::effacerSaisie();
         IHM::effacerLignes();
 
         bool affichageDynamique = true;
-        if(commande == "difficulte" || commande == "d")
+        if(commande == "d")
         {
             int choixDifficultee = -1;
             while(true)
@@ -73,7 +73,7 @@ bool Parametres::attendreCommande()
             return true;
         }
 
-        if(commande == "animation" || commande == "a")
+        if(commande == "a")
         {
             int choixAnimations = -1;
             while(choixAnimations != 0)
@@ -98,7 +98,7 @@ bool Parametres::attendreCommande()
             return true;
         }
 
-        if(commande == "menu" || commande == "m")
+        if(commande == "0")
         {
             return false;
         }
