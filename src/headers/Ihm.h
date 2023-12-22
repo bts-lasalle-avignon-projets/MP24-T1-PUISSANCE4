@@ -17,6 +17,7 @@ class IHM
     static void                afficherMessageTour(const Joueur& joueur);
     static void                afficherVictoire(Joueur* joueur);
     static void                afficherMenu();
+    static void                afficherBanniere();
     static std::string         saisirCommandeDeJeu();
     static void                attendreRetourMenu();
     static void                afficherDynamiquement(const std::string& message);

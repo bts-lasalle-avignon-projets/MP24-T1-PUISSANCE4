@@ -25,6 +25,7 @@ int main()
     while(continueLeJeu)
     {
         IHM::effacerTout();
+        IHM::afficherBanniere();
         IHM::afficherMenu();
         string commande = IHM::saisirCommandeDeJeu();
         IHM::effacerSaisie();
