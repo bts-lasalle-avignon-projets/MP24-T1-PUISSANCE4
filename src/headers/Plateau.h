@@ -14,12 +14,13 @@ class Plateau
   private:
     int                lignes;
     int                colonnes;
+    int                alignement;
     std::vector<Jeton> cases;
     Puissance*         partie;
 
   public:
     Plateau();
-    Plateau(Puissance* partie, int lignes, int colonnes);
+    Plateau(Puissance* partie, int lignes, int colonnes, int nbPionsAlignement);
     Plateau(const Plateau& plateau);
     Plateau(Plateau&& plateau) noexcept;
     ~Plateau();
@@ -32,6 +33,7 @@ class Plateau
     Joueur*             getVainqueur() const;
     int                 getNbLignes() const;
     int                 getNbColonnes() const;
+    int                 getNbPionsAlignement() const;
     std::vector<Jeton>* getPlateau();
     bool                estUneSequence(int indiceCase, Jeton casePlateau) const;
     bool             estUneSequence(int indiceCase, Jeton casePlateau, int nbJetonsAaligner) const;
@@ -47,5 +49,7 @@ class Plateau
     bool sequenceEstDansSonAxe(std::vector<int> indicesSequence, bool alignementHorizontal) const;
     bool estPlein() const;
     bool colonneEstPleine(int colonne) const;
+    void jouerAnimationPionPlacee(int indiceCase, Jeton jeton);
+    std::vector<Jeton> getCases();
 };
 #endif // PLATEAU

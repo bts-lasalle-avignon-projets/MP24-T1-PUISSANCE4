@@ -14,5 +14,6 @@ enum Difficulte
 bool        necessiteUnBonCoup(Difficulte difficulte);
 std::string getTexte(Difficulte difficulte);
 Difficulte  getDifficulteIndexe(int indice);
+int         getIndice(Difficulte difficulte);
 
 #endif // DIFFICULTE_H

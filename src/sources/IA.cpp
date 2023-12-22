@@ -57,7 +57,7 @@ std::vector<int> IA::analyserCoupsVainqueurAdversaire()
     {
         if(joueur.getJeton() != this->getJeton())
         {
-            vector<int> coups = analyserSequence(joueur.getJeton(), 4);
+            vector<int> coups = analyserSequence(joueur.getJeton(), partie->getNbPionsAlignement());
             if(!coups.empty())
             {
                 return coups;
@@ -141,13 +141,17 @@ int IA::jouerCoup()
 
     if(!coupsAdverse.empty())
     {
-        if(!coups.empty() && coups.at(0) == 4)
+        if(!coups.empty() && coups.at(0) == partie->getNbPionsAlignement())
         {
             coupsFinal = &coups;
         }
         else if(necessiteUnBonCoup(Parametres::getDifficulte()))
         {
             coupsFinal = &coupsAdverse;
+        }
+        else
+        {
+            coupsFinal = &coups;
         }
     }
     else

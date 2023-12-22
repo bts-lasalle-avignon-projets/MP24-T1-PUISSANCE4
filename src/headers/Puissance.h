@@ -15,7 +15,10 @@ class Puissance
 
   public:
     Puissance();
-    Puissance(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
+    Puissance(std::vector<Joueur>* listeJoueurs,
+              int                  nbLignes,
+              int                  nbColonnes,
+              int                  nbPionsAlignement);
     Puissance(const Puissance& puissance);
     Puissance(Puissance&& puissance) noexcept;
     ~Puissance();
@@ -23,11 +26,12 @@ class Puissance
     Puissance& operator=(Puissance&& puissance) noexcept;
 
     void                 demarrerPartie();
-    int                  jouerTour();
+    int                  jouerTour(Joueur& joueurSuivant);
     bool                 partieEstTerminee();
     Joueur*              recupererJoueurAyantJeton(Jeton jeton);
     Joueur*              getVainqueur() const;
     std::vector<Joueur>* getJoueurs() const;
+    Plateau              getPlateau() const;
 };
 
 #endif

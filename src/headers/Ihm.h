@@ -16,6 +16,7 @@ class IHM
     static bool                nomJoueurValide(const std::string& nomJoueur);
     static void                afficherMessageTour(const Joueur& joueur);
     static void                afficherVictoire(Joueur* joueur);
+    static void                afficherPartieNulle();
     static void                afficherMenu();
     static std::string         saisirCommandeDeJeu();
     static void                attendreRetourMenu();
@@ -28,6 +29,8 @@ class IHM
     static void                mettreZeroNbLignesASupprimer();
     static void                afficherTexte(const std::string& texte);
     static void                afficherRegles();
+    static void                attendre(int millisecondes);
+    static void                initialiserJeu();
 };
 
 #endif // IHM_H

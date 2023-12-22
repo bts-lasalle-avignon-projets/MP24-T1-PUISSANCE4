@@ -73,3 +73,19 @@ Difficulte getDifficulteIndexe(int indice)
     }
     return Difficulte(NORMAL);
 }
+
+int getIndice(Difficulte difficulte)
+{
+    switch(difficulte)
+    {
+        case FACILE:
+            return 1;
+        case NORMAL:
+            return 2;
+        case DIFFICILE:
+            return 3;
+        case EPIQUE:
+            return 4;
+    }
+    return 0;
+}

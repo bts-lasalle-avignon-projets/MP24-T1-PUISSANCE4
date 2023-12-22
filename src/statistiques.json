@@ -1,0 +1,17 @@
+{
+  "Admin": {
+    "ia": false,
+    "parties": 7,
+    "points": 4
+  },
+  "Liam": {
+    "ia": true,
+    "parties": 100,
+    "points": 49
+  },
+  "Sofia": {
+    "ia": true,
+    "parties": 100,
+    "points": 49
+  }
+}

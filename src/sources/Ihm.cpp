@@ -3,6 +3,8 @@
 #include "../headers/Joueur.h"
 #include "../headers/Parametres.h"
 #include "../headers/IA.h"
+#include "../headers/Historique.h"
+#include "../headers/Puissance.h"
 
 #include <iostream>
 #include <thread>
@@ -63,6 +65,16 @@ void IHM::afficherVictoire(Joueur* joueur)
     afficherTexte(joueur->getNom() + " remporte la partie !\n");
 }
 
+void IHM::afficherPartieNulle()
+{
+    afficherTexte("                                                \n");
+    afficherTexte(" _____         _   _                _ _     \n");
+    afficherTexte("|  _  |___ ___| |_|_|___    ___ _ _| | |___ \n");
+    afficherTexte("|   __| .'|  _|  _| | -_|  |   | | | | | -_|\n");
+    afficherTexte("|__|  |__,|_| |_| |_|___|  |_|_|___|_|_|___|\n");
+    afficherTexte("                                            \n");
+}
+
 void IHM::afficherMenu()
 {
     string rouge  = "\033[1;31m";
@@ -78,7 +90,7 @@ void IHM::afficherMenu()
     afficherTexte(jaune + " |_|    \\__,_|_|___/___/\\__,_|_| |_|\\___\\___| " + rouge +
                   "   |_|  \n");
     afficherTexte(jaune + "                                              " + rouge + "        \n");
-    afficherTexte(violet + "V2.0\n");
+    afficherTexte(violet + "V" + Parametres::getVersion() + "\n");
     afficherTexte(jaune + "                                              " + rouge + "        \n");
     mettreZeroNbLignesASupprimer();
     afficherTexte(jaune + "Commandes de jeu à taper:\033[0m\n");
@@ -179,7 +191,7 @@ void IHM::afficherDynamiquement(const string& message)
         else
         {
             std::cout << message.at(i) << flush;
-            this_thread::sleep_for(chrono::milliseconds(tempsAffichageCaractere));
+            attendre(tempsAffichageCaractere);
         }
     }
 }
@@ -214,7 +226,6 @@ void IHM::afficherRegles()
                   "jetons, la partie est déclarée nulle.\n");
     afficherTexte("\n");
 }
-
 std::vector<Joueur> IHM::saisieJoueurs()
 {
     std::vector<Joueur> listeJoueurs;
@@ -247,4 +258,57 @@ std::vector<Joueur> IHM::saisieJoueurs()
         }
     }
     return listeJoueurs;
+}
+
+void IHM::attendre(int millisecondes)
+{
+    this_thread::sleep_for(chrono::milliseconds(millisecondes));
+}
+
+void IHM::initialiserJeu()
+{
+    vector<Joueur> listeJoueurs  = IHM::saisieJoueurs();
+    bool           continueLeJeu = true;
+    Historique     historique(listeJoueurs);
+
+    while(continueLeJeu)
+    {
+        IHM::effacerTout();
+        IHM::afficherMenu();
+        string commande = IHM::saisirCommandeDeJeu();
+        IHM::effacerSaisie();
+        IHM::effacerLignes();
+        if(commande == "play" || commande == "p")
+        {
+            IHM::effacerTout();
+            Puissance puissance = *new Puissance(&listeJoueurs,
+                                                 Parametres::getNbLignes(),
+                                                 Parametres::getNbColonnes(),
+                                                 Parametres::getNbPionsAlignement());
+            puissance.demarrerPartie();
+            historique.savegarderPartie(puissance);
+            historique.ajouterVictoire(puissance.getVainqueur());
+            IHM::attendreRetourMenu();
+        }
+        else if(commande == "history" || commande == "h")
+        {
+            historique.afficher();
+            IHM::attendreRetourMenu();
+        }
+        else if(commande == "settings" || commande == "s")
+        {
+            Parametres::afficher();
+        }
+        else if(commande == "rules" || commande == "r")
+        {
+            IHM::effacerTout();
+            IHM::afficherRegles();
+            IHM::attendreRetourMenu();
+        }
+        else if(commande == "quit" || commande == "q")
+        {
+            IHM::effacerTout();
+            continueLeJeu = false;
+        }
+    }
 }

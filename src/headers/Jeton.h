@@ -13,5 +13,6 @@ enum Jeton
 std::string getSequence(Jeton couleur, const std::string& contenu);
 std::string getCouleur(Jeton jeton);
 Jeton       getJetonDepuisIndice(int indice);
+int         getIndiceJeton(Jeton jeton);
 
 #endif // JETON

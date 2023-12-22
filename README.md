@@ -6,7 +6,7 @@
 
 - Nom du logiciel : Puissance 4
 - Date de début : 24 novembre 2023 à 14:58
-- Numéro de version du logiciel : 1.1
+- Numéro de version du logiciel : 2.0
 
 ## Présentation
 

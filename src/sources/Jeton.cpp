@@ -42,3 +42,17 @@ Jeton getJetonDepuisIndice(int indice)
     }
     return JETON(VIDE);
 }
+
+int getIndiceJeton(Jeton jeton)
+{
+    switch(jeton)
+    {
+        case VIDE:
+            return 0;
+        case ROUGE:
+            return 1;
+        case JAUNE:
+            return 2;
+    }
+    return 0;
+}

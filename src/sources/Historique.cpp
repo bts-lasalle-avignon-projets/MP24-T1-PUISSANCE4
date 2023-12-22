@@ -7,6 +7,7 @@
 #include "../headers/Puissance.h"
 #include "../headers/Jeton.h"
 #include "../headers/Ihm.h"
+#include "../headers/JSON.h"
 
 using namespace std;
 
@@ -61,11 +62,36 @@ Historique& Historique::operator=(Historique&& historique) noexcept
 void Historique::savegarderPartie(Puissance& puissance)
 {
     parties.push_back(puissance);
+    JSON           json("src/historique.json");
+    string         indice         = to_string((int)json.getCles("", false).size()) + ".";
+    int            nbLignes       = puissance.getPlateau().getNbLignes();
+    int            nbColonnes     = puissance.getPlateau().getNbColonnes();
+    int            tailleSequence = puissance.getPlateau().getNbPionsAlignement();
+    vector<string> pions;
+    vector<string> joueurs;
+    for(Jeton casePlateau: puissance.getPlateau().getCases())
+    {
+        pions.push_back(to_string(getIndiceJeton(casePlateau)));
+    }
+    for(int i = 0; i < (int)puissance.getJoueurs()->size(); i++)
+    {
+        Joueur joueur = puissance.getJoueurs()->at(i);
+        joueurs.push_back(joueur.getNom());
+    }
+    json.setInt(indice + "nbLignes", nbLignes);
+    json.setInt(indice + "nbColonnes", nbColonnes);
+    json.setInt(indice + "tailleSequence", tailleSequence);
+    json.setStringList(indice + "joueurs", joueurs);
+    json.setStringList(indice + "pions", pions);
+    json.sauvegarder();
 }
 
 void Historique::ajouterVictoire(Joueur* joueur)
 {
-    points[*joueur]++;
+    if(joueur != nullptr)
+    {
+        points[*joueur]++;
+    }
 }
 
 void Historique::afficher()

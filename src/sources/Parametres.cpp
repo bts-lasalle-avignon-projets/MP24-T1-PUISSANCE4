@@ -1,14 +1,23 @@
 #include "../headers/Parametres.h"
 #include "../headers/Difficulte.h"
 #include "../headers/Ihm.h"
+#include "../headers/JSON.h"
 
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-Difficulte Parametres::difficulte = Difficulte(NORMAL);
-bool       Parametres::animations = true;
+constexpr int definitionNbLignes          = 6;
+constexpr int definitionNbColonnes        = 7;
+constexpr int definitionNbPionsAlignement = 4;
+
+Difficulte Parametres::difficulte        = Difficulte(NORMAL);
+bool       Parametres::animations        = true;
+int        Parametres::nbLignes          = definitionNbLignes;
+int        Parametres::nbColonnes        = definitionNbColonnes;
+int        Parametres::nbPionsAlignement = definitionNbPionsAlignement;
+string     Parametres::version           = "Version inconnue";
 
 void Parametres::setDifficulte(Difficulte difficulte)
 {
@@ -67,6 +76,7 @@ bool Parametres::attendreCommande()
                 setDifficulte(getDifficulteIndexe(choixDifficultee));
                 IHM::effacerLignes();
                 affichageDynamique = false;
+                sauvegarder();
             }
             return true;
         }
@@ -89,6 +99,7 @@ bool Parametres::attendreCommande()
                 animations = choixAnimations == 1;
                 IHM::effacerLignes();
                 affichageDynamique = false;
+                sauvegarder();
             }
             return true;
         }
@@ -147,4 +158,55 @@ void Parametres::afficherParametre(const string&         selection,
 bool Parametres::possedeAnimation()
 {
     return animations;
+}
+
+int Parametres::getNbLignes()
+{
+    return Parametres::nbLignes;
+}
+
+void Parametres::setNbLignes(int nbLignes)
+{
+    Parametres::nbLignes = nbLignes;
+}
+
+int Parametres::getNbColonnes()
+{
+    return Parametres::nbColonnes;
+}
+
+void Parametres::setNbColonnes(int nbColonnes)
+{
+    Parametres::nbColonnes = nbColonnes;
+}
+
+int Parametres::getNbPionsAlignement()
+{
+    return Parametres::nbPionsAlignement;
+}
+
+void Parametres::setNbPionsAlignement(int nbPionsAlignement)
+{
+    Parametres::nbPionsAlignement = nbPionsAlignement;
+}
+
+void Parametres::chargerParametres()
+{
+    JSON json("src/parametres.json");
+    Parametres::animations = json.getBoolean("animation");
+    Parametres::difficulte = getDifficulteIndexe(json.getInt("difficulte"));
+    Parametres::version    = json.getString("version");
+}
+
+void Parametres::sauvegarder()
+{
+    JSON json("src/parametres.json");
+    json.setBoolean("animation", Parametres::animations);
+    json.setInt("difficulte", getIndice(Parametres::difficulte));
+    json.sauvegarder();
+}
+
+string Parametres::getVersion()
+{
+    return Parametres::version;
 }
