@@ -20,6 +20,16 @@ Plateau::Plateau(Puissance* partie, int lignes, int colonnes, int nbPionsAlignem
 {
 }
 
+Plateau::Plateau(Puissance*    partie,
+                 int           lignes,
+                 int           colonnes,
+                 vector<Jeton> cases,
+                 int           nbPionsAlignement) :
+    lignes(lignes),
+    colonnes(colonnes), alignement(nbPionsAlignement), cases(cases), partie(partie)
+{
+}
+
 Plateau::Plateau(const Plateau& plateau) :
     lignes(plateau.getNbLignes()), colonnes(plateau.getNbColonnes()),
     alignement(plateau.getNbPionsAlignement()),
@@ -135,7 +145,6 @@ void Plateau::afficherPlateau(int positionNouveauPion) const
 
 void Plateau::afficherPlateauFinDePartie() const
 {
-    IHM::effacerLignes();
     vector<int> positionSequence = this->getPositionDeSequenceVainqueur();
     this->afficherNumerosDeColonnes();
     for(int i = 0; i < this->lignes; i++)
@@ -232,6 +241,7 @@ void Plateau::afficherNumerosDeColonnes() const
 
 void Plateau::afficherPartie() const
 {
+    IHM::effacerLignes();
     afficherPlateauFinDePartie();
     if(getVainqueur() != nullptr)
     {

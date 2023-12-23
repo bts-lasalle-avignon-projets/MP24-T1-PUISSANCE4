@@ -270,6 +270,7 @@ void IHM::initialiserJeu()
     vector<Joueur> listeJoueurs  = IHM::saisieJoueurs();
     bool           continueLeJeu = true;
     Historique     historique(listeJoueurs);
+    historique.charger();
 
     while(continueLeJeu)
     {
@@ -281,13 +282,13 @@ void IHM::initialiserJeu()
         if(commande == "play" || commande == "p")
         {
             IHM::effacerTout();
-            Puissance puissance = *new Puissance(&listeJoueurs,
+            Puissance* puissance = new Puissance(&listeJoueurs,
                                                  Parametres::getNbLignes(),
                                                  Parametres::getNbColonnes(),
                                                  Parametres::getNbPionsAlignement());
-            puissance.demarrerPartie();
-            historique.savegarderPartie(puissance);
-            historique.ajouterVictoire(puissance.getVainqueur());
+            puissance->demarrerPartie();
+            historique.savegarderPartie(puissance, true);
+            historique.ajouterVictoire(puissance->getVainqueur());
             IHM::attendreRetourMenu();
         }
         else if(commande == "history" || commande == "h")

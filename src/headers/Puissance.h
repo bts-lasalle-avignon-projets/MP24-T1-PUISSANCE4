@@ -19,6 +19,11 @@ class Puissance
               int                  nbLignes,
               int                  nbColonnes,
               int                  nbPionsAlignement);
+    Puissance(std::vector<Joueur>* listeJoueurs,
+              int                  nbLignes,
+              int                  nbColonnes,
+              std::vector<Jeton>   cases,
+              int                  nbPionsAlignement);
     Puissance(const Puissance& puissance);
     Puissance(Puissance&& puissance) noexcept;
     ~Puissance();

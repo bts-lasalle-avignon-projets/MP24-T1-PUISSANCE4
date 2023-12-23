@@ -21,6 +21,11 @@ class Plateau
   public:
     Plateau();
     Plateau(Puissance* partie, int lignes, int colonnes, int nbPionsAlignement);
+    Plateau(Puissance*         partie,
+            int                lignes,
+            int                colonnes,
+            std::vector<Jeton> cases,
+            int                nbPionsAlignement);
     Plateau(const Plateau& plateau);
     Plateau(Plateau&& plateau) noexcept;
     ~Plateau();

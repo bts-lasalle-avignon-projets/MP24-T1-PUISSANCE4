@@ -22,6 +22,16 @@ Puissance::Puissance(vector<Joueur>* listeJoueurs,
 {
 }
 
+Puissance::Puissance(vector<Joueur>* listeJoueurs,
+                     int             nbLignes,
+                     int             nbColonnes,
+                     vector<Jeton>   cases,
+                     int             nbPionsAlignement) :
+    indiceJoueurActuel(-1),
+    listeJoueurs(listeJoueurs), plateau(this, nbLignes, nbColonnes, cases, nbPionsAlignement)
+{
+}
+
 Puissance::Puissance(const Puissance& puissance) :
     indiceJoueurActuel(puissance.indiceJoueurActuel), listeJoueurs(puissance.listeJoueurs),
     plateau(this,
@@ -78,9 +88,9 @@ void Puissance::demarrerPartie()
     while(!this->partieEstTerminee())
     {
         this->plateau.jouerAnimationPionPlacee(indiceJouee, jetonJoueur);
-        indiceJoueurActuel = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
-                               ? 0
-                               : this->indiceJoueurActuel + 1;
+        indiceJoueurActuel   = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
+                                 ? 0
+                                 : this->indiceJoueurActuel + 1;
         Joueur joueurSuivant = listeJoueurs->at(indiceJoueurActuel);
         jetonJoueur          = joueurSuivant.getJeton();
         indiceJouee          = this->jouerTour(joueurSuivant);

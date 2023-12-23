@@ -195,6 +195,10 @@ void JSON::extraireDonnee(string& chaine, const string& adressePrecedente)
         string contenu = extraireContenu(chaineSeparee, cle);
         supprimerCaractereChaine(cle, '"');
         adresseActuelle += cle;
+        if(adresseActuelle.empty())
+        {
+            continue;
+        }
         if(contenu.find(':') != string::npos)
         {
             extraireDonnee(contenu, adresseActuelle);
