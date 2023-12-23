@@ -6,15 +6,18 @@
 #include <iostream>
 #include <vector>
 
+class Joueur;
+
 class Parametres
 {
   private:
-    static Difficulte  difficulte;
-    static bool        animations;
-    static int         nbLignes;
-    static int         nbColonnes;
-    static int         nbPionsAlignement;
-    static std::string version;
+    static Difficulte          difficulte;
+    static bool                animations;
+    static int                 nbLignes;
+    static int                 nbColonnes;
+    static int                 nbPionsAlignement;
+    static std::vector<Joueur> joueurs;
+    static std::string         version;
 
   public:
     static void        setDifficulte(Difficulte difficulte);

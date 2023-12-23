@@ -5,6 +5,7 @@
 #include "../headers/IA.h"
 #include "../headers/Historique.h"
 #include "../headers/Puissance.h"
+#include "../headers/Humain.h"
 
 #include <iostream>
 #include <thread>
@@ -48,9 +49,9 @@ bool IHM::nomJoueurValide(const std::string& nomJoueur)
     return true;
 }
 
-void IHM::afficherMessageTour(const Joueur& joueur)
+void IHM::afficherMessageTour(const Joueur* joueur)
 {
-    afficherDynamiquement("C'est au tour de " + getCouleur(joueur.getJeton()) + joueur.getNom() +
+    afficherDynamiquement("C'est au tour de " + getCouleur(joueur->getJeton()) + joueur->getNom() +
                           getCouleur(Jeton(VIDE)) + " de jouer !\n");
 }
 
@@ -226,10 +227,10 @@ void IHM::afficherRegles()
                   "jetons, la partie est déclarée nulle.\n");
     afficherTexte("\n");
 }
-std::vector<Joueur> IHM::saisieJoueurs()
+std::vector<Joueur*> IHM::saisieJoueurs()
 {
-    std::vector<Joueur> listeJoueurs;
-    static bool         contientIA = false;
+    std::vector<Joueur*> listeJoueurs;
+    static bool          contientIA = false;
     for(int i = 0; i < 2; i++)
     {
         string commande;
@@ -246,15 +247,15 @@ std::vector<Joueur> IHM::saisieJoueurs()
             if(commande == "oui")
             {
                 listeJoueurs.push_back(
-                  IA(getJetonDepuisIndice(i + 1), "Brendan #" + to_string(i + 1)));
+                  new IA(getJetonDepuisIndice(i + 1), "Brendan #" + to_string(i + 1)));
                 contientIA = true;
             }
             else if(commande == "non")
             {
                 listeJoueurs.push_back(
-                  Joueur(getJetonDepuisIndice(i + 1), IHM::saisieNomJoueur(i + 1), nullptr));
+                  new Humain(getJetonDepuisIndice(i + 1), IHM::saisieNomJoueur(i + 1)));
             }
-            afficherTexte(listeJoueurs.at(i).getNom() + " à été ajouté\n");
+            afficherTexte(listeJoueurs.at(i)->getNom() + " à été ajouté\n");
         }
     }
     return listeJoueurs;
@@ -267,9 +268,9 @@ void IHM::attendre(int millisecondes)
 
 void IHM::initialiserJeu()
 {
-    vector<Joueur> listeJoueurs  = IHM::saisieJoueurs();
-    bool           continueLeJeu = true;
-    Historique     historique(listeJoueurs);
+    vector<Joueur*> listeJoueurs  = IHM::saisieJoueurs();
+    bool            continueLeJeu = true;
+    Historique      historique(listeJoueurs);
     historique.charger();
 
     while(continueLeJeu)
@@ -282,7 +283,7 @@ void IHM::initialiserJeu()
         if(commande == "play" || commande == "p")
         {
             IHM::effacerTout();
-            Puissance* puissance = new Puissance(&listeJoueurs,
+            Puissance* puissance = new Puissance(listeJoueurs,
                                                  Parametres::getNbLignes(),
                                                  Parametres::getNbColonnes(),
                                                  Parametres::getNbPionsAlignement());

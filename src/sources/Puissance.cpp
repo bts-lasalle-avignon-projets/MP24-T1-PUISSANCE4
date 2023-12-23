@@ -9,24 +9,24 @@
 
 using namespace std;
 
-Puissance::Puissance() : indiceJoueurActuel(-1), listeJoueurs(nullptr), plateau(nullptr, 0, 0, 0)
+Puissance::Puissance() : indiceJoueurActuel(-1), listeJoueurs(), plateau(nullptr, 0, 0, 0)
 {
 }
 
-Puissance::Puissance(vector<Joueur>* listeJoueurs,
-                     int             nbLignes,
-                     int             nbColonnes,
-                     int             nbPionsAlignement) :
+Puissance::Puissance(vector<Joueur*>& listeJoueurs,
+                     int              nbLignes,
+                     int              nbColonnes,
+                     int              nbPionsAlignement) :
     indiceJoueurActuel(-1),
     listeJoueurs(listeJoueurs), plateau(this, nbLignes, nbColonnes, nbPionsAlignement)
 {
 }
 
-Puissance::Puissance(vector<Joueur>* listeJoueurs,
-                     int             nbLignes,
-                     int             nbColonnes,
-                     vector<Jeton>   cases,
-                     int             nbPionsAlignement) :
+Puissance::Puissance(vector<Joueur*>& listeJoueurs,
+                     int              nbLignes,
+                     int              nbColonnes,
+                     vector<Jeton>    cases,
+                     int              nbPionsAlignement) :
     indiceJoueurActuel(-1),
     listeJoueurs(listeJoueurs), plateau(this, nbLignes, nbColonnes, cases, nbPionsAlignement)
 {
@@ -76,33 +76,34 @@ Puissance& Puissance::operator=(Puissance&& puissance) noexcept
 
 void Puissance::demarrerPartie()
 {
-    for(Joueur joueur: *listeJoueurs)
+    /*for(Joueur* joueur: listeJoueurs)
     {
         if(joueur.estUneIA())
         {
             joueur.getObjetIA()->setPlateau(&plateau);
         }
-    }
+        joueur->setPlateau(&plateau);
+    }*/
     int   indiceJouee = -1;
     Jeton jetonJoueur = Jeton(VIDE);
     while(!this->partieEstTerminee())
     {
         this->plateau.jouerAnimationPionPlacee(indiceJouee, jetonJoueur);
-        indiceJoueurActuel   = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs->size()
-                                 ? 0
-                                 : this->indiceJoueurActuel + 1;
-        Joueur joueurSuivant = listeJoueurs->at(indiceJoueurActuel);
-        jetonJoueur          = joueurSuivant.getJeton();
-        indiceJouee          = this->jouerTour(joueurSuivant);
+        indiceJoueurActuel    = this->indiceJoueurActuel + 1 == (int)this->listeJoueurs.size()
+                                  ? 0
+                                  : this->indiceJoueurActuel + 1;
+        Joueur* joueurSuivant = listeJoueurs.at(indiceJoueurActuel);
+        jetonJoueur           = joueurSuivant->getJeton();
+        indiceJouee           = this->jouerTour(joueurSuivant);
     }
 
     this->plateau.afficherPartie();
 }
-int Puissance::jouerTour(Joueur& joueurSuivant)
+int Puissance::jouerTour(Joueur* joueurSuivant)
 {
     IHM::afficherMessageTour(joueurSuivant);
-    int indiceColonne = joueurSuivant.jouerCoup(plateau);
-    return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
+    int indiceColonne = joueurSuivant->jouerCoup(plateau);
+    return this->plateau.placerJeton(indiceColonne, joueurSuivant->getJeton());
 }
 
 bool Puissance::partieEstTerminee()
@@ -112,9 +113,9 @@ bool Puissance::partieEstTerminee()
 
 Joueur* Puissance::recupererJoueurAyantJeton(Jeton jeton)
 {
-    for(int i = 0; i < (int)this->listeJoueurs->size(); i++)
+    for(int i = 0; i < (int)this->listeJoueurs.size(); i++)
     {
-        Joueur* joueur = &(listeJoueurs->at(i));
+        Joueur* joueur = listeJoueurs.at(i);
         if(joueur->getJeton() == jeton)
         {
             return joueur;
@@ -128,7 +129,7 @@ Joueur* Puissance::getVainqueur() const
     return this->plateau.getVainqueur();
 }
 
-std::vector<Joueur>* Puissance::getJoueurs() const
+std::vector<Joueur*> Puissance::getJoueurs() const
 {
     return this->listeJoueurs;
 }

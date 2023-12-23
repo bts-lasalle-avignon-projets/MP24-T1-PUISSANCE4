@@ -4,7 +4,7 @@
 #include "../headers/Jeton.h"
 #include <iostream>
 
-class IA;
+// class IA;
 class Plateau;
 
 class Joueur
@@ -12,11 +12,11 @@ class Joueur
   private:
     Jeton       couleur;
     std::string nom;
-    IA*         ia;
+    // IA*         ia;
 
   public:
     Joueur();
-    Joueur(Jeton couleur, const std::string& nom, IA* ia);
+    Joueur(Jeton couleur, const std::string& nom /*, IA* ia*/);
     Joueur(const Joueur& joueur);
     Joueur(Joueur&& joueur) noexcept;
     ~Joueur();
@@ -25,8 +25,8 @@ class Joueur
     bool        operator<(const Joueur& joueur) const;
     std::string getNom() const;
     Jeton       getJeton() const;
-    int         jouerCoup(Plateau& plateau);
-    bool        estUneIA();
-    IA*         getObjetIA();
+    virtual int jouerCoup(Plateau& plateau);
+    /*bool        estUneIA();
+    IA*         getObjetIA();*/
 };
 #endif // JOUEUR

@@ -11,8 +11,6 @@ class Plateau;
 class IA : public Joueur
 {
   private:
-    Plateau* partie;
-
   public:
     IA();
     IA(Jeton jeton, const std::string& nom);
@@ -21,12 +19,11 @@ class IA : public Joueur
     ~IA();
     IA&              operator=(const IA& ia) noexcept;
     IA&              operator=(IA&& ia) noexcept;
-    std::vector<int> analyserCoupsVainqueurAdversaire();
-    std::vector<int> analyserSequence(Jeton jeton, int nbJetons);
-    std::vector<int> analyserCoups(Plateau& plateauTemporaire);
+    std::vector<int> analyserCoupsVainqueurAdversaire(Plateau& plateau);
+    std::vector<int> analyserSequence(Jeton jeton, int nbJetons, Plateau& plateau);
+    std::vector<int> analyserCoups(Plateau& plateau);
     static int       calculerValeurHaute(std::map<int, int>& tailleSequenceParPositions);
-    int              jouerCoup();
-    void             setPlateau(Plateau* plateau);
+    virtual int      jouerCoup(Plateau& plateau) override;
 };
 
 #endif // IA_H

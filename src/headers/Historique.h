@@ -12,11 +12,11 @@ class Historique
 {
   private:
     std::vector<Puissance*> parties;
-    std::map<Joueur, int>   points;
+    std::map<Joueur*, int>  points;
 
   public:
     Historique();
-    Historique(std::vector<Joueur>& listeJoueurs);
+    Historique(std::vector<Joueur*>& listeJoueurs);
     Historique(const Historique& historique);
     Historique(Historique&& historique) noexcept;
     ~Historique();

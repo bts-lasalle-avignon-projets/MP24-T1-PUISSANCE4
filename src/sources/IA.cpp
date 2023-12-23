@@ -13,19 +13,19 @@
 
 using namespace std;
 
-IA::IA() : partie(nullptr)
+IA::IA()
 {
 }
 
-IA::IA(Jeton jeton, const string& nom) : Joueur(jeton, nom, this), partie(nullptr)
+IA::IA(Jeton jeton, const string& nom) : Joueur(jeton, nom)
 {
 }
 
-IA::IA(const IA& ia) : Joueur(ia), partie(ia.partie)
+IA::IA(const IA& ia) : Joueur(ia)
 {
 }
 
-IA::IA(IA&& ia) noexcept : Joueur(std::move(ia)), partie(ia.partie)
+IA::IA(IA&& ia) noexcept : Joueur(std::move(ia))
 {
 }
 
@@ -35,29 +35,22 @@ IA::~IA()
 
 IA& IA::operator=(const IA& ia) noexcept
 {
-    if(this != &ia)
-    {
-        partie = ia.partie;
-    }
     return *this;
 }
 
 IA& IA::operator=(IA&& ia) noexcept
 {
-    if(this != &ia)
-    {
-        partie = ia.partie;
-    }
     return *this;
 }
 
-std::vector<int> IA::analyserCoupsVainqueurAdversaire()
+std::vector<int> IA::analyserCoupsVainqueurAdversaire(Plateau& plateau)
 {
-    for(Joueur& joueur: *(this->partie->getPartie()->getJoueurs()))
+    for(Joueur* joueur: plateau.getPartie()->getJoueurs())
     {
-        if(joueur.getJeton() != this->getJeton())
+        if(joueur->getJeton() != this->getJeton())
         {
-            vector<int> coups = analyserSequence(joueur.getJeton(), partie->getNbPionsAlignement());
+            vector<int> coups =
+              analyserSequence(joueur->getJeton(), plateau.getNbPionsAlignement(), plateau);
             if(!coups.empty())
             {
                 return coups;
@@ -68,10 +61,10 @@ std::vector<int> IA::analyserCoupsVainqueurAdversaire()
     return coups;
 }
 
-vector<int> IA::analyserSequence(Jeton jeton, int nbJetons)
+vector<int> IA::analyserSequence(Jeton jeton, int nbJetons, Plateau& plateau)
 {
     vector<int> coups;
-    Plateau     plateauTemporaire(*partie);
+    Plateau     plateauTemporaire(plateau);
     for(int i = 0; i < plateauTemporaire.getNbColonnes(); i++)
     {
         if(plateauTemporaire.colonneEstPleine(i))
@@ -88,9 +81,10 @@ vector<int> IA::analyserSequence(Jeton jeton, int nbJetons)
     return coups;
 }
 
-std::vector<int> IA::analyserCoups(Plateau& plateauTemporaire)
+std::vector<int> IA::analyserCoups(Plateau& plateau)
 {
-    vector<int>   colonnes = analyserSequence(getJeton(), 1);
+    vector<int>   colonnes = analyserSequence(getJeton(), 1, plateau);
+    Plateau       plateauTemporaire(plateau);
     map<int, int> tailleSequenceParPositions;
     for(int indiceColonne: colonnes)
     {
@@ -131,17 +125,15 @@ int IA::calculerValeurHaute(map<int, int>& tailleSequenceParPositions)
     return maximum;
 }
 
-int IA::jouerCoup()
+int IA::jouerCoup(Plateau& plateau)
 {
-    Plateau     plateauTemporaire(*partie);
-    vector<int> coupsAdverse = analyserCoupsVainqueurAdversaire();
-    vector<int> coups        = analyserCoups(plateauTemporaire);
-
-    vector<int>* coupsFinal = nullptr;
+    vector<int>  coupsAdverse = analyserCoupsVainqueurAdversaire(plateau);
+    vector<int>  coups        = analyserCoups(plateau);
+    vector<int>* coupsFinal   = nullptr;
 
     if(!coupsAdverse.empty())
     {
-        if(!coups.empty() && coups.at(0) == partie->getNbPionsAlignement())
+        if(!coups.empty() && coups.at(0) == plateau.getNbPionsAlignement())
         {
             coupsFinal = &coups;
         }
@@ -167,10 +159,5 @@ int IA::jouerCoup()
     std::mt19937                    gen(rd());
     std::uniform_int_distribution<> distrib(0, coupsFinal->size() - 1);
     int                             indexAleatoire = distrib(gen);
-    return coupsFinal->at(indexAleatoire);
-}
-
-void IA::setPlateau(Plateau* plateau)
-{
-    this->partie = plateau;
+    return coupsFinal->at(indexAleatoire) % plateau.getNbColonnes() + 1;
 }

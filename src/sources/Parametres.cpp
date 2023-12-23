@@ -2,6 +2,7 @@
 #include "../headers/Difficulte.h"
 #include "../headers/Ihm.h"
 #include "../headers/JSON.h"
+#include "../headers/Joueur.h"
 
 #include <iostream>
 #include <vector>
@@ -12,12 +13,13 @@ constexpr int definitionNbLignes          = 6;
 constexpr int definitionNbColonnes        = 7;
 constexpr int definitionNbPionsAlignement = 4;
 
-Difficulte Parametres::difficulte        = Difficulte(NORMAL);
-bool       Parametres::animations        = true;
-int        Parametres::nbLignes          = definitionNbLignes;
-int        Parametres::nbColonnes        = definitionNbColonnes;
-int        Parametres::nbPionsAlignement = definitionNbPionsAlignement;
-string     Parametres::version           = "Version inconnue";
+Difficulte     Parametres::difficulte        = Difficulte(NORMAL);
+bool           Parametres::animations        = true;
+int            Parametres::nbLignes          = definitionNbLignes;
+int            Parametres::nbColonnes        = definitionNbColonnes;
+int            Parametres::nbPionsAlignement = definitionNbPionsAlignement;
+string         Parametres::version           = "Version inconnue";
+vector<Joueur> Parametres::joueurs;
 
 void Parametres::setDifficulte(Difficulte difficulte)
 {
@@ -192,10 +194,19 @@ void Parametres::setNbPionsAlignement(int nbPionsAlignement)
 
 void Parametres::chargerParametres()
 {
-    JSON json("src/parametres.json");
-    Parametres::animations = json.getBoolean("animation");
-    Parametres::difficulte = getDifficulteIndexe(json.getInt("difficulte"));
-    Parametres::version    = json.getString("version");
+    JSON parametres("src/parametres.json");
+    Parametres::animations = parametres.getBoolean("animation");
+    Parametres::difficulte = getDifficulteIndexe(parametres.getInt("difficulte"));
+    Parametres::version    = parametres.getString("version");
+
+    JSON statistiques("src/statistiques.json");
+    for(string nomJoueur: statistiques.getCles("", false))
+    {
+        bool estUneIA        = statistiques.getBoolean(nomJoueur + ".ia");
+        int  nbPoints        = statistiques.getInt(nomJoueur + ".points");
+        int  nbPartiesJouees = statistiques.getInt(nomJoueur + ".parties");
+        cout << nomJoueur << ": " << estUneIA << " " << nbPoints << " " << nbPartiesJouees << endl;
+    }
 }
 
 void Parametres::sauvegarder()

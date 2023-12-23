@@ -15,11 +15,11 @@ Historique::Historique() : parties({}), points({})
 {
 }
 
-Historique::Historique(vector<Joueur>& listeJoueurs) : parties({}), points({})
+Historique::Historique(vector<Joueur*>& listeJoueurs) : parties({}), points({})
 {
     for(int i = 0; i < (int)listeJoueurs.size(); i++)
     {
-        Joueur joueur  = listeJoueurs[i];
+        Joueur* joueur = listeJoueurs[i];
         points[joueur] = 0;
     }
 }
@@ -76,11 +76,11 @@ void Historique::savegarderPartie(Puissance* puissance, bool sauvegardeFichier)
     {
         pions.push_back(to_string(getIndiceJeton(casePlateau)));
     }
-    for(int i = 0; i < (int)puissance->getJoueurs()->size(); i++)
+    for(int i = 0; i < (int)puissance->getJoueurs().size(); i++)
     {
-        Joueur joueur      = puissance->getJoueurs()->at(i);
-        int    indiceJeton = getIndiceJeton(joueur.getJeton());
-        json.setInt(indice + ".joueurs." + joueur.getNom(), indiceJeton);
+        Joueur* joueur      = puissance->getJoueurs().at(i);
+        int     indiceJeton = getIndiceJeton(joueur->getJeton());
+        json.setInt(indice + "joueurs." + joueur->getNom(), indiceJeton);
     }
     json.setInt(indice + "nbLignes", nbLignes);
     json.setInt(indice + "nbColonnes", nbColonnes);
@@ -93,7 +93,7 @@ void Historique::ajouterVictoire(Joueur* joueur)
 {
     if(joueur != nullptr)
     {
-        points[*joueur]++;
+        points[joueur]++;
     }
 }
 
@@ -106,11 +106,11 @@ void Historique::afficher()
     }
     IHM::afficherTexte("Nombre de parties jouée(s) : " + to_string(parties.size()) + "\n");
     IHM::afficherTexte("Points par joueurs : \n");
-    for(map<Joueur, int>::iterator it = points.begin(); it != points.end(); ++it)
+    for(map<Joueur*, int>::iterator it = points.begin(); it != points.end(); ++it)
     {
-        Joueur joueur       = it->first;
-        int    pointsJoueur = it->second;
-        IHM::afficherTexte(getSequence(joueur.getJeton(), joueur.getNom()) + " : " +
+        Joueur* joueur       = it->first;
+        int     pointsJoueur = it->second;
+        IHM::afficherTexte(getSequence(joueur->getJeton(), joueur->getNom()) + " : " +
                            to_string(pointsJoueur) + " point(s)\n");
     }
     for(Puissance* partie: parties)
@@ -127,17 +127,16 @@ void Historique::charger()
     JSON json("src/historique.json");
     for(string indicePartie: json.getCles("", false))
     {
-        vector<Joueur>* joueurs    = new vector<Joueur>();
+        vector<Joueur*> joueurs    = *new vector<Joueur*>();
         int             nbColonnes = json.getInt(indicePartie + ".nbColonnes");
         int             nbLignes   = json.getInt(indicePartie + ".nbLignes");
         vector<Jeton>   pions;
         int             tailleSequence = json.getInt(indicePartie + ".tailleSequence");
         for(string nomJoueur: json.getCles(indicePartie + ".joueurs", true))
         {
-            joueurs->push_back(
-              Joueur(getJetonDepuisIndice(json.getInt(indicePartie + ".joueurs." + nomJoueur)),
-                     nomJoueur,
-                     nullptr));
+            joueurs.push_back(
+              new Joueur(getJetonDepuisIndice(json.getInt(indicePartie + ".joueurs." + nomJoueur)),
+                         nomJoueur));
         }
         for(string casePlateau: json.getStringList(indicePartie + ".pions"))
         {
