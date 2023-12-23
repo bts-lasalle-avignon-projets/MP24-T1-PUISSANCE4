@@ -72,20 +72,19 @@ void Historique::savegarderPartie(Puissance* puissance, bool sauvegardeFichier)
     int            nbColonnes     = puissance->getPlateau().getNbColonnes();
     int            tailleSequence = puissance->getPlateau().getNbPionsAlignement();
     vector<string> pions;
-    vector<string> joueurs;
     for(Jeton casePlateau: puissance->getPlateau().getCases())
     {
         pions.push_back(to_string(getIndiceJeton(casePlateau)));
     }
     for(int i = 0; i < (int)puissance->getJoueurs()->size(); i++)
     {
-        Joueur joueur = puissance->getJoueurs()->at(i);
-        joueurs.push_back(joueur.getNom());
+        Joueur joueur      = puissance->getJoueurs()->at(i);
+        int    indiceJeton = getIndiceJeton(joueur.getJeton());
+        json.setInt(indice + ".joueurs." + joueur.getNom(), indiceJeton);
     }
     json.setInt(indice + "nbLignes", nbLignes);
     json.setInt(indice + "nbColonnes", nbColonnes);
     json.setInt(indice + "tailleSequence", tailleSequence);
-    json.setStringList(indice + "joueurs", joueurs);
     json.setStringList(indice + "pions", pions);
     json.sauvegarder();
 }
@@ -117,6 +116,9 @@ void Historique::afficher()
     for(Puissance* partie: parties)
     {
         partie->getPlateau().afficherPlateauFinDePartie();
+        Joueur* vainqueur    = partie->getVainqueur();
+        string  nomVainqueur = getSequence(vainqueur->getJeton(), vainqueur->getNom());
+        IHM::afficherTexte("Vainqueur : " + nomVainqueur + "\n");
     }
 }
 
@@ -125,20 +127,23 @@ void Historique::charger()
     JSON json("src/historique.json");
     for(string indicePartie: json.getCles("", false))
     {
-        vector<Joueur> joueurs;
-        int            nbColonnes = json.getInt(indicePartie + ".nbColonnes");
-        int            nbLignes   = json.getInt(indicePartie + ".nbLignes");
-        vector<Jeton>  pions;
-        int            tailleSequence = json.getInt(indicePartie + ".tailleSequence");
-        for(string nomJoueur: json.getStringList(indicePartie + ".joueurs"))
+        vector<Joueur>* joueurs    = new vector<Joueur>();
+        int             nbColonnes = json.getInt(indicePartie + ".nbColonnes");
+        int             nbLignes   = json.getInt(indicePartie + ".nbLignes");
+        vector<Jeton>   pions;
+        int             tailleSequence = json.getInt(indicePartie + ".tailleSequence");
+        for(string nomJoueur: json.getCles(indicePartie + ".joueurs", true))
         {
-            joueurs.push_back(Joueur(Jeton(VIDE), nomJoueur, nullptr));
+            joueurs->push_back(
+              Joueur(getJetonDepuisIndice(json.getInt(indicePartie + ".joueurs." + nomJoueur)),
+                     nomJoueur,
+                     nullptr));
         }
         for(string casePlateau: json.getStringList(indicePartie + ".pions"))
         {
             pions.push_back(getJetonDepuisIndice(stoi(casePlateau)));
         }
-        Puissance* puissance = new Puissance(&joueurs, nbLignes, nbColonnes, pions, tailleSequence);
+        Puissance* puissance = new Puissance(joueurs, nbLignes, nbColonnes, pions, tailleSequence);
         savegarderPartie(puissance, false);
     }
 }
