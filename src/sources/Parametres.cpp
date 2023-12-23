@@ -3,6 +3,8 @@
 #include "../headers/Ihm.h"
 #include "../headers/JSON.h"
 #include "../headers/Joueur.h"
+#include "../headers/IA.h"
+#include "../headers/Humain.h"
 
 #include <iostream>
 #include <vector>
@@ -13,13 +15,13 @@ constexpr int definitionNbLignes          = 6;
 constexpr int definitionNbColonnes        = 7;
 constexpr int definitionNbPionsAlignement = 4;
 
-Difficulte     Parametres::difficulte        = Difficulte(NORMAL);
-bool           Parametres::animations        = true;
-int            Parametres::nbLignes          = definitionNbLignes;
-int            Parametres::nbColonnes        = definitionNbColonnes;
-int            Parametres::nbPionsAlignement = definitionNbPionsAlignement;
-string         Parametres::version           = "Version inconnue";
-vector<Joueur> Parametres::joueurs;
+Difficulte      Parametres::difficulte        = Difficulte(NORMAL);
+bool            Parametres::animations        = true;
+int             Parametres::nbLignes          = definitionNbLignes;
+int             Parametres::nbColonnes        = definitionNbColonnes;
+int             Parametres::nbPionsAlignement = definitionNbPionsAlignement;
+string          Parametres::version           = "Version inconnue";
+vector<Joueur*> Parametres::joueursExistant;
 
 void Parametres::setDifficulte(Difficulte difficulte)
 {
@@ -202,11 +204,20 @@ void Parametres::chargerParametres()
     JSON statistiques("src/statistiques.json");
     for(string nomJoueur: statistiques.getCles("", false))
     {
-        bool estUneIA        = statistiques.getBoolean(nomJoueur + ".ia");
-        int  nbPoints        = statistiques.getInt(nomJoueur + ".points");
-        int  nbPartiesJouees = statistiques.getInt(nomJoueur + ".parties");
-        cout << nomJoueur << ": " << estUneIA << " " << nbPoints << " " << nbPartiesJouees << endl;
+        if(statistiques.getBoolean(nomJoueur + ".ia"))
+        {
+            joueursExistant.push_back(new IA(Jeton(VIDE), nomJoueur));
+        }
+        else
+        {
+            joueursExistant.push_back(new Humain(Jeton(VIDE), nomJoueur));
+        }
     }
+}
+
+vector<Joueur*> Parametres::getJoueursExistant()
+{
+    return Parametres::joueursExistant;
 }
 
 void Parametres::sauvegarder()
@@ -220,4 +231,13 @@ void Parametres::sauvegarder()
 string Parametres::getVersion()
 {
     return Parametres::version;
+}
+
+void Parametres::sortie()
+{
+    for(int i = 0; i < (int)joueursExistant.size(); i++)
+    {
+        delete joueursExistant[i];
+    }
+    joueursExistant.clear();
 }

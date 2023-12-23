@@ -16,7 +16,6 @@ class Historique
 
   public:
     Historique();
-    Historique(std::vector<Joueur*>& listeJoueurs);
     Historique(const Historique& historique);
     Historique(Historique&& historique) noexcept;
     ~Historique();
@@ -26,6 +25,7 @@ class Historique
     void        ajouterVictoire(Joueur* joueur);
     void        afficher();
     void        charger();
+    Joueur*     recupererJoueurParNom(const std::string& nom);
 };
 
 #endif // HISTORIQUE

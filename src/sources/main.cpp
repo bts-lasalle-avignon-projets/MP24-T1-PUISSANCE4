@@ -7,5 +7,7 @@ int main()
 {
     Parametres::chargerParametres();
     IHM::initialiserJeu();
+
+    Parametres::sortie();
     return 0;
 }

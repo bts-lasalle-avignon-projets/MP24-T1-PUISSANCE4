@@ -10,7 +10,6 @@ class Plateau;
 
 class IA : public Joueur
 {
-  private:
   public:
     IA();
     IA(Jeton jeton, const std::string& nom);

@@ -270,7 +270,7 @@ void IHM::initialiserJeu()
 {
     vector<Joueur*> listeJoueurs  = IHM::saisieJoueurs();
     bool            continueLeJeu = true;
-    Historique      historique(listeJoueurs);
+    Historique      historique;
     historique.charger();
 
     while(continueLeJeu)

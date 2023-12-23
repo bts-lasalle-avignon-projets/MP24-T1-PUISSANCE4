@@ -1,5 +1,5 @@
 {
-  "animation": true,
-  "difficulte": 4,
+  "animation": false,
+  "difficulte": 1,
   "version": "3.0"
 }

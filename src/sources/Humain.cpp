@@ -9,27 +9,22 @@ using namespace std;
 
 Humain::Humain()
 {
-    std::cout << "\033[1;44m" << __PRETTY_FUNCTION__ << "\033[0m" << std::endl;
 }
 
 Humain::Humain(Jeton couleur, const string& nom) : Joueur(couleur, nom)
 {
-    std::cout << "\033[1;44m" << __PRETTY_FUNCTION__ << "\033[0m" << std::endl;
 }
 
 Humain::Humain(const Humain& humain) : Joueur(humain.getJeton(), humain.getNom())
 {
-    std::cout << "\033[1;44m" << __PRETTY_FUNCTION__ << "\033[0m" << std::endl;
 }
 
 Humain::Humain(Humain&& humain) noexcept : Joueur(humain.getJeton(), humain.getNom())
 {
-    std::cout << "\033[1;44m" << __PRETTY_FUNCTION__ << "\033[0m" << std::endl;
 }
 
 Humain::~Humain()
 {
-    std::cout << "\033[1;44m" << __PRETTY_FUNCTION__ << "\033[0m" << std::endl;
 }
 
 Humain& Humain::operator=(const Humain& humain) noexcept

@@ -8,20 +8,12 @@
 #include "../headers/Jeton.h"
 #include "../headers/Ihm.h"
 #include "../headers/JSON.h"
+#include "../headers/Parametres.h"
 
 using namespace std;
 
 Historique::Historique() : parties({}), points({})
 {
-}
-
-Historique::Historique(vector<Joueur*>& listeJoueurs) : parties({}), points({})
-{
-    for(int i = 0; i < (int)listeJoueurs.size(); i++)
-    {
-        Joueur* joueur = listeJoueurs[i];
-        points[joueur] = 0;
-    }
 }
 
 Historique::Historique(const Historique& historique) :
@@ -37,6 +29,11 @@ Historique::Historique(Historique&& historique) noexcept :
 
 Historique::~Historique()
 {
+    for(int i = 0; i < (int)parties.size(); i++)
+    {
+        delete parties[i];
+    }
+    parties.clear();
 }
 
 Historique& Historique::operator=(const Historique& historique) noexcept
@@ -145,4 +142,26 @@ void Historique::charger()
         Puissance* puissance = new Puissance(joueurs, nbLignes, nbColonnes, pions, tailleSequence);
         savegarderPartie(puissance, false);
     }
+    JSON statistiques("src/statistiques.json");
+    for(string nomJoueur: statistiques.getCles("", false))
+    {
+        int     nbPoints = statistiques.getInt(nomJoueur + ".points");
+        Joueur* joueur   = recupererJoueurParNom(nomJoueur);
+        if(joueur != nullptr)
+        {
+            points[joueur] = nbPoints;
+        }
+    }
+}
+
+Joueur* Historique::recupererJoueurParNom(const string& nom)
+{
+    for(Joueur* joueur: Parametres::getJoueursExistant())
+    {
+        if(joueur->getNom() == nom)
+        {
+            return joueur;
+        }
+    }
+    return nullptr;
 }
