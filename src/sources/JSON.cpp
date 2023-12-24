@@ -428,3 +428,8 @@ void JSON::setStringList(const string& cle, vector<string>& valeur)
     }
     configuration[cle] = contenu + "]";
 }
+
+void JSON::supprimer(const string& cle)
+{
+    configuration.erase(cle);
+}

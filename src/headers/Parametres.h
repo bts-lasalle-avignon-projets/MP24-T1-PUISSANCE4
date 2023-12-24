@@ -17,6 +17,7 @@ class Parametres
     static int                  nbColonnes;
     static int                  nbPionsAlignement;
     static std::vector<Joueur*> joueursExistant;
+    static std::vector<Joueur*> joueursChoisis;
     static std::string          version;
 
   public:
@@ -24,10 +25,10 @@ class Parametres
     static Difficulte           getDifficulte();
     static void                 afficher();
     static bool                 attendreCommande();
-    static int                  editerParametre(const std::string&              selection,
+    static int                  editerParametre(const std::vector<std::string>& selection,
                                                 const std::vector<std::string>& elements,
                                                 bool                            affichageDynamique);
-    static void                 afficherParametre(const std::string&              selection,
+    static void                 afficherParametre(const std::vector<std::string>& selection,
                                                   const std::vector<std::string>& elements,
                                                   bool                            dynamique);
     static bool                 possedeAnimation();
@@ -42,6 +43,7 @@ class Parametres
     static void                 sauvegarder();
     static std::vector<Joueur*> getJoueursExistant();
     static void                 sortie();
+    static Joueur*              recupererJoueurParNom(const std::string& nom);
 };
 
 #endif // PARAMETRES_H

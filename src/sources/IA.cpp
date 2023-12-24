@@ -17,7 +17,7 @@ IA::IA()
 {
 }
 
-IA::IA(Jeton jeton, const string& nom) : Joueur(jeton, nom)
+IA::IA(Jeton jeton, const string& nom) : Joueur(jeton, nom, true)
 {
 }
 

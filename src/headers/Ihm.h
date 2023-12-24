@@ -12,6 +12,7 @@ class IHM
 
   public:
     static std::vector<Joueur*> saisieJoueurs();
+    static Joueur*              saisirJoueur();
     static std::string          saisieNomJoueur(int numeroJoueur);
     static bool                 nomJoueurValide(const std::string& nomJoueur);
     static void                 afficherMessageTour(const Joueur* joueur);
@@ -28,6 +29,7 @@ class IHM
     static void                 compterNbLignes(const std::string& texte);
     static void                 mettreZeroNbLignesASupprimer();
     static void                 afficherTexte(const std::string& texte);
+    static void                 afficherErreur(const std::string& texte);
     static void                 afficherRegles();
     static void                 attendre(int millisecondes);
     static void                 initialiserJeu();

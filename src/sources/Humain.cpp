@@ -1,4 +1,4 @@
-#include "../headers/humain.h"
+#include "../headers/Humain.h"
 #include "../headers/Jeton.h"
 #include "../headers/IA.h"
 #include "../headers/Plateau.h"
@@ -11,15 +11,15 @@ Humain::Humain()
 {
 }
 
-Humain::Humain(Jeton couleur, const string& nom) : Joueur(couleur, nom)
+Humain::Humain(Jeton couleur, const string& nom) : Joueur(couleur, nom, false)
 {
 }
 
-Humain::Humain(const Humain& humain) : Joueur(humain.getJeton(), humain.getNom())
+Humain::Humain(const Humain& humain) : Joueur(humain.getJeton(), humain.getNom(), false)
 {
 }
 
-Humain::Humain(Humain&& humain) noexcept : Joueur(humain.getJeton(), humain.getNom())
+Humain::Humain(Humain&& humain) noexcept : Joueur(humain.getJeton(), humain.getNom(), false)
 {
 }
 

@@ -12,10 +12,11 @@ class Joueur
   private:
     Jeton       couleur;
     std::string nom;
+    bool        ia;
 
   public:
     Joueur();
-    Joueur(Jeton couleur, const std::string& nom);
+    Joueur(Jeton couleur, const std::string& nom, bool ia);
     Joueur(const Joueur& joueur);
     Joueur(Joueur&& joueur) noexcept;
     virtual ~Joueur();
@@ -25,5 +26,6 @@ class Joueur
     std::string getNom() const;
     Jeton       getJeton() const;
     virtual int jouerCoup(Plateau& plateau);
+    bool        estUneIA() const;
 };
 #endif // JOUEUR

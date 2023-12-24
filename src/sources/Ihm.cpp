@@ -35,17 +35,13 @@ bool IHM::nomJoueurValide(const std::string& nomJoueur)
     {
         return false;
     }
-    static vector<string> nomJoueurs;
-    for(string& nom: nomJoueurs)
+    for(Joueur* joueur: Parametres::getJoueursExistant())
     {
-        if(nom == nomJoueur)
+        if(joueur->getNom() == nomJoueur)
         {
-            nbLignesASupprimer++;
-            cerr << "\033[1;31mErreur: Ce nom est déjà utilisé par un autre joueur\033[0m\n";
             return false;
         }
     }
-    nomJoueurs.push_back(nomJoueur);
     return true;
 }
 
@@ -160,6 +156,12 @@ void IHM::afficherTexte(const string& texte)
 {
     compterNbLignes(texte);
     cout << texte;
+}
+
+void IHM::afficherErreur(const string& texte)
+{
+    compterNbLignes(texte);
+    cerr << texte;
 }
 
 void IHM::compterNbLignes(const string& texte)
@@ -313,4 +315,31 @@ void IHM::initialiserJeu()
             continueLeJeu = false;
         }
     }
+}
+
+Joueur* IHM::saisirJoueur()
+{
+    afficherTexte("Tapez 'menu' pour annuler la création\n\n");
+    string nomJoueur = IHM::saisieNomJoueur(0);
+    if(nomJoueur == "menu")
+    {
+        return nullptr;
+    }
+    string commande;
+    while(commande != "oui" && commande != "non" && commande != "menu")
+    {
+        afficherTexte("Tapez 'menu' pour annuler la création\n\n");
+        afficherTexte("Souhaitez-vous en faire une IA ? (oui/non) : ");
+        cin >> commande;
+        effacerSaisie();
+        if(commande == "oui")
+        {
+            return new IA(Jeton(VIDE), nomJoueur);
+        }
+        else if(commande == "non")
+        {
+            return new Humain(Jeton(VIDE), nomJoueur);
+        }
+    }
+    return nullptr;
 }

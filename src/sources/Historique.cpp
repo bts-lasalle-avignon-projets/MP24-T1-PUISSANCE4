@@ -133,7 +133,8 @@ void Historique::charger()
         {
             joueurs.push_back(
               new Joueur(getJetonDepuisIndice(json.getInt(indicePartie + ".joueurs." + nomJoueur)),
-                         nomJoueur));
+                         nomJoueur,
+                         false));
         }
         for(string casePlateau: json.getStringList(indicePartie + ".pions"))
         {
@@ -146,22 +147,10 @@ void Historique::charger()
     for(string nomJoueur: statistiques.getCles("", false))
     {
         int     nbPoints = statistiques.getInt(nomJoueur + ".points");
-        Joueur* joueur   = recupererJoueurParNom(nomJoueur);
+        Joueur* joueur   = Parametres::recupererJoueurParNom(nomJoueur);
         if(joueur != nullptr)
         {
             points[joueur] = nbPoints;
         }
     }
-}
-
-Joueur* Historique::recupererJoueurParNom(const string& nom)
-{
-    for(Joueur* joueur: Parametres::getJoueursExistant())
-    {
-        if(joueur->getNom() == nom)
-        {
-            return joueur;
-        }
-    }
-    return nullptr;
 }

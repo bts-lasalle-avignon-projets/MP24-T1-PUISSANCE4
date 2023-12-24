@@ -54,6 +54,7 @@ class JSON
     void                     setInt(const std::string& cle, int valeur);
     void                     setString(const std::string& cle, const std::string& valeur);
     void setStringList(const std::string& cle, std::vector<std::string>& valeur);
+    void supprimer(const std::string& cle);
 };
 
 #endif // FICHIER_YML_H

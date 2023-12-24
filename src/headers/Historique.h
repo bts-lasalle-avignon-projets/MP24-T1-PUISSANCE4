@@ -25,7 +25,6 @@ class Historique
     void        ajouterVictoire(Joueur* joueur);
     void        afficher();
     void        charger();
-    Joueur*     recupererJoueurParNom(const std::string& nom);
 };
 
 #endif // HISTORIQUE
