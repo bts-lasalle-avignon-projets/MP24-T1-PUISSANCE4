@@ -59,6 +59,11 @@ Jeton Joueur::getJeton() const
     return this->couleur;
 }
 
+void Joueur::setJeton(Jeton jeton)
+{
+    this->couleur = jeton;
+}
+
 bool Joueur::operator<(const Joueur& joueur) const
 {
     return this->nom < joueur.nom;

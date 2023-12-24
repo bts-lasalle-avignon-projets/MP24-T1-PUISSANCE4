@@ -58,6 +58,14 @@ Historique& Historique::operator=(Historique&& historique) noexcept
 
 void Historique::savegarderPartie(Puissance* puissance, bool sauvegardeFichier)
 {
+    // A VERFIIER
+    for(int i = 0; i < (int)puissance->getJoueurs().size(); i++)
+    {
+        Joueur* joueur = puissance->getJoueurs().at(i);
+        puissance->getJoueurs().at(i) =
+          new Joueur(joueur->getJeton(), joueur->getNom(), joueur->estUneIA());
+    }
+    // A VERFIIER
     parties.push_back(puissance);
     if(!sauvegardeFichier)
     {

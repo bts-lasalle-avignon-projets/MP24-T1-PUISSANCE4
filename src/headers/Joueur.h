@@ -25,6 +25,7 @@ class Joueur
     bool        operator<(const Joueur& joueur) const;
     std::string getNom() const;
     Jeton       getJeton() const;
+    void        setJeton(Jeton jeton);
     virtual int jouerCoup(Plateau& plateau);
     bool        estUneIA() const;
 };

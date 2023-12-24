@@ -115,120 +115,7 @@ bool Parametres::attendreCommande()
         }
         if(commande == "joueurs" || commande == "j")
         {
-            int choixJoueur = -1;
-            while(choixJoueur != 0)
-            {
-                vector<string> joueurs;
-                vector<string> nomJoueurs;
-                joueurs.push_back("(+) Créer un profil");
-                joueurs.push_back("(-) Supprimer un profil");
-                for(Joueur* joueur: joueursExistant)
-                {
-                    string prefix = "";
-                    if(joueur->estUneIA())
-                    {
-                        prefix = "[IA] ";
-                    }
-                    nomJoueurs.push_back(joueur->getNom());
-                    joueurs.push_back(prefix + joueur->getNom());
-                }
-                vector<string> joueursSelection;
-                for(Joueur* joueur: joueursChoisis)
-                {
-                    string prefix = "";
-                    if(joueur->estUneIA())
-                    {
-                        prefix = "[IA] ";
-                    }
-                    joueursSelection.push_back(prefix + joueur->getNom());
-                }
-                choixJoueur = editerParametre(joueursSelection, joueurs, affichageDynamique);
-                if(choixJoueur == 0)
-                {
-                    if((int)joueursChoisis.size() != nbJoueursRequis)
-                    {
-                        IHM::effacerLignes();
-                        affichageDynamique = false;
-                        choixJoueur        = -1;
-                        IHM::afficherErreur(
-                          "\033[1;31mErreur: Le nombre de joueurs actifs doit être de " +
-                          to_string(nbJoueursRequis) + "\033[0m\n");
-                        continue;
-                    }
-                    break;
-                }
-                if(choixJoueur == 1)
-                {
-                    IHM::effacerLignes();
-                    affichageDynamique    = false;
-                    Joueur* nouveauJoueur = IHM::saisirJoueur();
-                    if(nouveauJoueur != nullptr)
-                    {
-                        joueursExistant.push_back(nouveauJoueur);
-                        JSON statistiques("src/statistiques.json");
-                        statistiques.setBoolean(nouveauJoueur->getNom() + ".ia",
-                                                nouveauJoueur->estUneIA());
-                        statistiques.setInt(nouveauJoueur->getNom() + ".parties", 0);
-                        statistiques.setInt(nouveauJoueur->getNom() + ".points", 0);
-                        statistiques.sauvegarder();
-                    }
-                    continue;
-                }
-                if(choixJoueur == 2)
-                {
-                    IHM::effacerLignes();
-                    affichageDynamique       = false;
-                    Joueur* joueurASupprimer = recupererJoueurParNom(IHM::saisieNomJoueur(0));
-                    if(joueurASupprimer == nullptr)
-                    {
-                        IHM::afficherErreur("\033[1;31mErreur: Ce joueur n'existe pas\033[0m\n");
-                    }
-                    else
-                    {
-                        for(int i = 0; i < (int)joueursExistant.size(); i++)
-                        {
-                            if(joueursExistant.at(i)->getNom() == joueurASupprimer->getNom())
-                            {
-                                joueursExistant.erase(joueursExistant.begin() + i);
-                                if(find(joueursChoisis.begin(),
-                                        joueursChoisis.end(),
-                                        joueurASupprimer) != joueursChoisis.end())
-                                {
-                                    for(int j = 0; j < (int)joueursChoisis.size(); j++)
-                                    {
-                                        joueursChoisis.erase(joueursChoisis.begin() + j);
-                                    }
-                                }
-                                JSON statistiques("src/statistiques.json");
-                                statistiques.supprimer(joueurASupprimer->getNom() + ".ia");
-                                statistiques.supprimer(joueurASupprimer->getNom() + ".parties");
-                                statistiques.supprimer(joueurASupprimer->getNom() + ".points");
-                                statistiques.sauvegarder();
-                                delete joueurASupprimer;
-                                break;
-                            }
-                        }
-                    }
-                    continue;
-                }
-                if((int)joueursChoisis.size() == nbJoueursRequis)
-                {
-                    joueursChoisis.clear();
-                }
-                Joueur* joueurChoisi = recupererJoueurParNom(nomJoueurs.at(choixJoueur - 3));
-                if(find(joueursChoisis.begin(), joueursChoisis.end(), joueurChoisi) !=
-                   joueursChoisis.end())
-                {
-                    IHM::effacerLignes();
-                    affichageDynamique = false;
-                    IHM::afficherErreur(
-                      "\033[1;31mErreur: Ce joueur est déjà sélectionné\033[0m\n");
-                    continue;
-                }
-                joueursChoisis.push_back(joueurChoisi);
-                IHM::effacerLignes();
-                affichageDynamique = false;
-            }
+            afficherMenuJoueurs();
             return true;
         }
         if(commande == "menu" || commande == "m")
@@ -270,7 +157,7 @@ void Parametres::afficherParametre(const vector<string>& selection,
             IHM::afficherTexte(to_string(i + 1) + " : [ " + element + " ]\033[0m\n");
         }
     }
-    IHM::afficherTexte("\n0 : \033[1;31mRetour au paramètres\033[0m\n");
+    IHM::afficherTexte("\n0 : \033[1;31mRetour\033[0m\n");
     string message = "\nTapez le numéro du paramètre souhaité (\033[1;34m1\033[0m - \033[1;34m" +
                      to_string(elements.size()) + "\033[0m) :\n";
     if(dynamique)
@@ -337,11 +224,138 @@ void Parametres::chargerParametres()
             joueursExistant.push_back(new Humain(Jeton(VIDE), nomJoueur));
         }
     }
+    IHM::afficherTexte("Choisissez vos " + to_string(nbJoueursRequis) +
+                       " joueur(s) qui sont s'affronter\n\n");
+    IHM::mettreZeroNbLignesASupprimer();
+    afficherMenuJoueurs();
+    IHM::effacerTout();
+}
+
+void Parametres::afficherMenuJoueurs()
+{
+    bool affichageDynamique = true;
+    int  choixJoueur        = -1;
+    while(choixJoueur != 0)
+    {
+        vector<string> joueurs;
+        vector<string> nomJoueurs;
+        joueurs.push_back("\033[1;37m(\033[1;36m+\033[1;37m) \033[1;36mCréer un profil\033[0m");
+        joueurs.push_back("\033[1;37m(\033[1;31m-\033[1;37m) \033[1;31mSupprimer un profil\033[0m");
+        for(Joueur* joueur: joueursExistant)
+        {
+            string prefix = "";
+            if(joueur->estUneIA())
+            {
+                prefix = "[IA] ";
+            }
+            nomJoueurs.push_back(joueur->getNom());
+            joueurs.push_back(prefix + joueur->getNom());
+        }
+        vector<string> joueursSelection;
+        for(Joueur* joueur: joueursChoisis)
+        {
+            string prefix = "";
+            if(joueur->estUneIA())
+            {
+                prefix = "[IA] ";
+            }
+            joueursSelection.push_back(prefix + joueur->getNom());
+        }
+        choixJoueur = editerParametre(joueursSelection, joueurs, affichageDynamique);
+        if(choixJoueur == 0)
+        {
+            if((int)joueursChoisis.size() != nbJoueursRequis)
+            {
+                IHM::effacerLignes();
+                affichageDynamique = false;
+                choixJoueur        = -1;
+                IHM::afficherErreur("\033[1;31mErreur: Le nombre de joueurs actifs doit être de " +
+                                    to_string(nbJoueursRequis) + "\033[0m\n");
+                continue;
+            }
+            break;
+        }
+        if(choixJoueur == 1)
+        {
+            IHM::effacerLignes();
+            affichageDynamique    = false;
+            Joueur* nouveauJoueur = IHM::saisirJoueur();
+            if(nouveauJoueur != nullptr)
+            {
+                joueursExistant.push_back(nouveauJoueur);
+                JSON statistiques("src/statistiques.json");
+                statistiques.setBoolean(nouveauJoueur->getNom() + ".ia", nouveauJoueur->estUneIA());
+                statistiques.setInt(nouveauJoueur->getNom() + ".parties", 0);
+                statistiques.setInt(nouveauJoueur->getNom() + ".points", 0);
+                statistiques.sauvegarder();
+            }
+            IHM::effacerLignes();
+            continue;
+        }
+        if(choixJoueur == 2)
+        {
+            IHM::effacerLignes();
+            affichageDynamique = false;
+            Joueur* joueurASupprimer =
+              recupererJoueurParNom(IHM::saisieNomJoueur("à supprimer", false));
+            if(joueurASupprimer == nullptr)
+            {
+                IHM::afficherErreur("\033[1;31mErreur: Ce joueur n'existe pas\033[0m\n");
+            }
+            else
+            {
+                for(int i = 0; i < (int)joueursExistant.size(); i++)
+                {
+                    if(joueursExistant.at(i)->getNom() == joueurASupprimer->getNom())
+                    {
+                        joueursExistant.erase(joueursExistant.begin() + i);
+                        if(find(joueursChoisis.begin(), joueursChoisis.end(), joueurASupprimer) !=
+                           joueursChoisis.end())
+                        {
+                            for(int j = 0; j < (int)joueursChoisis.size(); j++)
+                            {
+                                joueursChoisis.erase(joueursChoisis.begin() + j);
+                            }
+                        }
+                        JSON statistiques("src/statistiques.json");
+                        statistiques.supprimer(joueurASupprimer->getNom() + ".ia");
+                        statistiques.supprimer(joueurASupprimer->getNom() + ".parties");
+                        statistiques.supprimer(joueurASupprimer->getNom() + ".points");
+                        statistiques.sauvegarder();
+                        delete joueurASupprimer;
+                        break;
+                    }
+                }
+            }
+            IHM::effacerLignes();
+            continue;
+        }
+        if((int)joueursChoisis.size() == nbJoueursRequis)
+        {
+            joueursChoisis.clear();
+        }
+        Joueur* joueurChoisi = recupererJoueurParNom(nomJoueurs.at(choixJoueur - 3));
+        if(find(joueursChoisis.begin(), joueursChoisis.end(), joueurChoisi) != joueursChoisis.end())
+        {
+            IHM::effacerLignes();
+            affichageDynamique = false;
+            IHM::afficherErreur("\033[1;31mErreur: Ce joueur est déjà sélectionné\033[0m\n");
+            continue;
+        }
+        joueursChoisis.push_back(joueurChoisi);
+        IHM::effacerLignes();
+        affichageDynamique = false;
+    }
 }
 
 vector<Joueur*> Parametres::getJoueursExistant()
 {
     return Parametres::joueursExistant;
+}
+
+vector<Joueur*> Parametres::getJoueursChoisis()
+{
+    return Parametres::joueursChoisis;
 }
 
 void Parametres::sauvegarder()

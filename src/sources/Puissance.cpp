@@ -76,14 +76,10 @@ Puissance& Puissance::operator=(Puissance&& puissance) noexcept
 
 void Puissance::demarrerPartie()
 {
-    /*for(Joueur* joueur: listeJoueurs)
+    for(int i = 0; i < (int)listeJoueurs.size(); i++)
     {
-        if(joueur.estUneIA())
-        {
-            joueur.getObjetIA()->setPlateau(&plateau);
-        }
-        joueur->setPlateau(&plateau);
-    }*/
+        listeJoueurs.at(i)->setJeton(getJetonDepuisIndice(i + 1));
+    }
     int   indiceJouee = -1;
     Jeton jetonJoueur = Jeton(VIDE);
     while(!this->partieEstTerminee())

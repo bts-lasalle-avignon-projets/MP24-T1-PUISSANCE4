@@ -16,15 +16,19 @@ using namespace std;
 int           IHM::nbLignesASupprimer = 0;
 constexpr int tempsAffichageCaractere = 20;
 
-string IHM::saisieNomJoueur(int numeroJoueur)
+string IHM::saisieNomJoueur(const string& indicationTextuelle, bool verifierDoublons)
 {
     string nom;
-    while(!nomJoueurValide(nom))
+    while((nom.empty() && !verifierDoublons) || (verifierDoublons && !nomJoueurValide(nom)))
     {
-        afficherTexte("Entrez le nom/pseudo du Joueur " + to_string(numeroJoueur) + " : ");
+        afficherTexte("Entrez le nom/pseudo du Joueur");
+        if(!indicationTextuelle.empty())
+        {
+            afficherTexte(" " + indicationTextuelle);
+        }
+        afficherTexte(" : ");
         cin >> nom;
         effacerSaisie();
-        effacerLignes();
     }
     return nom;
 }
@@ -39,6 +43,8 @@ bool IHM::nomJoueurValide(const std::string& nomJoueur)
     {
         if(joueur->getNom() == nomJoueur)
         {
+            IHM::afficherErreur(
+              "\033[1;31mErreur: Ce nom est déjà utilisé par un autre joueur\033[0m\n");
             return false;
         }
     }
@@ -229,39 +235,6 @@ void IHM::afficherRegles()
                   "jetons, la partie est déclarée nulle.\n");
     afficherTexte("\n");
 }
-std::vector<Joueur*> IHM::saisieJoueurs()
-{
-    std::vector<Joueur*> listeJoueurs;
-    static bool          contientIA = false;
-    for(int i = 0; i < 2; i++)
-    {
-        string commande;
-        while(commande != "oui" && commande != "non")
-        {
-            afficherTexte("Souhaitez-vous faire jouer ");
-            if(contientIA)
-            {
-                afficherTexte("une autre ");
-            }
-            afficherTexte("IA ? (oui/non) : ");
-            cin >> commande;
-            effacerSaisie();
-            if(commande == "oui")
-            {
-                listeJoueurs.push_back(
-                  new IA(getJetonDepuisIndice(i + 1), "Brendan #" + to_string(i + 1)));
-                contientIA = true;
-            }
-            else if(commande == "non")
-            {
-                listeJoueurs.push_back(
-                  new Humain(getJetonDepuisIndice(i + 1), IHM::saisieNomJoueur(i + 1)));
-            }
-            afficherTexte(listeJoueurs.at(i)->getNom() + " à été ajouté\n");
-        }
-    }
-    return listeJoueurs;
-}
 
 void IHM::attendre(int millisecondes)
 {
@@ -270,9 +243,8 @@ void IHM::attendre(int millisecondes)
 
 void IHM::initialiserJeu()
 {
-    vector<Joueur*> listeJoueurs  = IHM::saisieJoueurs();
-    bool            continueLeJeu = true;
-    Historique      historique;
+    bool       continueLeJeu = true;
+    Historique historique;
     historique.charger();
 
     while(continueLeJeu)
@@ -285,7 +257,8 @@ void IHM::initialiserJeu()
         if(commande == "play" || commande == "p")
         {
             IHM::effacerTout();
-            Puissance* puissance = new Puissance(listeJoueurs,
+            vector<Joueur*> listeJoueurs = Parametres::getJoueursChoisis();
+            Puissance*      puissance    = new Puissance(listeJoueurs,
                                                  Parametres::getNbLignes(),
                                                  Parametres::getNbColonnes(),
                                                  Parametres::getNbPionsAlignement());
@@ -320,7 +293,7 @@ void IHM::initialiserJeu()
 Joueur* IHM::saisirJoueur()
 {
     afficherTexte("Tapez 'menu' pour annuler la création\n\n");
-    string nomJoueur = IHM::saisieNomJoueur(0);
+    string nomJoueur = IHM::saisieNomJoueur("", true);
     if(nomJoueur == "menu")
     {
         return nullptr;

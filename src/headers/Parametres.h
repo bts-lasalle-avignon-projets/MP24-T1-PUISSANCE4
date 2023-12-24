@@ -42,8 +42,10 @@ class Parametres
     static std::string          getVersion();
     static void                 sauvegarder();
     static std::vector<Joueur*> getJoueursExistant();
+    static std::vector<Joueur*> getJoueursChoisis();
     static void                 sortie();
     static Joueur*              recupererJoueurParNom(const std::string& nom);
+    static void                 afficherMenuJoueurs();
 };
 
 #endif // PARAMETRES_H
