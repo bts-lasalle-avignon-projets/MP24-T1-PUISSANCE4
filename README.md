@@ -6,7 +6,7 @@
 
 - Nom du logiciel : Puissance 4
 - Date de début : 24 novembre 2023 à 14:58
-- Numéro de version du logiciel : 2.1
+- Numéro de version du logiciel : 2.2
 
 ## Présentation
 
@@ -26,6 +26,12 @@ $ ./puissance4.out
 
 Permet de jouer une partie de Puissance 4 à deux joueurs.
 
+
+### Version 2.2
+
+- [x] Correction version 2.1
+- [x] Simplification interaction Homme-Machine
+- [x] Affichage du menu et version
 
 ### Version 2.1
 
