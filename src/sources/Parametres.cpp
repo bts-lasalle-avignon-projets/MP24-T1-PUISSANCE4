@@ -27,14 +27,14 @@ void Parametres::afficher()
     {
         IHM::effacerLignes();
         IHM::afficherTexte("Difficultée : \033[1;34m" + getTexte(getDifficulte()) +
-                           "\033[0m (Tapez '\033[1;31md\033[0m')\n");
+                           "\033[0m (Tapez '\033[1;31m1\033[0m')\n");
         string texteAnimation = "Activé";
         if(!animations)
         {
             texteAnimation = "Désactivé";
         }
         IHM::afficherTexte("Animations : \033[1;34m" + texteAnimation +
-                           "\033[0m (Tapez '\033[1;31ma\033[0m')\n");
+                           "\033[0m (Tapez '\033[1;31m2\033[0m')\n");
         continueEdition = attendreCommande();
     }
 }
@@ -50,7 +50,7 @@ bool Parametres::attendreCommande()
         IHM::effacerLignes();
 
         bool affichageDynamique = true;
-        if(commande == "d")
+        if(commande == "1")
         {
             int choixDifficultee = -1;
             while(true)
@@ -73,7 +73,7 @@ bool Parametres::attendreCommande()
             return true;
         }
 
-        if(commande == "a")
+        if(commande == "2")
         {
             int choixAnimations = -1;
             while(choixAnimations != 0)

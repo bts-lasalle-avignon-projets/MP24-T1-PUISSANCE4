@@ -30,7 +30,7 @@ int main()
         string commande = IHM::saisirCommandeDeJeu();
         IHM::effacerSaisie();
         IHM::effacerLignes();
-        if(commande == "j")
+        if(commande == "1")
         {
             IHM::effacerTout();
             Puissance puissance = *new Puissance(&listeJoueurs, nbLignes, nbColonnes);
@@ -40,18 +40,18 @@ int main()
             IHM::attendreRetourMenu();
         }
 
-        else if(commande == "h")
+        else if(commande == "2")
         {
             historique.afficher();
             IHM::attendreRetourMenu();
         }
 
-        else if(commande == "p")
+        else if(commande == "3")
         {
             Parametres::afficher();
         }
 
-        else if(commande == "r")
+        else if(commande == "4")
         {
             IHM::effacerTout();
             IHM::afficherRegles();
