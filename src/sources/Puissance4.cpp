@@ -3,7 +3,6 @@
 #include "Partie.h"
 #include "Ihm.h"
 #include "Plateau.h"
-#include "Historique.h"
 #include "IA.h"
 #include "Parametres.h"
 
@@ -25,7 +24,6 @@ void Puissance4::demarrer()
     IHM::afficherBanniere();
 
     vector<Joueur> listeJoueurs = IHM::saisirJoueurs(nbJoueursParDefaut);
-    Historique     historique(listeJoueurs);
 
     bool continueLeJeu = true;
     while(continueLeJeu)
@@ -39,10 +37,10 @@ void Puissance4::demarrer()
         if(commande == "1")
         {
             IHM::effacerTout();
-            Partie partie(&listeJoueurs);
-            partie.demarrer();
-            historique.savegarderPartie(partie);
-            historique.ajouterVictoire(partie.getVainqueur());
+            Partie* partie = new Partie(&listeJoueurs);
+            historique.sauvegarderPartie(partie);
+            partie->demarrer();
+            historique.ajouterVictoire(partie->getVainqueur());
             IHM::attendreRetourMenu();
         }
 

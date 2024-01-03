@@ -11,18 +11,17 @@ class Partie;
 class Historique
 {
   private:
-    std::vector<Partie>   parties;
+    std::vector<Partie*>  parties;
     std::map<Joueur, int> points;
 
   public:
     Historique();
-    Historique(std::vector<Joueur>& listeJoueurs);
     Historique(const Historique& historique);
     Historique(Historique&& historique) noexcept;
     ~Historique();
     Historique& operator=(const Historique& historique) noexcept;
     Historique& operator=(Historique&& historique) noexcept;
-    void        savegarderPartie(Partie& puissance);
+    void        sauvegarderPartie(Partie* partie);
     void        ajouterVictoire(Joueur* joueur);
     void        afficher();
 };

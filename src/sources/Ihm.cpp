@@ -95,12 +95,12 @@ void IHM::afficherBanniere()
 void IHM::afficherMenu()
 {
     mettreZeroNbLignesASupprimer();
-    afficherTexte(jaune + "Commandes de jeu à taper:\033[0m\n");
-    afficherTexte(" - Jouer une nouvelle partie: " + rouge + "1\033[0m\n");
-    afficherTexte(" - Afficher l'historique: " + rouge + "2\033[0m\n");
-    afficherTexte(" - Accéder aux paramètres: " + rouge + "3\033[0m\n");
-    afficherTexte(" - Lire les règles: " + rouge + "4\033[0m\n");
-    afficherTexte("\n - " + rouge + "Quitter: " + jaune + "0\033[0m\n");
+    afficherTexte(jaune + "Menu\033[0m\n");
+    afficherTexte(jaune + "1" + "\033[0m - Jouer une nouvelle partie" + "\033[0m\n");
+    afficherTexte(jaune + "2" + "\033[0m - Afficher l'historique" + "\033[0m\n");
+    afficherTexte(jaune + "3" + "\033[0m - Accéder aux paramètres" + "\033[0m\n");
+    afficherTexte(jaune + "4" + "\033[0m - Lire les règles" + "\033[0m\n");
+    afficherTexte(rouge + "0" + "\033[0m - Quitter" + "\033[0m\n");
 }
 
 string IHM::saisirCommandeDeJeu()
@@ -135,7 +135,7 @@ void IHM::effacerLignes(int nombreDeLignes)
 
 void IHM::attendreRetourMenu()
 {
-    afficherTexte("Tapez '0' pour quitter\n");
+    afficherTexte("\nTapez '" + rouge + "0" + "\033[0m' pour revenir au menu\n");
     string commande;
     while(commande != "0")
     {
