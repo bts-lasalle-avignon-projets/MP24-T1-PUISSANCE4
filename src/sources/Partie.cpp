@@ -5,12 +5,12 @@
 
 using namespace std;
 
-Partie::Partie(std::vector<Joueur>* listeJoueurs /*= nullptr*/) :
+Partie::Partie(std::vector<Joueur*>* listeJoueurs /*= nullptr*/) :
     indiceJoueurActuel(Jeton::VIDE), listeJoueurs(listeJoueurs), plateau(this)
 {
 }
 
-Partie::Partie(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes) :
+Partie::Partie(vector<Joueur*>* listeJoueurs, int nbLignes, int nbColonnes) :
     indiceJoueurActuel(Jeton::VIDE), listeJoueurs(listeJoueurs), plateau(this, nbLignes, nbColonnes)
 {
 }
@@ -53,14 +53,6 @@ Partie& Partie::operator=(Partie&& partie) noexcept
 
 void Partie::demarrer()
 {
-    for(Joueur joueur: *listeJoueurs)
-    {
-        if(joueur.estUneIA())
-        {
-            joueur.getObjetIA()->setPlateau(&plateau);
-        }
-    }
-
     int indiceJouee = -1;
     while(!this->partieEstTerminee())
     {
@@ -75,10 +67,10 @@ int Partie::jouerTour()
 {
     Jeton indiceJoueurSuivant = Jeton((this->indiceJoueurActuel + 1) % Jeton::NB_JETONS);
     indiceJoueurActuel        = indiceJoueurSuivant;
-    Joueur joueurSuivant      = listeJoueurs->at(indiceJoueurSuivant);
-    IHM::afficherMessageTour(joueurSuivant);
-    int indiceColonne = joueurSuivant.jouerCoup(plateau);
-    return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
+    Joueur* joueurSuivant     = listeJoueurs->at(indiceJoueurSuivant);
+    IHM::afficherMessageTour(*joueurSuivant);
+    int indiceColonne = joueurSuivant->jouerCoup(plateau);
+    return this->plateau.placerJeton(indiceColonne, joueurSuivant->getJeton());
 }
 
 bool Partie::partieEstTerminee()
@@ -90,7 +82,7 @@ Joueur* Partie::recupererJoueurAyantJeton(Jeton jeton)
 {
     for(int i = 0; i < (int)this->listeJoueurs->size(); i++)
     {
-        Joueur* joueur = &(listeJoueurs->at(i));
+        Joueur* joueur = listeJoueurs->at(i);
         if(joueur->getJeton() == jeton)
         {
             return joueur;
@@ -104,7 +96,7 @@ Joueur* Partie::getVainqueur() const
     return this->plateau.getVainqueur();
 }
 
-std::vector<Joueur>* Partie::getJoueurs() const
+std::vector<Joueur*>* Partie::getJoueurs() const
 {
     return this->listeJoueurs;
 }

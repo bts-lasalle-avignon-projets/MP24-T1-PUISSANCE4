@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Difficulte Parametres::difficulte = Difficulte(NORMAL);
+Difficulte Parametres::difficulte = Difficulte::NORMAL;
 bool       Parametres::animations = true;
 
 void Parametres::setDifficulte(Difficulte difficulte)
@@ -22,15 +22,15 @@ void Parametres::afficher()
     while(continueEdition)
     {
         IHM::effacerLignes();
-        IHM::afficherTexte("Difficultée : \033[1;34m" + getTexte(getDifficulte()) +
-                           "\033[0m (Tapez '\033[1;31m1\033[0m')\n");
-        string texteAnimation = "Activé";
+        IHM::afficherTexte("\033[1;33m1 \033[0m- Difficulté : \033[1;34m" +
+                           getTexte(getDifficulte()) + "\033[0m\n");
+        string texteAnimation = "Activée";
         if(!animations)
         {
-            texteAnimation = "Désactivé";
+            texteAnimation = "Désactivée";
         }
-        IHM::afficherTexte("Animations : \033[1;34m" + texteAnimation +
-                           "\033[0m (Tapez '\033[1;31m2\033[0m')\n");
+        IHM::afficherTexte("\033[1;33m2 \033[0m- Animation  : \033[1;34m" + texteAnimation +
+                           "\033[0m\n");
         continueEdition = attendreCommande();
     }
 }
@@ -40,7 +40,8 @@ bool Parametres::attendreCommande()
     string commande;
     while(true)
     {
-        IHM::afficherTexte("\nTapez une commande d'édition ou '0' pour quitter\n");
+        IHM::afficherTexte(
+          "\nTapez une commande d'édition ou '\033[1;31m0\033[0m' pour revenir au menu\n");
         commande = IHM::saisirCommandeDeJeu();
         IHM::effacerLignes();
 
@@ -51,10 +52,10 @@ bool Parametres::attendreCommande()
             while(true)
             {
                 choixDifficultee = editerParametre(getTexte(getDifficulte()),
-                                                   { getTexte(Difficulte(FACILE)),
-                                                     getTexte(Difficulte(NORMAL)),
-                                                     getTexte(Difficulte(DIFFICILE)),
-                                                     getTexte(Difficulte(EPIQUE)) },
+                                                   { getTexte(Difficulte::FACILE),
+                                                     getTexte(Difficulte::NORMAL),
+                                                     getTexte(Difficulte::DIFFICILE),
+                                                     getTexte(Difficulte::EPIQUE) },
                                                    affichageDynamique);
                 if(choixDifficultee == 0)
                 {

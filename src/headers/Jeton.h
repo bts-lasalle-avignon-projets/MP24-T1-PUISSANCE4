@@ -3,6 +3,8 @@
 
 #include <string>
 
+#define NB_JETONS_ALIGNES 4
+
 enum Jeton
 {
     VIDE = -1,

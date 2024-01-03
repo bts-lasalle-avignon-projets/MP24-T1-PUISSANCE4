@@ -2,6 +2,7 @@
 #include "Jeton.h"
 #include "Joueur.h"
 #include "Parametres.h"
+#include "Humain.h"
 #include "IA.h"
 
 #include <iostream>
@@ -239,11 +240,11 @@ void IHM::afficherRegles()
     afficherTexte("\n");
 }
 
-std::vector<Joueur> IHM::saisirJoueurs(int nbJoueurs)
+void IHM::saisirJoueurs(std::vector<Joueur*>& listeJoueurs, int nbJoueurs)
 {
-    std::vector<Joueur> listeJoueurs;
-    static bool         contientIA = false;
+    bool contientIA = false;
 
+    listeJoueurs.clear();
     for(int i = 0; i < nbJoueurs; i++)
     {
         string commande;
@@ -254,22 +255,20 @@ std::vector<Joueur> IHM::saisirJoueurs(int nbJoueurs)
             {
                 afficherTexte("une autre ");
             }
-
             afficherTexte("IA ? (oui/non) : ");
+
             cin >> commande;
             effacerSaisie();
             if(commande == "oui")
             {
-                listeJoueurs.push_back(IA(Jeton(i), "Brendan #" + to_string(i + 1)));
+                listeJoueurs.push_back(new IA(Jeton(i), "Brendan #" + to_string(i + 1)));
                 contientIA = true;
             }
-
             else if(commande == "non")
             {
-                listeJoueurs.push_back(Joueur(Jeton(i), IHM::saisirNomJoueur(i + 1), nullptr));
+                listeJoueurs.push_back(new Humain(Jeton(i), IHM::saisirNomJoueur(i + 1)));
             }
-            afficherTexte(listeJoueurs.at(i).getNom() + " à été ajouté\n");
+            afficherTexte(listeJoueurs.at(i)->getNom() + " à été ajouté\n");
         }
     }
-    return listeJoueurs;
 }

@@ -3,10 +3,19 @@
 
 #include "Historique.h"
 
+class Joueur;
+
 class Puissance4
 {
   private:
-    Historique historique;
+    std::vector<Joueur*> listeJoueurs;
+    Historique           historique;
+
+    void        jouerNouvellePartie();
+    void        afficherHistorique();
+    void        parametrer();
+    void        afficherLesRegles();
+    std::string saisirCommande();
 
   public:
     Puissance4();

@@ -16,6 +16,10 @@ Puissance4::Puissance4()
 
 Puissance4::~Puissance4()
 {
+    for(vector<Joueur*>::iterator it = listeJoueurs.begin(); it != listeJoueurs.end(); ++it)
+    {
+        delete *it;
+    }
 }
 
 void Puissance4::demarrer()
@@ -23,49 +27,72 @@ void Puissance4::demarrer()
     IHM::effacerTout();
     IHM::afficherBanniere();
 
-    vector<Joueur> listeJoueurs = IHM::saisirJoueurs(nbJoueursParDefaut);
+    IHM::saisirJoueurs(listeJoueurs, nbJoueursParDefaut);
 
     bool continueLeJeu = true;
     while(continueLeJeu)
     {
-        IHM::effacerTout();
-        IHM::afficherBanniere();
-        IHM::afficherMenu();
-        string commande = IHM::saisirCommandeDeJeu();
-        IHM::effacerLignes();
+        string commande = saisirCommande();
 
         if(commande == "1")
         {
-            IHM::effacerTout();
-            Partie* partie = new Partie(&listeJoueurs);
-            historique.sauvegarderPartie(partie);
-            partie->demarrer();
-            historique.ajouterVictoire(partie->getVainqueur());
-            IHM::attendreRetourMenu();
+            jouerNouvellePartie();
         }
-
         else if(commande == "2")
         {
-            historique.afficher();
-            IHM::attendreRetourMenu();
+            afficherHistorique();
         }
 
         else if(commande == "3")
         {
-            Parametres::afficher();
+            parametrer();
         }
-
         else if(commande == "4")
         {
-            IHM::effacerTout();
-            IHM::afficherRegles();
-            IHM::attendreRetourMenu();
+            afficherLesRegles();
         }
-
         else if(commande == "0")
         {
             IHM::effacerTout();
             continueLeJeu = false;
         }
     }
+}
+
+void Puissance4::jouerNouvellePartie()
+{
+    IHM::effacerTout();
+    Partie* partie = new Partie(&listeJoueurs);
+    historique.sauvegarderPartie(partie);
+    partie->demarrer();
+    historique.ajouterVictoire(partie->getVainqueur());
+    IHM::attendreRetourMenu();
+}
+
+void Puissance4::afficherHistorique()
+{
+    historique.afficher();
+    IHM::attendreRetourMenu();
+}
+
+void Puissance4::parametrer()
+{
+    Parametres::afficher();
+}
+
+void Puissance4::afficherLesRegles()
+{
+    IHM::effacerTout();
+    IHM::afficherRegles();
+    IHM::attendreRetourMenu();
+}
+
+string Puissance4::saisirCommande()
+{
+    IHM::effacerTout();
+    IHM::afficherBanniere();
+    IHM::afficherMenu();
+    string commande = IHM::saisirCommandeDeJeu();
+    IHM::effacerLignes();
+    return commande;
 }

@@ -11,8 +11,8 @@ class Partie;
 class Historique
 {
   private:
-    std::vector<Partie*>  parties;
-    std::map<Joueur, int> points;
+    std::vector<Partie*>   parties;
+    std::map<Joueur*, int> points;
 
   public:
     Historique();

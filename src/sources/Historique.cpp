@@ -56,7 +56,7 @@ void Historique::sauvegarderPartie(Partie* partie)
 
 void Historique::ajouterVictoire(Joueur* joueur)
 {
-    points[*joueur]++;
+    points[joueur]++;
 }
 
 void Historique::afficher()
@@ -82,11 +82,11 @@ void Historique::afficher()
 
     IHM::afficherTexte("Points par joueurs : \n");
 
-    for(map<Joueur, int>::iterator it = points.begin(); it != points.end(); ++it)
+    for(map<Joueur*, int>::iterator it = points.begin(); it != points.end(); ++it)
     {
-        Joueur joueur       = it->first;
-        int    pointsJoueur = it->second;
-        IHM::afficherTexte(getSequence(joueur.getJeton(), joueur.getNom()) + " : " +
+        Joueur* joueur       = it->first;
+        int     pointsJoueur = it->second;
+        IHM::afficherTexte(getSequence(joueur->getJeton(), joueur->getNom()) + " : " +
                            to_string(pointsJoueur) + " point(s)\n");
     }
 }
