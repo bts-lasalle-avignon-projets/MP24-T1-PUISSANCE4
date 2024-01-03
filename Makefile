@@ -1,9 +1,9 @@
-CXX = g++
-CXXFLAGS = -std=c++11 -Wall
-
 SRCDIR = src/sources
 INCDIR = src/headers
 OBJDIR = src/sources
+
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall -I$(INCDIR)
 
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))

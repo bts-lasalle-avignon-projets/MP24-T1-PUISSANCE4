@@ -1,8 +1,6 @@
-#include "../headers/Difficulte.h"
+#include "Difficulte.h"
 
 #include <random>
-#include <iostream>
-#include <string>
 
 using namespace std;
 

@@ -5,20 +5,22 @@
 #include <vector>
 
 class Joueur;
+
 class IHM
 {
   private:
     static int nbLignesASupprimer;
 
   public:
-    static std::vector<Joueur> saisieJoueurs();
-    static std::string         saisieNomJoueur(int numeroJoueur);
-    static bool                nomJoueurValide(const std::string& nomJoueur);
+    static std::string         saisirNomJoueur(int numeroJoueur);
+    static int                 saisirCoup();
+    static bool                estNomJoueurValide(const std::string& nomJoueur);
     static void                afficherMessageTour(const Joueur& joueur);
     static void                afficherVictoire(Joueur* joueur);
     static void                afficherMenu();
     static void                afficherBanniere();
     static std::string         saisirCommandeDeJeu();
+    static int                 saisirChoixParametre();
     static void                attendreRetourMenu();
     static void                afficherDynamiquement(const std::string& message);
     static void                effacerTout();
@@ -29,6 +31,7 @@ class IHM
     static void                mettreZeroNbLignesASupprimer();
     static void                afficherTexte(const std::string& texte);
     static void                afficherRegles();
+    static std::vector<Joueur> saisirJoueurs();
 };
 
 #endif // IHM_H

@@ -1,11 +1,14 @@
-#ifndef PUISSANCE
-#define PUISSANCE
+#ifndef PUISSANCE_H
+#define PUISSANCE_H
 
+#include "Plateau.h"
+#include "Jeton.h"
+
+#include <string>
 #include <vector>
-#include <iostream>
 
-#include "../headers/Plateau.h"
-#include "../headers/Jeton.h"
+#define INDICE_JOUEUR_NON_DEFINI -1
+
 class Puissance
 {
   private:
@@ -14,7 +17,7 @@ class Puissance
     Plateau              plateau;
 
   public:
-    Puissance();
+    Puissance(std::vector<Joueur>* listeJoueurs = nullptr);
     Puissance(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
     Puissance(const Puissance& puissance);
     Puissance(Puissance&& puissance) noexcept;

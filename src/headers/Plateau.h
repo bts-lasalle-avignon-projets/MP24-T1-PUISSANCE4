@@ -1,10 +1,10 @@
-#ifndef PLATEAU
-#define PLATEAU
+#ifndef PLATEAU_H
+#define PLATEAU_H
 
+#include "Jeton.h"
+
+#include <string>
 #include <vector>
-#include <iostream>
-
-#include "../headers/Jeton.h"
 
 class Joueur;
 class Puissance;
@@ -18,7 +18,7 @@ class Plateau
     Puissance*         partie;
 
   public:
-    Plateau();
+    Plateau(Puissance* partie = nullptr);
     Plateau(Puissance* partie, int lignes, int colonnes);
     Plateau(const Plateau& plateau);
     Plateau(Plateau&& plateau) noexcept;

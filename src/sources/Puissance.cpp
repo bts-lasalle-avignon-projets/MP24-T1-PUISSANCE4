@@ -1,20 +1,18 @@
-#include "../headers/Puissance.h"
-#include "../headers/Plateau.h"
-#include "../headers/Joueur.h"
-#include "../headers/Jeton.h"
-#include "../headers/Ihm.h"
-#include "../headers/IA.h"
-#include <vector>
-#include <iostream>
+#include "Puissance.h"
+#include "Joueur.h"
+#include "Ihm.h"
+#include "IA.h"
 
 using namespace std;
 
-Puissance::Puissance() : indiceJoueurActuel(-1), listeJoueurs(nullptr), plateau(nullptr, 0, 0)
+Puissance::Puissance(std::vector<Joueur>* listeJoueurs /*= nullptr*/) :
+    indiceJoueurActuel(INDICE_JOUEUR_NON_DEFINI), listeJoueurs(listeJoueurs), plateau(this)
 {
 }
 
 Puissance::Puissance(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes) :
-    indiceJoueurActuel(-1), listeJoueurs(listeJoueurs), plateau(this, nbLignes, nbColonnes)
+    indiceJoueurActuel(INDICE_JOUEUR_NON_DEFINI), listeJoueurs(listeJoueurs),
+    plateau(this, nbLignes, nbColonnes)
 {
 }
 

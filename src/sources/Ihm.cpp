@@ -1,8 +1,8 @@
-#include "../headers/Ihm.h"
-#include "../headers/Jeton.h"
-#include "../headers/Joueur.h"
-#include "../headers/Parametres.h"
-#include "../headers/IA.h"
+#include "Ihm.h"
+#include "Jeton.h"
+#include "Joueur.h"
+#include "Parametres.h"
+#include "IA.h"
 
 #include <iostream>
 #include <thread>
@@ -17,10 +17,10 @@ const string rouge  = "\033[1;31m";
 const string jaune  = "\033[1;33m";
 const string violet = "\033[1;95m";
 
-string IHM::saisieNomJoueur(int numeroJoueur)
+string IHM::saisirNomJoueur(int numeroJoueur)
 {
     string nom;
-    while(!nomJoueurValide(nom))
+    while(!estNomJoueurValide(nom))
     {
         afficherTexte("Entrez le nom/pseudo du Joueur " + to_string(numeroJoueur) + " : ");
         cin >> nom;
@@ -29,7 +29,15 @@ string IHM::saisieNomJoueur(int numeroJoueur)
     return nom;
 }
 
-bool IHM::nomJoueurValide(const std::string& nomJoueur)
+int IHM::saisirCoup()
+{
+    int numeroColonne = 0;
+    cin >> numeroColonne;
+    IHM::effacerSaisie();
+    return numeroColonne;
+}
+
+bool IHM::estNomJoueurValide(const std::string& nomJoueur)
 {
     if(nomJoueur.empty())
     {
@@ -99,7 +107,16 @@ string IHM::saisirCommandeDeJeu()
 {
     string commande;
     cin >> commande;
+    IHM::effacerSaisie();
     return commande;
+}
+
+int IHM::saisirChoixParametre()
+{
+    int choixParametre;
+    cin >> choixParametre;
+    IHM::effacerSaisie();
+    return choixParametre;
 }
 
 void IHM::effacerLignes(int nombreDeLignes)
@@ -222,7 +239,7 @@ void IHM::afficherRegles()
     afficherTexte("\n");
 }
 
-std::vector<Joueur> IHM::saisieJoueurs()
+std::vector<Joueur> IHM::saisirJoueurs()
 {
     std::vector<Joueur> listeJoueurs;
     static bool         contientIA = false;
@@ -251,7 +268,7 @@ std::vector<Joueur> IHM::saisieJoueurs()
             else if(commande == "non")
             {
                 listeJoueurs.push_back(
-                  Joueur(getJetonDepuisIndice(i + 1), IHM::saisieNomJoueur(i + 1), nullptr));
+                  Joueur(getJetonDepuisIndice(i + 1), IHM::saisirNomJoueur(i + 1), nullptr));
             }
             afficherTexte(listeJoueurs.at(i).getNom() + " à été ajouté\n");
         }

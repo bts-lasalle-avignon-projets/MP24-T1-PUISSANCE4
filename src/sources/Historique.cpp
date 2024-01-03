@@ -1,12 +1,8 @@
-#include <iostream>
-#include <vector>
-#include <map>
-
-#include "../headers/Historique.h"
-#include "../headers/Joueur.h"
-#include "../headers/Puissance.h"
-#include "../headers/Jeton.h"
-#include "../headers/Ihm.h"
+#include "Historique.h"
+#include "Joueur.h"
+#include "Puissance.h"
+#include "Jeton.h"
+#include "Ihm.h"
 
 using namespace std;
 

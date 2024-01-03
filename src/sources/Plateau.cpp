@@ -1,11 +1,8 @@
-#include "../headers/Plateau.h"
-#include "../headers/Puissance.h"
-#include "../headers/Joueur.h"
-#include "../headers/Jeton.h"
-#include "../headers/Ihm.h"
+#include "Plateau.h"
+#include "Puissance.h"
+#include "Joueur.h"
+#include "Ihm.h"
 
-#include <vector>
-#include <iostream>
 #include <algorithm>
 
 constexpr int nbCases = 4;
@@ -15,9 +12,9 @@ using namespace std;
 constexpr int lignePardefaut   = 6;
 constexpr int colonnePardefaut = 7;
 
-Plateau::Plateau() :
+Plateau::Plateau(Puissance* partie /*= nullptr*/) :
     lignes(lignePardefaut), colonnes(colonnePardefaut), cases(lignePardefaut * colonnePardefaut),
-    partie(nullptr)
+    partie(partie)
 {
 }
 

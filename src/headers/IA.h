@@ -1,8 +1,8 @@
 #ifndef IA_H
 #define IA_H
 
-#include "../headers/Joueur.h"
-#include <iostream>
+#include "Joueur.h"
+#include <string>
 #include <vector>
 #include <map>
 

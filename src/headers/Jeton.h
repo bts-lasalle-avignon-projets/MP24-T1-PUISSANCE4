@@ -1,7 +1,7 @@
 #ifndef JETON
 #define JETON
 
-#include <iostream>
+#include <string>
 
 enum Jeton
 {

@@ -1,7 +1,7 @@
-#ifndef HISTORIQUE
-#define HISTORIQUE
+#ifndef HISTORIQUE_H
+#define HISTORIQUE_H
 
-#include <iostream>
+#include <string>
 #include <vector>
 #include <map>
 

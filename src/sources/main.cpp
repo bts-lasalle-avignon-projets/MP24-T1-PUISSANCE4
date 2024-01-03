@@ -1,24 +1,21 @@
-#include "../headers/Joueur.h"
-#include "../headers/Puissance.h"
-#include "../headers/Ihm.h"
-#include "../headers/Plateau.h"
-#include "../headers/Historique.h"
-#include "../headers/IA.h"
-#include "../headers/Parametres.h"
+#include "Joueur.h"
+#include "Puissance.h"
+#include "Ihm.h"
+#include "Plateau.h"
+#include "Historique.h"
+#include "IA.h"
+#include "Parametres.h"
 
 #include <iostream>
 #include <string>
 #include <chrono>
 #include <thread>
 
-constexpr int nbLignes   = 6;
-constexpr int nbColonnes = 7;
-
 using namespace std;
 
 int main()
 {
-    vector<Joueur> listeJoueurs  = IHM::saisieJoueurs();
+    vector<Joueur> listeJoueurs  = IHM::saisirJoueurs();
     bool           continueLeJeu = true;
     Historique     historique(listeJoueurs);
 
@@ -33,7 +30,7 @@ int main()
         if(commande == "1")
         {
             IHM::effacerTout();
-            Puissance puissance = *new Puissance(&listeJoueurs, nbLignes, nbColonnes);
+            Puissance puissance = *new Puissance(&listeJoueurs);
             puissance.demarrerPartie();
             historique.savegarderPartie(puissance);
             historique.ajouterVictoire(puissance.getVainqueur());

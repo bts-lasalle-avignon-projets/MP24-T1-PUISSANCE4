@@ -1,9 +1,8 @@
-#include "../headers/Joueur.h"
-#include "../headers/Jeton.h"
-#include "../headers/IA.h"
-#include "../headers/Plateau.h"
-#include "../headers/Ihm.h"
-#include <iostream>
+#include "Joueur.h"
+#include "Jeton.h"
+#include "IA.h"
+#include "Plateau.h"
+#include "Ihm.h"
 
 using namespace std;
 
@@ -74,8 +73,7 @@ int Joueur::jouerCoup(Plateau& plateau)
     int indice = 0;
     while(indice < 1 || indice > plateau.getNbColonnes() || plateau.colonneEstPleine(indice - 1))
     {
-        cin >> indice;
-        IHM::effacerSaisie();
+        indice = IHM::saisirCoup();
     }
     return indice;
 }

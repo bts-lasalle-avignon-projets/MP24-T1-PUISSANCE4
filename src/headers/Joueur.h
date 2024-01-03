@@ -1,8 +1,8 @@
 #ifndef JOUEUR
 #define JOUEUR
 
-#include "../headers/Jeton.h"
-#include <iostream>
+#include "Jeton.h"
+#include <string>
 
 class IA;
 class Plateau;

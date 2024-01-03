@@ -1,9 +1,5 @@
-#include "../headers/Parametres.h"
-#include "../headers/Difficulte.h"
-#include "../headers/Ihm.h"
-
-#include <iostream>
-#include <vector>
+#include "Parametres.h"
+#include "Ihm.h"
 
 using namespace std;
 
@@ -45,8 +41,7 @@ bool Parametres::attendreCommande()
     while(true)
     {
         IHM::afficherTexte("\nTapez une commande d'édition ou '0' pour quitter\n");
-        cin >> commande;
-        IHM::effacerSaisie();
+        commande = IHM::saisirCommandeDeJeu();
         IHM::effacerLignes();
 
         bool affichageDynamique = true;
@@ -114,8 +109,7 @@ int Parametres::editerParametre(const string&              selection,
     int choixParametre = -1;
     while(choixParametre < 0 || choixParametre > (int)elements.size())
     {
-        cin >> choixParametre;
-        IHM::effacerSaisie();
+        choixParametre = IHM::saisirChoixParametre();
     }
     return choixParametre;
 }
