@@ -1,5 +1,5 @@
 #include "Plateau.h"
-#include "Puissance.h"
+#include "Partie.h"
 #include "Joueur.h"
 #include "Ihm.h"
 
@@ -12,13 +12,13 @@ using namespace std;
 constexpr int lignePardefaut   = 6;
 constexpr int colonnePardefaut = 7;
 
-Plateau::Plateau(Puissance* partie /*= nullptr*/) :
+Plateau::Plateau(Partie* partie /*= nullptr*/) :
     lignes(lignePardefaut), colonnes(colonnePardefaut), cases(lignePardefaut * colonnePardefaut),
     partie(partie)
 {
 }
 
-Plateau::Plateau(Puissance* partie, int lignes, int colonnes) :
+Plateau::Plateau(Partie* partie, int lignes, int colonnes) :
     lignes(lignes), colonnes(colonnes), cases(lignes * colonnes), partie(partie)
 {
 }
@@ -323,7 +323,7 @@ vector<Jeton>* Plateau::getPlateau()
     return &cases;
 }
 
-Puissance* Plateau::getPartie()
+Partie* Plateau::getPartie()
 {
     return this->partie;
 }

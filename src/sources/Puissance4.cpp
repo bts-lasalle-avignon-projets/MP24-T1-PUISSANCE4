@@ -1,6 +1,6 @@
 #include "Puissance4.h"
 #include "Joueur.h"
-#include "Puissance.h"
+#include "Partie.h"
 #include "Ihm.h"
 #include "Plateau.h"
 #include "Historique.h"
@@ -39,10 +39,10 @@ void Puissance4::demarrer()
         if(commande == "1")
         {
             IHM::effacerTout();
-            Puissance puissance = *new Puissance(&listeJoueurs);
-            puissance.demarrerPartie();
-            historique.savegarderPartie(puissance);
-            historique.ajouterVictoire(puissance.getVainqueur());
+            Partie partie(&listeJoueurs);
+            partie.demarrer();
+            historique.savegarderPartie(partie);
+            historique.ajouterVictoire(partie.getVainqueur());
             IHM::attendreRetourMenu();
         }
 

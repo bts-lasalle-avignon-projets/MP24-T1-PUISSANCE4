@@ -1,5 +1,5 @@
-#ifndef PUISSANCE_H
-#define PUISSANCE_H
+#ifndef PARTIE_H
+#define PARTIE_H
 
 #include "Plateau.h"
 #include "Jeton.h"
@@ -9,7 +9,7 @@
 
 #define INDICE_JOUEUR_NON_DEFINI -1
 
-class Puissance
+class Partie
 {
   private:
     int                  indiceJoueurActuel;
@@ -17,15 +17,15 @@ class Puissance
     Plateau              plateau;
 
   public:
-    Puissance(std::vector<Joueur>* listeJoueurs = nullptr);
-    Puissance(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
-    Puissance(const Puissance& puissance);
-    Puissance(Puissance&& puissance) noexcept;
-    ~Puissance();
-    Puissance& operator=(const Puissance& puissance) noexcept;
-    Puissance& operator=(Puissance&& puissance) noexcept;
+    Partie(std::vector<Joueur>* listeJoueurs = nullptr);
+    Partie(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
+    Partie(const Partie& puissance);
+    Partie(Partie&& puissance) noexcept;
+    ~Partie();
+    Partie& operator=(const Partie& puissance) noexcept;
+    Partie& operator=(Partie&& puissance) noexcept;
 
-    void                 demarrerPartie();
+    void                 demarrer();
     int                  jouerTour();
     bool                 partieEstTerminee();
     Joueur*              recupererJoueurAyantJeton(Jeton jeton);
@@ -33,4 +33,4 @@ class Puissance
     std::vector<Joueur>* getJoueurs() const;
 };
 
-#endif // PUISSANCE_H
+#endif // PARTIE_H

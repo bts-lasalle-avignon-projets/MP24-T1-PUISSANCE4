@@ -1,6 +1,6 @@
 #include "Historique.h"
 #include "Joueur.h"
-#include "Puissance.h"
+#include "Partie.h"
 #include "Jeton.h"
 #include "Ihm.h"
 
@@ -54,9 +54,9 @@ Historique& Historique::operator=(Historique&& historique) noexcept
     return *this;
 }
 
-void Historique::savegarderPartie(Puissance& puissance)
+void Historique::savegarderPartie(Partie& partie)
 {
-    parties.push_back(puissance);
+    parties.push_back(partie);
 }
 
 void Historique::ajouterVictoire(Joueur* joueur)

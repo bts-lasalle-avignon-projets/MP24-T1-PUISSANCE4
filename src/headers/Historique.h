@@ -6,13 +6,13 @@
 #include <map>
 
 class Joueur;
-class Puissance;
+class Partie;
 
 class Historique
 {
   private:
-    std::vector<Puissance> parties;
-    std::map<Joueur, int>  points;
+    std::vector<Partie>   parties;
+    std::map<Joueur, int> points;
 
   public:
     Historique();
@@ -22,7 +22,7 @@ class Historique
     ~Historique();
     Historique& operator=(const Historique& historique) noexcept;
     Historique& operator=(Historique&& historique) noexcept;
-    void        savegarderPartie(Puissance& puissance);
+    void        savegarderPartie(Partie& puissance);
     void        ajouterVictoire(Joueur* joueur);
     void        afficher();
 };

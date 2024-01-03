@@ -7,7 +7,7 @@
 #include <vector>
 
 class Joueur;
-class Puissance;
+class Partie;
 
 class Plateau
 {
@@ -15,11 +15,11 @@ class Plateau
     int                lignes;
     int                colonnes;
     std::vector<Jeton> cases;
-    Puissance*         partie;
+    Partie*            partie;
 
   public:
-    Plateau(Puissance* partie = nullptr);
-    Plateau(Puissance* partie, int lignes, int colonnes);
+    Plateau(Partie* partie = nullptr);
+    Plateau(Partie* partie, int lignes, int colonnes);
     Plateau(const Plateau& plateau);
     Plateau(Plateau&& plateau) noexcept;
     ~Plateau();
@@ -39,7 +39,7 @@ class Plateau
     std::vector<int> getPositionDeSequenceVainqueur() const;
     std::vector<int> getPositions(int indiceCase, Jeton casePlateau, int indiceCaseTeste) const;
     int              placerJeton(int colonneSelectionnee, Jeton jeton);
-    Puissance*       getPartie();
+    Partie*          getPartie();
     void             supprimerJeton(int indiceJeton);
     int              getNbJetonsAlignes(int positionJeton, Jeton jeton);
     int              getTailleSequenceVainqueur();

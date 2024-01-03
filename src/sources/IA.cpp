@@ -1,6 +1,6 @@
 #include "IA.h"
 #include "Plateau.h"
-#include "Puissance.h"
+#include "Partie.h"
 #include "Parametres.h"
 #include "Difficulte.h"
 

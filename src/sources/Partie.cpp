@@ -1,39 +1,39 @@
-#include "Puissance.h"
+#include "Partie.h"
 #include "Joueur.h"
 #include "Ihm.h"
 #include "IA.h"
 
 using namespace std;
 
-Puissance::Puissance(std::vector<Joueur>* listeJoueurs /*= nullptr*/) :
+Partie::Partie(std::vector<Joueur>* listeJoueurs /*= nullptr*/) :
     indiceJoueurActuel(INDICE_JOUEUR_NON_DEFINI), listeJoueurs(listeJoueurs), plateau(this)
 {
 }
 
-Puissance::Puissance(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes) :
+Partie::Partie(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes) :
     indiceJoueurActuel(INDICE_JOUEUR_NON_DEFINI), listeJoueurs(listeJoueurs),
     plateau(this, nbLignes, nbColonnes)
 {
 }
 
-Puissance::Puissance(const Puissance& puissance) :
+Partie::Partie(const Partie& puissance) :
     indiceJoueurActuel(puissance.indiceJoueurActuel), listeJoueurs(puissance.listeJoueurs),
     plateau(this, puissance.plateau.getNbLignes(), puissance.plateau.getNbColonnes())
 {
 }
 
-Puissance::Puissance(Puissance&& puissance) noexcept :
+Partie::Partie(Partie&& puissance) noexcept :
     indiceJoueurActuel(puissance.indiceJoueurActuel),
     listeJoueurs(puissance.listeJoueurs),
     plateau(this, puissance.plateau.getNbLignes(), puissance.plateau.getNbColonnes())
 {
 }
 
-Puissance::~Puissance()
+Partie::~Partie()
 {
 }
 
-Puissance& Puissance::operator=(const Puissance& puissance) noexcept
+Partie& Partie::operator=(const Partie& puissance) noexcept
 {
     if(&puissance != this)
     {
@@ -44,7 +44,7 @@ Puissance& Puissance::operator=(const Puissance& puissance) noexcept
     return *this;
 }
 
-Puissance& Puissance::operator=(Puissance&& puissance) noexcept
+Partie& Partie::operator=(Partie&& puissance) noexcept
 {
     this->listeJoueurs       = puissance.listeJoueurs;
     this->indiceJoueurActuel = puissance.indiceJoueurActuel;
@@ -52,7 +52,7 @@ Puissance& Puissance::operator=(Puissance&& puissance) noexcept
     return *this;
 }
 
-void Puissance::demarrerPartie()
+void Partie::demarrer()
 {
     for(Joueur joueur: *listeJoueurs)
     {
@@ -72,7 +72,7 @@ void Puissance::demarrerPartie()
     this->plateau.afficherPartie();
 }
 
-int Puissance::jouerTour()
+int Partie::jouerTour()
 {
     size_t prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
     indiceJoueurActuel    = prochainIndice;
@@ -82,12 +82,12 @@ int Puissance::jouerTour()
     return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());
 }
 
-bool Puissance::partieEstTerminee()
+bool Partie::partieEstTerminee()
 {
     return this->plateau.getVainqueur() != nullptr;
 }
 
-Joueur* Puissance::recupererJoueurAyantJeton(Jeton jeton)
+Joueur* Partie::recupererJoueurAyantJeton(Jeton jeton)
 {
     for(int i = 0; i < (int)this->listeJoueurs->size(); i++)
     {
@@ -100,12 +100,12 @@ Joueur* Puissance::recupererJoueurAyantJeton(Jeton jeton)
     return nullptr;
 }
 
-Joueur* Puissance::getVainqueur() const
+Joueur* Partie::getVainqueur() const
 {
     return this->plateau.getVainqueur();
 }
 
-std::vector<Joueur>* Puissance::getJoueurs() const
+std::vector<Joueur>* Partie::getJoueurs() const
 {
     return this->listeJoueurs;
 }
