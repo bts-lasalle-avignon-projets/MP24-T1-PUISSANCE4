@@ -239,12 +239,12 @@ void IHM::afficherRegles()
     afficherTexte("\n");
 }
 
-std::vector<Joueur> IHM::saisirJoueurs()
+std::vector<Joueur> IHM::saisirJoueurs(int nbJoueurs)
 {
     std::vector<Joueur> listeJoueurs;
     static bool         contientIA = false;
-    IHM::afficherBanniere();
-    for(int i = 0; i < 2; i++)
+
+    for(int i = 0; i < nbJoueurs; i++)
     {
         string commande;
         while(commande != "oui" && commande != "non")

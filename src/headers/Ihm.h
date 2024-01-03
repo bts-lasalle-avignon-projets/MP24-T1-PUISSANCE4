@@ -31,7 +31,7 @@ class IHM
     static void                mettreZeroNbLignesASupprimer();
     static void                afficherTexte(const std::string& texte);
     static void                afficherRegles();
-    static std::vector<Joueur> saisirJoueurs();
+    static std::vector<Joueur> saisirJoueurs(int nbJoueurs);
 };
 
 #endif // IHM_H
