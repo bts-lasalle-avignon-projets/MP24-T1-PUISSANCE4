@@ -2,9 +2,6 @@
 #include "Joueur.h"
 #include "Partie.h"
 #include "Ihm.h"
-#include "Plateau.h"
-#include "IA.h"
-#include "Parametres.h"
 
 using namespace std;
 
@@ -77,7 +74,7 @@ void Puissance4::afficherHistorique()
 
 void Puissance4::parametrer()
 {
-    Parametres::afficher();
+    IHM::afficherParametres();
 }
 
 void Puissance4::afficherLesRegles()

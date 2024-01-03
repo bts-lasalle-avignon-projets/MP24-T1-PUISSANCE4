@@ -240,6 +240,11 @@ void IHM::afficherRegles()
     afficherTexte("\n");
 }
 
+void IHM::afficherParametres()
+{
+    Parametres::afficher();
+}
+
 void IHM::saisirJoueurs(std::vector<Joueur*>& listeJoueurs, int nbJoueurs)
 {
     bool contientIA = false;
