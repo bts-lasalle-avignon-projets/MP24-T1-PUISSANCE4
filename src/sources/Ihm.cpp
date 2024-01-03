@@ -260,15 +260,13 @@ std::vector<Joueur> IHM::saisirJoueurs(int nbJoueurs)
             effacerSaisie();
             if(commande == "oui")
             {
-                listeJoueurs.push_back(
-                  IA(getJetonDepuisIndice(i + 1), "Brendan #" + to_string(i + 1)));
+                listeJoueurs.push_back(IA(Jeton(i), "Brendan #" + to_string(i + 1)));
                 contientIA = true;
             }
 
             else if(commande == "non")
             {
-                listeJoueurs.push_back(
-                  Joueur(getJetonDepuisIndice(i + 1), IHM::saisirNomJoueur(i + 1), nullptr));
+                listeJoueurs.push_back(Joueur(Jeton(i), IHM::saisirNomJoueur(i + 1), nullptr));
             }
             afficherTexte(listeJoueurs.at(i).getNom() + " à été ajouté\n");
         }

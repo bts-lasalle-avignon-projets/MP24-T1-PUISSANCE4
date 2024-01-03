@@ -6,26 +6,25 @@
 using namespace std;
 
 Partie::Partie(std::vector<Joueur>* listeJoueurs /*= nullptr*/) :
-    indiceJoueurActuel(INDICE_JOUEUR_NON_DEFINI), listeJoueurs(listeJoueurs), plateau(this)
+    indiceJoueurActuel(Jeton::VIDE), listeJoueurs(listeJoueurs), plateau(this)
 {
 }
 
 Partie::Partie(vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes) :
-    indiceJoueurActuel(INDICE_JOUEUR_NON_DEFINI), listeJoueurs(listeJoueurs),
-    plateau(this, nbLignes, nbColonnes)
+    indiceJoueurActuel(Jeton::VIDE), listeJoueurs(listeJoueurs), plateau(this, nbLignes, nbColonnes)
 {
 }
 
-Partie::Partie(const Partie& puissance) :
-    indiceJoueurActuel(puissance.indiceJoueurActuel), listeJoueurs(puissance.listeJoueurs),
-    plateau(this, puissance.plateau.getNbLignes(), puissance.plateau.getNbColonnes())
+Partie::Partie(const Partie& partie) :
+    indiceJoueurActuel(partie.indiceJoueurActuel), listeJoueurs(partie.listeJoueurs),
+    plateau(this, partie.plateau.getNbLignes(), partie.plateau.getNbColonnes())
 {
 }
 
-Partie::Partie(Partie&& puissance) noexcept :
-    indiceJoueurActuel(puissance.indiceJoueurActuel),
-    listeJoueurs(puissance.listeJoueurs),
-    plateau(this, puissance.plateau.getNbLignes(), puissance.plateau.getNbColonnes())
+Partie::Partie(Partie&& partie) noexcept :
+    indiceJoueurActuel(partie.indiceJoueurActuel),
+    listeJoueurs(partie.listeJoueurs),
+    plateau(this, partie.plateau.getNbLignes(), partie.plateau.getNbColonnes())
 {
 }
 
@@ -33,22 +32,22 @@ Partie::~Partie()
 {
 }
 
-Partie& Partie::operator=(const Partie& puissance) noexcept
+Partie& Partie::operator=(const Partie& partie) noexcept
 {
-    if(&puissance != this)
+    if(&partie != this)
     {
-        this->listeJoueurs       = puissance.listeJoueurs;
-        this->indiceJoueurActuel = puissance.indiceJoueurActuel;
-        this->plateau            = puissance.plateau;
+        this->listeJoueurs       = partie.listeJoueurs;
+        this->indiceJoueurActuel = partie.indiceJoueurActuel;
+        this->plateau            = partie.plateau;
     }
     return *this;
 }
 
-Partie& Partie::operator=(Partie&& puissance) noexcept
+Partie& Partie::operator=(Partie&& partie) noexcept
 {
-    this->listeJoueurs       = puissance.listeJoueurs;
-    this->indiceJoueurActuel = puissance.indiceJoueurActuel;
-    this->plateau            = puissance.plateau;
+    this->listeJoueurs       = partie.listeJoueurs;
+    this->indiceJoueurActuel = partie.indiceJoueurActuel;
+    this->plateau            = partie.plateau;
     return *this;
 }
 
@@ -74,9 +73,9 @@ void Partie::demarrer()
 
 int Partie::jouerTour()
 {
-    size_t prochainIndice = (this->indiceJoueurActuel + 1) % this->listeJoueurs->size();
-    indiceJoueurActuel    = prochainIndice;
-    Joueur joueurSuivant  = listeJoueurs->at(prochainIndice);
+    Jeton indiceJoueurSuivant = Jeton((this->indiceJoueurActuel + 1) % Jeton::NB_JETONS);
+    indiceJoueurActuel        = indiceJoueurSuivant;
+    Joueur joueurSuivant      = listeJoueurs->at(indiceJoueurSuivant);
     IHM::afficherMessageTour(joueurSuivant);
     int indiceColonne = joueurSuivant.jouerCoup(plateau);
     return this->plateau.placerJeton(indiceColonne, joueurSuivant.getJeton());

@@ -27,17 +27,3 @@ string getCouleur(Jeton jeton)
             return "\033[0m";
     }
 }
-
-Jeton getJetonDepuisIndice(int indice)
-{
-    switch(indice)
-    {
-        case 0:
-            return Jeton(VIDE);
-        case 1:
-            return Jeton(ROUGE);
-        case 2:
-            return Jeton(JAUNE);
-    }
-    return JETON(VIDE);
-}

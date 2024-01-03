@@ -7,23 +7,21 @@
 #include <string>
 #include <vector>
 
-#define INDICE_JOUEUR_NON_DEFINI -1
-
 class Partie
 {
   private:
-    int                  indiceJoueurActuel;
+    Jeton                indiceJoueurActuel;
     std::vector<Joueur>* listeJoueurs;
     Plateau              plateau;
 
   public:
     Partie(std::vector<Joueur>* listeJoueurs = nullptr);
     Partie(std::vector<Joueur>* listeJoueurs, int nbLignes, int nbColonnes);
-    Partie(const Partie& puissance);
-    Partie(Partie&& puissance) noexcept;
+    Partie(const Partie& partie);
+    Partie(Partie&& partie) noexcept;
     ~Partie();
-    Partie& operator=(const Partie& puissance) noexcept;
-    Partie& operator=(Partie&& puissance) noexcept;
+    Partie& operator=(const Partie& partie) noexcept;
+    Partie& operator=(Partie&& partie) noexcept;
 
     void                 demarrer();
     int                  jouerTour();

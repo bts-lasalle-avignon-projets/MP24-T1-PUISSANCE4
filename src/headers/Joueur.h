@@ -1,5 +1,5 @@
-#ifndef JOUEUR
-#define JOUEUR
+#ifndef JOUEUR_H
+#define JOUEUR_H
 
 #include "Jeton.h"
 #include <string>
