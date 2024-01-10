@@ -16,7 +16,7 @@ class IA : public Joueur
     std::vector<int> analyserCoupsVainqueurAdversaire();
     std::vector<int> analyserSequence(Jeton jeton, int nbJetons);
     std::vector<int> analyserCoups(Plateau& plateauTemporaire);
-    int              calculerValeurHaute(std::map<int, int>& tailleSequenceParPositions);
+    static int       calculerValeurHaute(std::map<int, int>& tailleSequenceParPositions);
 
   public:
     IA();
@@ -27,7 +27,7 @@ class IA : public Joueur
     IA& operator=(const IA& ia) noexcept;
     IA& operator=(IA&& ia) noexcept;
 
-    virtual int jouerCoup(Plateau& plateau);
+    int jouerCoup(Plateau& plateau) override;
 };
 
 #endif // IA_H

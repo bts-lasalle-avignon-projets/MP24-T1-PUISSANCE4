@@ -10,11 +10,11 @@
 
 using namespace std;
 
-IA::IA() : Joueur(), plateau(nullptr)
+IA::IA() : plateau(nullptr)
 {
 }
 
-IA::IA(Jeton couleur, const string& nom) : Joueur(couleur, nom), plateau(nullptr)
+IA::IA(Jeton jeton, const string& nom) : Joueur(jeton, nom), plateau(nullptr)
 {
 }
 
@@ -102,7 +102,7 @@ std::vector<int> IA::analyserCoups(Plateau& plateauTemporaire)
     return emplamentsMeilleursCoups;
 }
 
-int IA::calculerValeurHaute(map<int, int>& tailleSequenceParPositions)
+int IA::calculerValeurHaute(std::map<int, int>& tailleSequenceParPositions)
 {
     int maximum = 0;
     for(map<int, int>::iterator it = tailleSequenceParPositions.begin();

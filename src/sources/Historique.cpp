@@ -4,6 +4,8 @@
 #include "Jeton.h"
 #include "Ihm.h"
 
+#include <memory>
+
 using namespace std;
 
 Historique::Historique() : parties({}), points({})
@@ -23,9 +25,9 @@ Historique::Historique(Historique&& historique) noexcept :
 
 Historique::~Historique()
 {
-    for(vector<Partie*>::iterator it = parties.begin(); it != parties.end(); ++it)
+    for(auto it = parties.begin(); it != parties.end(); ++it)
     {
-        delete *it;
+        std::unique_ptr<Partie> partie_ptr(*it);
     }
 }
 

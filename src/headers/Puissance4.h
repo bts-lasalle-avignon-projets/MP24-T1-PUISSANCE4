@@ -11,17 +11,20 @@ class Puissance4
     std::vector<Joueur*> listeJoueurs;
     Historique           historique;
 
-    void        jouerNouvellePartie();
-    void        afficherHistorique();
-    void        parametrer();
-    void        afficherLesRegles();
-    std::string saisirCommande();
+    void               jouerNouvellePartie();
+    void               afficherHistorique();
+    static void        parametrer();
+    static void        afficherLesRegles();
+    static std::string saisirCommande();
 
   public:
     Puissance4();
     ~Puissance4();
-
-    void demarrer();
+    Puissance4(const Puissance4& other) = delete;
+    Puissance4& operator=(const Puissance4& other) = delete;
+    Puissance4(Puissance4&& other) noexcept        = delete;
+    Puissance4& operator=(Puissance4&& other) noexcept = delete;
+    void        demarrer();
 };
 
 #endif // PUISSANCE4_H

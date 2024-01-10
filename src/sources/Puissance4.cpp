@@ -3,6 +3,8 @@
 #include "Partie.h"
 #include "Ihm.h"
 
+#include <memory>
+
 using namespace std;
 
 constexpr int nbJoueursParDefaut = 2;
@@ -13,12 +15,11 @@ Puissance4::Puissance4()
 
 Puissance4::~Puissance4()
 {
-    for(vector<Joueur*>::iterator it = listeJoueurs.begin(); it != listeJoueurs.end(); ++it)
+    for(auto it = listeJoueurs.begin(); it != listeJoueurs.end(); ++it)
     {
-        delete *it;
+        std::unique_ptr<Joueur> joueurPtr(*it);
     }
 }
-
 void Puissance4::demarrer()
 {
     IHM::effacerTout();
@@ -59,8 +60,8 @@ void Puissance4::demarrer()
 void Puissance4::jouerNouvellePartie()
 {
     IHM::effacerTout();
-    Partie* partie = new Partie(&listeJoueurs);
-    historique.sauvegarderPartie(partie);
+    std::unique_ptr<Partie> partie(new Partie(&listeJoueurs));
+    historique.sauvegarderPartie(partie.get());
     partie->demarrer();
     historique.ajouterVictoire(partie->getVainqueur());
     IHM::attendreRetourMenu();

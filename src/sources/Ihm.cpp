@@ -114,7 +114,7 @@ string IHM::saisirCommandeDeJeu()
 
 int IHM::saisirChoixParametre()
 {
-    int choixParametre;
+    int choixParametre = 0;
     cin >> choixParametre;
     IHM::effacerSaisie();
     return choixParametre;

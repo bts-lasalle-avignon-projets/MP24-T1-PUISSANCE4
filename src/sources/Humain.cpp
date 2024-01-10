@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Humain::Humain() : Joueur()
+Humain::Humain()
 {
 }
 
@@ -23,6 +23,24 @@ Humain::Humain(Humain&& humain) noexcept : Joueur(std::move(humain))
 
 Humain::~Humain()
 {
+}
+
+Humain& Humain::operator=(const Humain& humain)
+{
+    if(this != &humain)
+    {
+        Joueur::operator=(humain);
+    }
+    return *this;
+}
+
+Humain& Humain::operator=(Humain&& humain) noexcept
+{
+    if(this != &humain)
+    {
+        Joueur::operator=(std::move(humain));
+    }
+    return *this;
 }
 
 int Humain::jouerCoup(Plateau& plateau)

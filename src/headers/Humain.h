@@ -16,7 +16,9 @@ class Humain : public Joueur
     Humain(Humain&& humain) noexcept;
     virtual ~Humain();
 
-    virtual int jouerCoup(Plateau& plateau);
+    int     jouerCoup(Plateau& plateau) override;
+    Humain& operator=(const Humain& humain);
+    Humain& operator=(Humain&& humain) noexcept;
 };
 
 #endif // HUMAIN_H
