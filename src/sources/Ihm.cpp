@@ -222,7 +222,7 @@ void IHM::afficherRegles()
     afficherTexte("\033[0m\n");
 
     afficherTexte(
-      "1. Le jeu se joue sur un plateau vertical de 6 lignes et horizontal de 7 colonnes.\n");
+      "1. Le jeu se déroule sur un plateau vertical de 6 lignes et horizontal de 7 colonnes.\n");
     afficherTexte("\n");
     afficherTexte("2. Deux joueurs s'affrontent avec des jetons de couleurs différentes "
                   "(\033[1;91mRouge\033[0m et \033[1;93mJaune\033[0m).\n");
@@ -235,8 +235,8 @@ void IHM::afficherRegles()
     afficherTexte("5. Le premier joueur qui parvient à aligner quatre de ses jetons consécutifs "
                   "(horizontalement, verticalement ou en diagonale) remporte la partie.\n");
     afficherTexte("\n");
-    afficherTexte("6. Si le plateau est rempli sans qu'aucun joueur n'ait aligné quatre "
-                  "jetons, la partie est déclarée nulle.\n");
+    afficherTexte("6. Si le plateau est rempli sans qu'aucun joueur n'ait aligné quatre jetons, la "
+                  "partie est déclarée nulle.\n");
     afficherTexte("\n");
 }
 

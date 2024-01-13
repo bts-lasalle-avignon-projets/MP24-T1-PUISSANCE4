@@ -1,9 +1,12 @@
+// Historique.h
+
 #ifndef HISTORIQUE_H
 #define HISTORIQUE_H
 
 #include <string>
 #include <vector>
 #include <map>
+#include <memory>
 
 class Joueur;
 class Partie;
@@ -11,8 +14,8 @@ class Partie;
 class Historique
 {
   private:
-    std::vector<Partie*>   parties;
-    std::map<Joueur*, int> points;
+    std::vector<std::unique_ptr<Partie> > parties;
+    std::map<Joueur*, int>                points;
 
   public:
     Historique();

@@ -20,9 +20,9 @@ class Puissance4
   public:
     Puissance4();
     ~Puissance4();
-    Puissance4(const Puissance4& other) = delete;
-    Puissance4& operator=(const Puissance4& other) = delete;
-    Puissance4(Puissance4&& other) noexcept        = delete;
+    Puissance4(const Puissance4& other)                = delete;
+    Puissance4& operator=(const Puissance4& other)     = delete;
+    Puissance4(Puissance4&& other) noexcept            = delete;
     Puissance4& operator=(Puissance4&& other) noexcept = delete;
     void        demarrer();
 };
