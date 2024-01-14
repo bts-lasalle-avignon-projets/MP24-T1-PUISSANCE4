@@ -1,9 +1,9 @@
-CXX = g++
-CXXFLAGS = -std=c++11 -Wall
-
 SRCDIR = src/sources
 INCDIR = src/headers
 OBJDIR = src/sources
+
+CXX = g++
+CXXFLAGS = -std=c++11 -std=c++14   -Wall -I$(INCDIR)
 
 SOURCES = $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
@@ -51,7 +51,7 @@ check: install-clang-tidy
 	@echo "\n$(JAUNE)------------------------"
 	@echo "Exécution de Clang Tidy 🔎 :"
 	@echo "------------------------$(NC)"
-	@clang-tidy $(SOURCES) --quiet -header-filter='.*' -checks=-*,boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-use-nullptr,clang-analyzer-*,cppcoreguidelines-* --format-style=none -- -std=c++11
+	@clang-tidy $(SOURCES) --quiet -header-filter='.*' -checks=-*,boost-*,bugprone-*,performance-*,readability-*,portability-*,modernize-use-nullptr,clang-analyzer-*,cppcoreguidelines-* --format-style=none -- -std=c++11 -std=c++14 -I$(INCDIR)
 	@echo "$(VERT)Clang Tidy terminé.$(NC)"
 
 test-clang-format:
