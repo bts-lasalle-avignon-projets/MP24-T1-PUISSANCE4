@@ -2,11 +2,37 @@
 
 # Mini-Projet Puissance 4
 
+- [Mini-Projet Puissance 4](#mini-projet-puissance-4)
+  - [Informations](#informations)
+  - [Présentation](#présentation)
+  - [Utilisation](#utilisation)
+  - [Changelog](#changelog)
+    - [Version 2.2](#version-22)
+    - [Version 2.1](#version-21)
+    - [Version 2.0](#version-20)
+    - [Version 1.1](#version-11)
+    - [Version 1.0](#version-10)
+  - [TODO](#todo)
+    - [Version 3.0](#version-30)
+  - [Défauts constatés non corrigés](#défauts-constatés-non-corrigés)
+  - [Itérations](#itérations)
+    - [Itération 1](#itération-1)
+    - [Itération 2](#itération-2)
+  - [Diagramme de classes](#diagramme-de-classes)
+  - [Diagramme du domaine](#diagramme-du-domaine)
+
+---
+
 ## Informations
 
 - Nom du logiciel : Puissance 4
-- Date de début : 24 novembre 2023 à 14:58
-- Numéro de version du logiciel : 2.1
+- Date de début : 24 novembre 2023
+- Numéro de version du logiciel : 2.2
+
+Équipe de développement
+
+- [Jules HILLION](mailto:redisbackhere@gmail.com)
+- [Thomas HNIZDO](mailto:thomas.hnizdo@gmail.com)
 
 ## Présentation
 
@@ -22,10 +48,17 @@ $ make
 $ ./puissance4.out
 ```
 
-## Ce que le logiciel fait dans cette version
+![Puissance4](images/puissance4-2.2.gif)
 
-Permet de jouer une partie de Puissance 4 à deux joueurs.
+## Changelog
 
+Le logiciel permet de jouer une partie de Puissance 4 à deux joueurs.
+
+### Version 2.2
+
+- [x] Correction version 2.1
+- [x] Simplification interaction Homme-Machine
+- [x] Affichage du menu et version
 
 ### Version 2.1
 
@@ -38,15 +71,15 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 - [x] Historique de parties jouées
 - [x] Paramétrage de la partie
 - [x] Jouer contre l'odinateur (IA)
-- [x] Nouveau modes de jeux:
+- [x] Nouveaux modes de jeux :
   - Joueur vs Joueur
   - Joueur vs IA
   - IA vs IA
-- [x] Choix de la difficulté de l'IA
-  - **FACILE**: Elle contrera les coups adverse une fois sur trois
-  - **NORMALE** (par défaut): Elle contrera les coups adverse trois fois sur cinq
-  - **DIFFILE**: Elle contrera les coups adverse cinq fois sur six
-  - **EPIQUE** (pour le fun): Elle contrera tous les coups adverse et privilègera sa contre-attaque à sa victoire
+- [x] Choix de la difficulté de l'IA :
+  - **FACILE** : Elle contrera les coups adverses une fois sur trois
+  - **NORMALE** (par défaut) : Elle contrera les coups adverses trois fois sur cinq
+  - **DIFFILE** : Elle contrera les coups adverses cinq fois sur six
+  - **EPIQUE** : Elle contrera tous les coups adverses et privilègera sa contre-attaque à sa victoire
 
 ### Version 1.1
 
@@ -56,11 +89,9 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 
 ### Version 1.0
 
-- [x] saisir le nom du joueur
-- [x] jouer une partie
-- [x] afficher le déroulement d’une partie
-
-![Puissance4](images/puissance4-2.0.gif)
+- [x] Saisie du nom du joueur
+- [x] Jouer une partie
+- [x] Affichage du déroulement d’une partie
 
 ## TODO
 
@@ -73,14 +104,19 @@ Permet de jouer une partie de Puissance 4 à deux joueurs.
 
 ## Défauts constatés non corrigés
 
+## Itérations
 
-## Itérations 1
+### Itération 1
 
 ![Jira-iteration](images/jira-iteration1.png)
 
-## Itérations 2
+### Itération 2
 
 ![Jira-iteration](images/jira-iteration2.png)
+
+## Diagramme de classes
+
+![diagramme-classes-2.2](images/diagramme-classes-2.2.png)
 
 ## Diagramme du domaine
 
@@ -119,15 +155,5 @@ Plateau "- plateau" <--o "- partie" Puissance
 Jeton "- cases" <--o Plateau : vector< Jeton >
 ```
 
-
-## Diagramme de classes
-
-![diagramme-classes-2.0](images/diagramme-classes-2.0.png)
-
-## Équipe de développement
-
-- [Jules HILLION](mailto:redisbackhere@gmail.com)
-- [Thomas HNIZDO](mailto:thomas.hnizdo@gmail.com)
-
 ---
-&copy; 2023 LaSalle Avignon
+&copy; 2023-2024 LaSalle Avignon

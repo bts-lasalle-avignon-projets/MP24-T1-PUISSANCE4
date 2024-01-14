@@ -1,13 +1,9 @@
-#include "../headers/Parametres.h"
-#include "../headers/Difficulte.h"
-#include "../headers/Ihm.h"
-
-#include <iostream>
-#include <vector>
+#include "Parametres.h"
+#include "Ihm.h"
 
 using namespace std;
 
-Difficulte Parametres::difficulte = Difficulte(NORMAL);
+Difficulte Parametres::difficulte = Difficulte::NORMAL;
 bool       Parametres::animations = true;
 
 void Parametres::setDifficulte(Difficulte difficulte)
@@ -26,15 +22,15 @@ void Parametres::afficher()
     while(continueEdition)
     {
         IHM::effacerLignes();
-        IHM::afficherTexte("Difficultée : \033[1;34m" + getTexte(getDifficulte()) +
-                           "\033[0m (Tapez '\033[1;31md\033[0m')\n");
-        string texteAnimation = "Activé";
+        IHM::afficherTexte("\033[1;33m1 \033[0m- Difficulté : \033[1;34m" +
+                           getTexte(getDifficulte()) + "\033[0m\n");
+        string texteAnimation = "Activée";
         if(!animations)
         {
-            texteAnimation = "Désactivé";
+            texteAnimation = "Désactivée";
         }
-        IHM::afficherTexte("Animations : \033[1;34m" + texteAnimation +
-                           "\033[0m (Tapez '\033[1;31ma\033[0m')\n");
+        IHM::afficherTexte("\033[1;33m2 \033[0m- Animation  : \033[1;34m" + texteAnimation +
+                           "\033[0m\n");
         continueEdition = attendreCommande();
     }
 }
@@ -44,22 +40,22 @@ bool Parametres::attendreCommande()
     string commande;
     while(true)
     {
-        IHM::afficherTexte("\nTapez une commande d'édition ou '0' pour quitter\n");
-        cin >> commande;
-        IHM::effacerSaisie();
+        IHM::afficherTexte(
+          "\nTapez une commande d'édition ou '\033[1;31m0\033[0m' pour revenir au menu\n");
+        commande = IHM::saisirCommandeDeJeu();
         IHM::effacerLignes();
 
         bool affichageDynamique = true;
-        if(commande == "d")
+        if(commande == "1")
         {
             int choixDifficultee = -1;
             while(true)
             {
                 choixDifficultee = editerParametre(getTexte(getDifficulte()),
-                                                   { getTexte(Difficulte(FACILE)),
-                                                     getTexte(Difficulte(NORMAL)),
-                                                     getTexte(Difficulte(DIFFICILE)),
-                                                     getTexte(Difficulte(EPIQUE)) },
+                                                   { getTexte(Difficulte::FACILE),
+                                                     getTexte(Difficulte::NORMAL),
+                                                     getTexte(Difficulte::DIFFICILE),
+                                                     getTexte(Difficulte::EPIQUE) },
                                                    affichageDynamique);
                 if(choixDifficultee == 0)
                 {
@@ -73,7 +69,7 @@ bool Parametres::attendreCommande()
             return true;
         }
 
-        if(commande == "a")
+        if(commande == "2")
         {
             int choixAnimations = -1;
             while(choixAnimations != 0)
@@ -114,8 +110,7 @@ int Parametres::editerParametre(const string&              selection,
     int choixParametre = -1;
     while(choixParametre < 0 || choixParametre > (int)elements.size())
     {
-        cin >> choixParametre;
-        IHM::effacerSaisie();
+        choixParametre = IHM::saisirChoixParametre();
     }
     return choixParametre;
 }
