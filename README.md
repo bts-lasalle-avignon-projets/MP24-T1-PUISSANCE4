@@ -48,7 +48,7 @@ $ make
 $ ./puissance4.out
 ```
 
-![Puissance4](images/puissance4-2.0.gif)
+![Puissance4](images/puissance4-2.2.gif)
 
 ## Changelog
 
@@ -131,7 +131,7 @@ class Jeton {
 }
 
 class IHM {
-
+ 
 }
 
 class Joueur {
