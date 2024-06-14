@@ -1,6 +1,7 @@
-#include "Difficulte.h"
-
+#include "../headers/Difficulte.h"
 #include <random>
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -17,7 +18,6 @@ bool necessiteUnBonCoup(Difficulte difficulte)
 {
     int nombreDeChance       = 0;
     int nombreDePossibilites = 0;
-
     switch(difficulte)
     {
         case FACILE:
@@ -35,7 +35,6 @@ bool necessiteUnBonCoup(Difficulte difficulte)
         case EPIQUE:
             return true;
     }
-
     std::random_device              rd;
     std::mt19937                    gen(rd());
     std::uniform_int_distribution<> distrib(0, nombreDePossibilites);

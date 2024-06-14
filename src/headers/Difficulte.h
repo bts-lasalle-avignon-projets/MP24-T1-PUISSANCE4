@@ -1,7 +1,7 @@
 #ifndef DIFFICULTE_H
 #define DIFFICULTE_H
 
-#include <string>
+#include <iostream>
 
 enum Difficulte
 {

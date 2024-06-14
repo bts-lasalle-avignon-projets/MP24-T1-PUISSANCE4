@@ -1,9 +1,9 @@
 #ifndef PARAMETRES_H
 #define PARAMETRES_H
 
-#include "Difficulte.h"
+#include "../headers/Difficulte.h"
 
-#include <string>
+#include <iostream>
 #include <vector>
 
 class Joueur;
