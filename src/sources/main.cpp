@@ -1,12 +1,13 @@
-#include "Puissance4.h"
+#include "../headers/Ihm.h"
+#include "../headers/Parametres.h"
 
 using namespace std;
 
 int main()
 {
-    Puissance4 puissance4;
+    Parametres::chargerParametres();
+    IHM::initialiserJeu();
 
-    puissance4.demarrer();
-
+    Parametres::sortie();
     return 0;
 }

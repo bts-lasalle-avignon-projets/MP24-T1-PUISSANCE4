@@ -1,25 +1,31 @@
-#ifndef PLATEAU_H
-#define PLATEAU_H
+#ifndef PLATEAU
+#define PLATEAU
 
-#include "Jeton.h"
-
-#include <string>
 #include <vector>
+#include <iostream>
+
+#include "../headers/Jeton.h"
 
 class Joueur;
-class Partie;
+class Puissance;
 
 class Plateau
 {
   private:
     int                lignes;
     int                colonnes;
+    int                alignement;
     std::vector<Jeton> cases;
-    Partie*            partie;
+    Puissance*         partie;
 
   public:
-    Plateau(Partie* partie = nullptr);
-    Plateau(Partie* partie, int lignes, int colonnes);
+    Plateau();
+    Plateau(Puissance* partie, int lignes, int colonnes, int nbPionsAlignement);
+    Plateau(Puissance*         partie,
+            int                lignes,
+            int                colonnes,
+            std::vector<Jeton> cases,
+            int                nbPionsAlignement);
     Plateau(const Plateau& plateau);
     Plateau(Plateau&& plateau) noexcept;
     ~Plateau();
@@ -32,6 +38,7 @@ class Plateau
     Joueur*             getVainqueur() const;
     int                 getNbLignes() const;
     int                 getNbColonnes() const;
+    int                 getNbPionsAlignement() const;
     std::vector<Jeton>* getPlateau();
     bool                estUneSequence(int indiceCase, Jeton casePlateau) const;
     bool             estUneSequence(int indiceCase, Jeton casePlateau, int nbJetonsAaligner) const;
@@ -39,7 +46,7 @@ class Plateau
     std::vector<int> getPositionDeSequenceVainqueur() const;
     std::vector<int> getPositions(int indiceCase, Jeton casePlateau, int indiceCaseTeste) const;
     int              placerJeton(int colonneSelectionnee, Jeton jeton);
-    Partie*          getPartie();
+    Puissance*       getPartie();
     void             supprimerJeton(int indiceJeton);
     int              getNbJetonsAlignes(int positionJeton, Jeton jeton);
     int              getTailleSequenceVainqueur();
@@ -47,6 +54,7 @@ class Plateau
     bool sequenceEstDansSonAxe(std::vector<int> indicesSequence, bool alignementHorizontal) const;
     bool estPlein() const;
     bool colonneEstPleine(int colonne) const;
+    void jouerAnimationPionPlacee(int indiceCase, Jeton jeton);
+    std::vector<Jeton> getCases();
 };
-
-#endif // PLATEAU_H
+#endif // PLATEAU

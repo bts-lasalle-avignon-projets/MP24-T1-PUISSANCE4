@@ -5,22 +5,21 @@
 #include <vector>
 
 class Joueur;
-
 class IHM
 {
   private:
     static int nbLignesASupprimer;
 
   public:
-    static std::string saisirNomJoueur(int numeroJoueur);
-    static int         saisirCoup();
-    static bool        estNomJoueurValide(const std::string& nomJoueur);
-    static void        afficherMessageTour(const Joueur& joueur);
+    static Joueur*     saisirJoueur();
+    static std::string saisieNomJoueur(const std::string& indicationTextuelle,
+                                       bool               verifierDoublons);
+    static bool        nomJoueurValide(const std::string& nomJoueur);
+    static void        afficherMessageTour(const Joueur* joueur);
     static void        afficherVictoire(Joueur* joueur);
+    static void        afficherPartieNulle();
     static void        afficherMenu();
-    static void        afficherBanniere();
     static std::string saisirCommandeDeJeu();
-    static int         saisirChoixParametre();
     static void        attendreRetourMenu();
     static void        afficherDynamiquement(const std::string& message);
     static void        effacerTout();
@@ -30,9 +29,10 @@ class IHM
     static void        compterNbLignes(const std::string& texte);
     static void        mettreZeroNbLignesASupprimer();
     static void        afficherTexte(const std::string& texte);
+    static void        afficherErreur(const std::string& texte);
     static void        afficherRegles();
-    static void        afficherParametres();
-    static void        saisirJoueurs(std::vector<Joueur*>& listeJoueurs, int nbJoueurs);
+    static void        attendre(int millisecondes);
+    static void        initialiserJeu();
 };
 
 #endif // IHM_H

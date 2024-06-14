@@ -1,21 +1,18 @@
-// Historique.h
+#ifndef HISTORIQUE
+#define HISTORIQUE
 
-#ifndef HISTORIQUE_H
-#define HISTORIQUE_H
-
-#include <string>
+#include <iostream>
 #include <vector>
 #include <map>
-#include <memory>
 
 class Joueur;
-class Partie;
+class Puissance;
 
 class Historique
 {
   private:
-    std::vector<std::unique_ptr<Partie> > parties;
-    std::map<Joueur*, int>                points;
+    std::vector<Puissance*> parties;
+    std::map<Joueur*, int>  points;
 
   public:
     Historique();
@@ -24,9 +21,10 @@ class Historique
     ~Historique();
     Historique& operator=(const Historique& historique) noexcept;
     Historique& operator=(Historique&& historique) noexcept;
-    void        sauvegarderPartie(Partie* partie);
+    void        savegarderPartie(Puissance* puissance, bool sauvegardeFichier);
     void        ajouterVictoire(Joueur* joueur);
     void        afficher();
+    void        charger();
 };
 
-#endif // HISTORIQUE_H
+#endif // HISTORIQUE

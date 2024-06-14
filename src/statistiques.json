@@ -1,0 +1,22 @@
+{
+  "Liam": {
+    "ia": true,
+    "parties": 0,
+    "points": 0
+  },
+  "RedEstDeRetour": {
+    "ia": false,
+    "parties": 0,
+    "points": 0
+  },
+  "Sofia": {
+    "ia": true,
+    "parties": 0,
+    "points": 0
+  },
+  "Thomas": {
+    "ia": false,
+    "parties": 0,
+    "points": 0
+  }
+}

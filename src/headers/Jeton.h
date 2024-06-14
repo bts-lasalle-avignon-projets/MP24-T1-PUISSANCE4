@@ -1,19 +1,18 @@
-#ifndef JETON_H
-#define JETON_H
+#ifndef JETON
+#define JETON
 
-#include <string>
-
-constexpr int NB_JETONS_ALIGNES = 4;
+#include <iostream>
 
 enum Jeton
 {
-    VIDE = -1,
+    VIDE,
     ROUGE,
-    JAUNE,
-    NB_JETONS
+    JAUNE
 };
 
 std::string getSequence(Jeton couleur, const std::string& contenu);
 std::string getCouleur(Jeton jeton);
+Jeton       getJetonDepuisIndice(int indice);
+int         getIndiceJeton(Jeton jeton);
 
-#endif // JETON_H
+#endif // JETON
